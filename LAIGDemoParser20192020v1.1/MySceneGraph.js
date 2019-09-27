@@ -27,6 +27,8 @@ class MySceneGraph {
 
     this.nodes = [];
 
+    this.cameras = {'ortho': [], 'perspective': []};
+
     this.idRoot = null;  // The id of the root element.
 
     this.axisCoords = [];
@@ -223,15 +225,92 @@ class MySceneGraph {
     // this.onXMLMinorError("To do: Parse views and create cameras.");
     var children = viewsNode.children;
 
+
     if (children.length == 0)
       this.onXMLError('There has to be at least one view. No views found');
 
-    var orto = [];
-    var pers = [];
-
     for (let i = 0; i < children.length; i++) {
-      if (children[i].tagName == 'perspective') pers.push(children[i]);
-      if (children[i].tagName == 'ortho') orto.push(children[i]);
+      var grandchildren = [];
+      for (let j = 0; j < children[i].children.length; j++) {
+        grandchildren.push(children[i].children[j].nodeName)
+      }
+
+
+
+      var tagName = children[i].tagName;
+      if (tagName == 'perspective' || tagName == 'ortho') {
+        var near = this.reader.getFloat(children[i], 'near');
+        if (near == null) {
+          this.onXMLMinorError(
+              'no near defined for camera perspective, skipping camera');
+          continue;
+        }
+        var far = this.reader.getFloat(children[i], 'far');
+        if (far == null) {
+          this.onXMLMinorError(
+              'no far defined for camera perspective, skipping camera');
+          continue;
+        }
+        var index_from = grandchildren.indexOf('from');
+        if (index_from == -1) {
+          this.onXMLMinorError('no from element found, skipping camera');
+          continue;
+        }
+        var from = this.parseCoordinates3D(children[i].children[index_from]);
+        var index_to = grandchildren.indexOf('to');
+        if (index_to == -1) {
+          this.onXMLMinorError('no to element found, skipping camera');
+          continue;
+        }
+        var to = this.parseCoordinates3D(children[i].children[index_to]);
+
+        if (tagName == 'perspective') {
+          var angle = this.reader.getFloat(children[i], 'angle');
+          if (angle == null) {
+            this.onXMLMinorError(
+                'no angle defined for camera perspective, skipping camera');
+            continue;
+          }
+          this.cameras['perspective'].push(
+              new CGFcamera(angle, near, far, from, to));
+        }
+        else {
+          var left = this.reader.getFloat(children[i], 'left');
+          if (left == null) {
+            this.onXMLMinorError(
+                'no left defined for cameraOrtho perspective, skipping camera');
+            continue;
+          }
+          var right = this.reader.getFloat(children[i], 'right');
+          if (right == null) {
+            this.onXMLMinorError(
+                'no right defined for cameraOrtho perspective, skipping camera');
+            continue;
+          }
+          var top = this.reader.getFloat(children[i], 'top');
+          if (top == null) {
+            this.onXMLMinorError(
+                'no top defined for cameraOrtho perspective, skipping camera');
+            continue;
+          }
+          var bottom = this.reader.getFloat(children[i], 'bottom');
+          if (bottom == null) {
+            this.onXMLMinorError(
+                'no bottom defined for cameraOrtho perspective, skipping camera');
+            continue;
+          }
+          var up;
+          var index_up = grandchildren.indexOf('to');
+          if (index_up == -1) {
+            this.onXMLMinorError('no up element found, using default 0,1,0');
+            up = vec3.fromValues(0, 1, 0);
+          } else {
+            up = this.parseCoordinates3D(children[i].children[index_up]);
+          }
+          this.cameras['ortho'].push(
+              new CGFcameraOrtho(left,right,bottom,top,near,far,from,to,up));
+        }
+      }
     }
 
     return null;
