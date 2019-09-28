@@ -559,10 +559,18 @@ class MySceneGraph {
         continue;
       }
 
-      var emission = this.parseColor(grandChildren[nodeNames.indexOf('emission')]);
-      var ambient = this.parseColor(grandChildren[nodeNames.indexOf('ambient')]);
-      var diffuse = this.parseColor(grandChildren[nodeNames.indexOf('diffuse')]);
-      var specular = this.parseColor(grandChildren[nodeNames.indexOf('specular')]);
+      var emission = this.parseColor(
+          grandChildren[nodeNames.indexOf('emission')],
+          'emission information for ID ' + materialID);
+      var ambient = this.parseColor(
+          grandChildren[nodeNames.indexOf('ambient')],
+          'ambient information for ID ' + materialID);
+      var diffuse = this.parseColor(
+          grandChildren[nodeNames.indexOf('diffuse')],
+          'diffuse information for ID ' + materialID);
+      var specular = this.parseColor(
+          grandChildren[nodeNames.indexOf('specular')],
+          'specular information for ID ' + materialID);
 
       var material = new CGFappearance(this.scene);
       material.setAmbient(...ambient);
@@ -571,324 +579,329 @@ class MySceneGraph {
       material.setSpecular(...specular);
 
       this.materials[materialID] = material;
-
     }
 
-  this.log("Parsed materials");
-  return null;
-}
+    this.log('Parsed materials');
+    return null;
+  }
 
-/**
- * Parses the <transformations> block.
- * @param {transformations block element} transformationsNode
- */
-parseTransformations(transformationsNode) {
-  var children = transformationsNode.children;
+  /**
+   * Parses the <transformations> block.
+   * @param {transformations block element} transformationsNode
+   */
+  parseTransformations(transformationsNode) {
+    var children = transformationsNode.children;
 
-  this.transformations = [];
+    this.transformations = [];
 
-  var grandChildren = [];
+    var grandChildren = [];
 
-  // Any number of transformations.
-  for (var i = 0; i < children.length; i++) {
-    if (children[i].nodeName != 'transformation') {
-      this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
-      continue;
+    // Any number of transformations.
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].nodeName != 'transformation') {
+        this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+        continue;
+      }
+
+      // Get id of the current transformation.
+      var transformationID = this.reader.getString(children[i], 'id');
+      if (transformationID == null) return 'no ID defined for transformation';
+
+      // Checks for repeated IDs.
+      if (this.transformations[transformationID] != null)
+        return 'ID must be unique for each transformation (conflict: ID = ' +
+            transformationID + ')';
+
+      grandChildren = children[i].children;
+      // Specifications for the current transformation.
+
+      var transfMatrix = mat4.create();
+
+      for (var j = 0; j < grandChildren.length; j++) {
+        switch (grandChildren[j].nodeName) {
+          case 'translate':
+            var coordinates = this.parseCoordinates3D(
+                grandChildren[j],
+                'translate transformation for ID ' + transformationID);
+            if (!Array.isArray(coordinates)) return coordinates;
+
+            transfMatrix =
+                mat4.translate(transfMatrix, transfMatrix, coordinates);
+            break;
+          case 'scale':
+            // this.onXMLMinorError('To do: Parse scale transformations.');
+            var scalefactor = this.parseCoordinates3D(
+                grandChildren[j],
+                'scale transformation for ID ' + transformationID);
+            if (!Array.isArray(scalefactor)) return scalefactor;
+
+            transfMatrix = mat4.scale(transfMatrix,transfMatrix,scalefactor);
+            break;
+          case 'rotate':
+            // angle
+            this.onXMLMinorError('To do: Parse rotate transformations.');
+            break;
+        }
+      }
+      this.transformations[transformationID] = transfMatrix;
     }
 
-    // Get id of the current transformation.
-    var transformationID = this.reader.getString(children[i], 'id');
-    if (transformationID == null) return 'no ID defined for transformation';
+    this.log('Parsed transformations');
+    return null;
+  }
 
-    // Checks for repeated IDs.
-    if (this.transformations[transformationID] != null)
-      return 'ID must be unique for each transformation (conflict: ID = ' +
-          transformationID + ')';
+  /**
+   * Parses the <primitives> block.
+   * @param {primitives block element} primitivesNode
+   */
+  parsePrimitives(primitivesNode) {
+    var children = primitivesNode.children;
 
-    grandChildren = children[i].children;
-    // Specifications for the current transformation.
+    this.primitives = [];
 
-    var transfMatrix = mat4.create();
+    var grandChildren = [];
 
-    for (var j = 0; j < grandChildren.length; j++) {
-      switch (grandChildren[j].nodeName) {
-        case 'translate':
-          var coordinates = this.parseCoordinates3D(
-              grandChildren[j],
-              'translate transformation for ID ' + transformationID);
-          if (!Array.isArray(coordinates)) return coordinates;
+    // Any number of primitives.
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].nodeName != 'primitive') {
+        this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+        continue;
+      }
 
-          transfMatrix =
-              mat4.translate(transfMatrix, transfMatrix, coordinates);
-          break;
-        case 'scale':
-          this.onXMLMinorError('To do: Parse scale transformations.');
-          break;
-        case 'rotate':
-          // angle
-          this.onXMLMinorError('To do: Parse rotate transformations.');
-          break;
+      // Get id of the current primitive.
+      var primitiveId = this.reader.getString(children[i], 'id');
+      if (primitiveId == null) return 'no ID defined for texture';
+
+      // Checks for repeated IDs.
+      if (this.primitives[primitiveId] != null)
+        return 'ID must be unique for each primitive (conflict: ID = ' +
+            primitiveId + ')';
+
+      grandChildren = children[i].children;
+
+      // Validate the primitive type
+      if (grandChildren.length != 1 ||
+          (grandChildren[0].nodeName != 'rectangle' &&
+           grandChildren[0].nodeName != 'triangle' &&
+           grandChildren[0].nodeName != 'cylinder' &&
+           grandChildren[0].nodeName != 'sphere' &&
+           grandChildren[0].nodeName != 'torus')) {
+        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)'
+      }
+
+      // Specifications for the current primitive.
+      var primitiveType = grandChildren[0].nodeName;
+
+      // Retrieves the primitive coordinates.
+      if (primitiveType == 'rectangle') {
+        // x1
+        var x1 = this.reader.getFloat(grandChildren[0], 'x1');
+        if (!(x1 != null && !isNaN(x1)))
+          return 'unable to parse x1 of the primitive coordinates for ID = ' +
+              primitiveId;
+
+        // y1
+        var y1 = this.reader.getFloat(grandChildren[0], 'y1');
+        if (!(y1 != null && !isNaN(y1)))
+          return 'unable to parse y1 of the primitive coordinates for ID = ' +
+              primitiveId;
+
+        // x2
+        var x2 = this.reader.getFloat(grandChildren[0], 'x2');
+        if (!(x2 != null && !isNaN(x2) && x2 > x1))
+          return 'unable to parse x2 of the primitive coordinates for ID = ' +
+              primitiveId;
+
+        // y2
+        var y2 = this.reader.getFloat(grandChildren[0], 'y2');
+        if (!(y2 != null && !isNaN(y2) && y2 > y1))
+          return 'unable to parse y2 of the primitive coordinates for ID = ' +
+              primitiveId;
+
+        var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
+
+        this.primitives[primitiveId] = rect;
+      } else {
+        console.warn('To do: Parse other primitives.');
       }
     }
-    this.transformations[transformationID] = transfMatrix;
+
+    this.log('Parsed primitives');
+    return null;
   }
 
-  this.log('Parsed transformations');
-  return null;
-}
+  /**
+   * Parses the <components> block.
+   * @param {components block element} componentsNode
+   */
+  parseComponents(componentsNode) {
+    var children = componentsNode.children;
 
-/**
- * Parses the <primitives> block.
- * @param {primitives block element} primitivesNode
- */
-parsePrimitives(primitivesNode) {
-  var children = primitivesNode.children;
+    this.components = [];
 
-  this.primitives = [];
+    var grandChildren = [];
+    var grandgrandChildren = [];
+    var nodeNames = [];
 
-  var grandChildren = [];
+    // Any number of components.
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].nodeName != 'component') {
+        this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+        continue;
+      }
 
-  // Any number of primitives.
-  for (var i = 0; i < children.length; i++) {
-    if (children[i].nodeName != 'primitive') {
-      this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
-      continue;
-    }
+      // Get id of the current component.
+      var componentID = this.reader.getString(children[i], 'id');
+      if (componentID == null) return 'no ID defined for componentID';
 
-    // Get id of the current primitive.
-    var primitiveId = this.reader.getString(children[i], 'id');
-    if (primitiveId == null) return 'no ID defined for texture';
+      // Checks for repeated IDs.
+      if (this.components[componentID] != null)
+        return 'ID must be unique for each component (conflict: ID = ' +
+            componentID + ')';
 
-    // Checks for repeated IDs.
-    if (this.primitives[primitiveId] != null)
-      return 'ID must be unique for each primitive (conflict: ID = ' +
-          primitiveId + ')';
+      grandChildren = children[i].children;
 
-    grandChildren = children[i].children;
+      nodeNames = [];
+      for (var j = 0; j < grandChildren.length; j++) {
+        nodeNames.push(grandChildren[j].nodeName);
+      }
 
-    // Validate the primitive type
-    if (grandChildren.length != 1 ||
-        (grandChildren[0].nodeName != 'rectangle' &&
-         grandChildren[0].nodeName != 'triangle' &&
-         grandChildren[0].nodeName != 'cylinder' &&
-         grandChildren[0].nodeName != 'sphere' &&
-         grandChildren[0].nodeName != 'torus')) {
-      return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)'
-    }
+      var transformationIndex = nodeNames.indexOf('transformation');
+      var materialsIndex = nodeNames.indexOf('materials');
+      var textureIndex = nodeNames.indexOf('texture');
+      var childrenIndex = nodeNames.indexOf('children');
 
-    // Specifications for the current primitive.
-    var primitiveType = grandChildren[0].nodeName;
+      this.onXMLMinorError('To do: Parse components.');
+      // Transformations
 
-    // Retrieves the primitive coordinates.
-    if (primitiveType == 'rectangle') {
-      // x1
-      var x1 = this.reader.getFloat(grandChildren[0], 'x1');
-      if (!(x1 != null && !isNaN(x1)))
-        return 'unable to parse x1 of the primitive coordinates for ID = ' +
-            primitiveId;
+      // Materials
 
-      // y1
-      var y1 = this.reader.getFloat(grandChildren[0], 'y1');
-      if (!(y1 != null && !isNaN(y1)))
-        return 'unable to parse y1 of the primitive coordinates for ID = ' +
-            primitiveId;
+      // Texture
 
-      // x2
-      var x2 = this.reader.getFloat(grandChildren[0], 'x2');
-      if (!(x2 != null && !isNaN(x2) && x2 > x1))
-        return 'unable to parse x2 of the primitive coordinates for ID = ' +
-            primitiveId;
-
-      // y2
-      var y2 = this.reader.getFloat(grandChildren[0], 'y2');
-      if (!(y2 != null && !isNaN(y2) && y2 > y1))
-        return 'unable to parse y2 of the primitive coordinates for ID = ' +
-            primitiveId;
-
-      var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
-
-      this.primitives[primitiveId] = rect;
-    } else {
-      console.warn('To do: Parse other primitives.');
+      // Children
     }
   }
 
-  this.log('Parsed primitives');
-  return null;
-}
 
-/**
- * Parses the <components> block.
- * @param {components block element} componentsNode
- */
-parseComponents(componentsNode) {
-  var children = componentsNode.children;
+  /**
+   * Parse the coordinates from a node with ID = id
+   * @param {block element} node
+   * @param {message to be displayed in case of error} messageError
+   */
+  parseCoordinates3D(node, messageError) {
+    var position = [];
 
-  this.components = [];
+    // x
+    var x = this.reader.getFloat(node, 'x');
+    if (!(x != null && !isNaN(x)))
+      return 'unable to parse x-coordinate of the ' + messageError;
 
-  var grandChildren = [];
-  var grandgrandChildren = [];
-  var nodeNames = [];
+    // y
+    var y = this.reader.getFloat(node, 'y');
+    if (!(y != null && !isNaN(y)))
+      return 'unable to parse y-coordinate of the ' + messageError;
 
-  // Any number of components.
-  for (var i = 0; i < children.length; i++) {
-    if (children[i].nodeName != 'component') {
-      this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
-      continue;
-    }
+    // z
+    var z = this.reader.getFloat(node, 'z');
+    if (!(z != null && !isNaN(z)))
+      return 'unable to parse z-coordinate of the ' + messageError;
 
-    // Get id of the current component.
-    var componentID = this.reader.getString(children[i], 'id');
-    if (componentID == null) return 'no ID defined for componentID';
+    position.push(...[x, y, z]);
 
-    // Checks for repeated IDs.
-    if (this.components[componentID] != null)
-      return 'ID must be unique for each component (conflict: ID = ' +
-          componentID + ')';
-
-    grandChildren = children[i].children;
-
-    nodeNames = [];
-    for (var j = 0; j < grandChildren.length; j++) {
-      nodeNames.push(grandChildren[j].nodeName);
-    }
-
-    var transformationIndex = nodeNames.indexOf('transformation');
-    var materialsIndex = nodeNames.indexOf('materials');
-    var textureIndex = nodeNames.indexOf('texture');
-    var childrenIndex = nodeNames.indexOf('children');
-
-    this.onXMLMinorError('To do: Parse components.');
-    // Transformations
-
-    // Materials
-
-    // Texture
-
-    // Children
+    return position;
   }
-}
+
+  /**
+   * Parse the coordinates from a node with ID = id
+   * @param {block element} node
+   * @param {message to be displayed in case of error} messageError
+   */
+  parseCoordinates4D(node, messageError) {
+    var position = [];
+
+    // Get x, y, z
+    position = this.parseCoordinates3D(node, messageError);
+
+    if (!Array.isArray(position)) return position;
 
 
-/**
- * Parse the coordinates from a node with ID = id
- * @param {block element} node
- * @param {message to be displayed in case of error} messageError
- */
-parseCoordinates3D(node, messageError) {
-  var position = [];
+    // w
+    var w = this.reader.getFloat(node, 'w');
+    if (!(w != null && !isNaN(w)))
+      return 'unable to parse w-coordinate of the ' + messageError;
 
-  // x
-  var x = this.reader.getFloat(node, 'x');
-  if (!(x != null && !isNaN(x)))
-    return 'unable to parse x-coordinate of the ' + messageError;
+    position.push(w);
 
-  // y
-  var y = this.reader.getFloat(node, 'y');
-  if (!(y != null && !isNaN(y)))
-    return 'unable to parse y-coordinate of the ' + messageError;
+    return position;
+  }
 
-  // z
-  var z = this.reader.getFloat(node, 'z');
-  if (!(z != null && !isNaN(z)))
-    return 'unable to parse z-coordinate of the ' + messageError;
+  /**
+   * Parse the color components from a node
+   * @param {block element} node
+   * @param {message to be displayed in case of error} messageError
+   */
+  parseColor(node, messageError) {
+    var color = [];
 
-  position.push(...[x, y, z]);
+    // R
+    var r = this.reader.getFloat(node, 'r');
+    if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+      return 'unable to parse R component of the ' + messageError;
 
-  return position;
-}
+    // G
+    var g = this.reader.getFloat(node, 'g');
+    if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+      return 'unable to parse G component of the ' + messageError;
 
-/**
- * Parse the coordinates from a node with ID = id
- * @param {block element} node
- * @param {message to be displayed in case of error} messageError
- */
-parseCoordinates4D(node, messageError) {
-  var position = [];
+    // B
+    var b = this.reader.getFloat(node, 'b');
+    if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+      return 'unable to parse B component of the ' + messageError;
 
-  // Get x, y, z
-  position = this.parseCoordinates3D(node, messageError);
+    // A
+    var a = this.reader.getFloat(node, 'a');
+    if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+      return 'unable to parse A component of the ' + messageError;
 
-  if (!Array.isArray(position)) return position;
+    color.push(...[r, g, b, a]);
 
+    return color;
+  }
 
-  // w
-  var w = this.reader.getFloat(node, 'w');
-  if (!(w != null && !isNaN(w)))
-    return 'unable to parse w-coordinate of the ' + messageError;
+  /*
+   * Callback to be executed on any read error, showing an error on the console.
+   * @param {string} message
+   */
+  onXMLError(message) {
+    console.error('XML Loading Error: ' + message);
+    this.loadedOk = false;
+  }
 
-  position.push(w);
+  /**
+   * Callback to be executed on any minor error, showing a warning on the
+   * console.
+   * @param {string} message
+   */
+  onXMLMinorError(message) {
+    console.warn('Warning: ' + message);
+  }
 
-  return position;
-}
+  /**
+   * Callback to be executed on any message.
+   * @param {string} message
+   */
+  log(message) {
+    console.log('   ' + message);
+  }
 
-/**
- * Parse the color components from a node
- * @param {block element} node
- * @param {message to be displayed in case of error} messageError
- */
-parseColor(node, messageError) {
-  var color = [];
+  /**
+   * Displays the scene, processing each node, starting in the root node.
+   */
+  displayScene() {
+    // To do: Create display loop for transversing the scene graph
 
-  // R
-  var r = this.reader.getFloat(node, 'r');
-  if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
-    return 'unable to parse R component of the ' + messageError;
-
-  // G
-  var g = this.reader.getFloat(node, 'g');
-  if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
-    return 'unable to parse G component of the ' + messageError;
-
-  // B
-  var b = this.reader.getFloat(node, 'b');
-  if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
-    return 'unable to parse B component of the ' + messageError;
-
-  // A
-  var a = this.reader.getFloat(node, 'a');
-  if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
-    return 'unable to parse A component of the ' + messageError;
-
-  color.push(...[r, g, b, a]);
-
-  return color;
-}
-
-/*
- * Callback to be executed on any read error, showing an error on the console.
- * @param {string} message
- */
-onXMLError(message) {
-  console.error('XML Loading Error: ' + message);
-  this.loadedOk = false;
-}
-
-/**
- * Callback to be executed on any minor error, showing a warning on the
- * console.
- * @param {string} message
- */
-onXMLMinorError(message) {
-  console.warn('Warning: ' + message);
-}
-
-/**
- * Callback to be executed on any message.
- * @param {string} message
- */
-log(message) {
-  console.log('   ' + message);
-}
-
-/**
- * Displays the scene, processing each node, starting in the root node.
- */
-displayScene() {
-  // To do: Create display loop for transversing the scene graph
-
-  // To test the parsing/creation of the primitives, call the display function
-  // directly
-  this.primitives['demoRectangle'].display();
-}
+    // To test the parsing/creation of the primitives, call the display function
+    // directly
+    this.primitives['demoRectangle'].display();
+  }
 }
