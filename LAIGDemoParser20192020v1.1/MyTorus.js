@@ -2,9 +2,10 @@
  * MyTorus
  * @constructor
  * @param scene - Reference to MyScene object
- * @param r - Radius
+ * @param r1 - Outer radius
+ * @param r2 - Inner radius
  * @param sl - Number of slices
- * @param st - Number of stacks
+ * @param lp - Number of loops
  */
 class MyTorus extends CGFobject {
     constructor(scene, id, r1,r2, sl, lp) {
