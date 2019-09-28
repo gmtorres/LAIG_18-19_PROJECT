@@ -558,6 +558,25 @@ class MySceneGraph {
                 var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
 
                 this.primitives[primitiveId] = rect;
+            }else if (primitiveType == 'sphere') {
+                // r
+                var r = this.reader.getFloat(grandChildren[0], 'r');
+                if (!(r != null && !isNaN(r)))
+                    return "unable to parse r of the primitive coordinates for ID = " + primitiveId;
+
+                // slices
+                var slices = this.reader.getFloat(grandChildren[0], 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
+
+                // stacks
+                var stacks = this.reader.getFloat(grandChildren[0], 'stacks');
+                if (!(stacks != null && !isNaN(stacks)))
+                    return "unable to parse stacks of the primitive coordinates for ID = " + primitiveId;
+
+                var sphere = new MySphere(this.scene, primitiveId, r,slices,stacks);
+
+                this.primitives[primitiveId] = sphere;
             }
             else {
                 console.warn("To do: Parse other primitives.");
@@ -740,6 +759,7 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph
 
         //To test the parsing/creation of the primitives, call the display function directly
-        this.primitives['demoRectangle'].display();
+        //this.primitives['demoRectangle'].display();
+        this.primitives['demoSphere'].display();
     }
 }
