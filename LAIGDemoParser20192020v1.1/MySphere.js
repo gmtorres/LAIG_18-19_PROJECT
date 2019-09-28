@@ -33,8 +33,8 @@ class MySphere extends CGFobject {
                         0,0,-1];
     
         for (var phi = 0, slice = 0; phi < 2 * Math.PI; phi += this.dp , slice+=1) {
-            //for (var thetha = this.dt , stack = 0; thetha <= Math.PI/2; thetha += this.dt , stack+=1) {
-            for (var thetha = Math.PI/2 - this.dt, stack = 0; thetha >= 0; thetha -= this.dt , stack+=1) {
+            //for (var thetha = Math.PI/2 - this.dt, stack = 0; thetha > -Math.PI/2; thetha -= this.dt , stack+=1) {
+            for(var stack = 0 , thetha = Math.PI/2 - this.dt ; stack < 2*this.st-1; thetha -= this.dt , stack+=1){
                 var ct = Math.cos(thetha);
                 var cp = Math.cos(phi);
                 var st = Math.sin(thetha);
@@ -45,18 +45,15 @@ class MySphere extends CGFobject {
                 var nz = st;
                 this.vertices.push(this.r * nx, this.r * ny, this.r * nz);
                 this.normals.push(nx, ny, nz);
-
-                //this.indices.push(slice*this.st + stack + 1 , slice*this.st + stack + 1 + 1 , (((slice+1)%this.sl)*this.st + stack) + 1 );
-                //this.indices.push(slice*this.st + stack + 1 + 1 , (((slice+1)%this.sl)*this.st + stack) + 1, (((slice+1)%this.sl)*this.st + stack) + 1 +1 );
-
             }
-            this.indices.push(0,slice*this.st + 2 , (((slice+1)%this.sl) * this.st) +2);
+            this.indices.push(0, slice*(2*this.st-1) + 2 , (((slice+1)%this.sl) * (2*this.st-1)) +2);
+            this.indices.push( slice*(2*this.st-1) + (this.st-1) * 2 + 2 , 1, (((slice+1)%this.sl) * (2*this.st-1)) + (this.st-1) * 2 +2);
         }
 
         for(var a = 0; a < this.sl ; a++){
-            for(var b = 0; b < this.st-1; b++){
-                this.indices.push(a * this.st + b + 2, a * this.st + b + 3,(((a+1)%this.sl) * this.st) + b + 2 );
-                this.indices.push( (((a+1)%this.sl) * this.st) + b + 2, a * this.st + b + 3, (((a+1)%this.sl) * this.st) + b + 3 );
+            for(var b = 0; b < (2*this.st-1)-1; b++){
+                this.indices.push(a * (2*this.st-1) + b + 2, a * (2*this.st-1) + b + 3,(((a+1)%this.sl) * (2*this.st-1)) + b + 2 );
+                this.indices.push( (((a+1)%this.sl) * (2*this.st-1)) + b + 2, a * (2*this.st-1) + b + 3, (((a+1)%this.sl) * (2*this.st-1)) + b + 3 );
             }
         }
 

@@ -48,7 +48,7 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere r="1" slices="8" stacks="4" />
+            <sphere r="1" slices="20" stacks="25" />
         </primitive>
     </primitives>
 
