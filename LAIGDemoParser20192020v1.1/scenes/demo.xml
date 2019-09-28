@@ -50,6 +50,9 @@
         <primitive id="demoSphere">
             <sphere r="1" slices="20" stacks="25" />
         </primitive>
+        <primitive id="demoTorus">
+            <torus r1="2" r2="1" slices="15" loops="20" />
+        </primitive>
     </primitives>
 
     <components>
