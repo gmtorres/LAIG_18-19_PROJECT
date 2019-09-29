@@ -635,11 +635,44 @@ class MySceneGraph {
                 'scale transformation for ID ' + transformationID);
             if (!Array.isArray(scalefactor)) return scalefactor;
 
-            transfMatrix = mat4.scale(transfMatrix,transfMatrix,scalefactor);
+            transfMatrix = mat4.scale(transfMatrix, transfMatrix, scalefactor);
             break;
           case 'rotate':
-            // angle
-            this.onXMLMinorError('To do: Parse rotate transformations.');
+            // Get axis
+            var axis = this.reader.getString(grandChildren[j], 'axis');
+            switch (axis) {
+              case 'x':
+                axis = vec3.fromValues(1, 0, 0);
+                break;
+              case 'y':
+                axis = vec3.fromValues(0, 1, 0);
+                break;
+              case 'z':
+                axis = vec3.fromValues(0, 0, 1);
+                break;
+
+              default:
+                this.onXMLMinorError(
+                    'axis ' + axis +
+                    ' does not exist, skipping rotation in transformation ' +
+                    transformationID + '.');
+                continue;
+                break;
+            }
+
+            // Get angle
+            var angle = this.reader.getFloat(grandChildren[j], 'angle');
+            if (angle == null) {
+              this.onXMLMinorError(
+                  'angle does not exist or is not valid, skipping rotation in transformation ' +
+                  transformationID + '.');
+              continue;
+            }
+
+            // Degrees to Radians
+            angle *= DEGREE_TO_RAD;
+
+            transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle, axis);
             break;
         }
       }

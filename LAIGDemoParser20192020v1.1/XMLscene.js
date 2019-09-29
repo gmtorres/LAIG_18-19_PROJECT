@@ -44,7 +44,7 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.s_camera = 0;
         this.cameras.push(new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0)));
-        
+        this.camera = this.cameras[this.s_camera];
     }
     /**
      * Initializes the scene lights with the values read from the XML file.
@@ -113,7 +113,7 @@ class XMLscene extends CGFscene {
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
-        this.camera = this.cameras[this.s_camera];
+        
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
