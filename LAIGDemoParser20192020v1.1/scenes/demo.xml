@@ -75,7 +75,7 @@
             </materials>
             <texture id="demoTexture"/>
             <children>
-                <primitiveref id="demoSphere" />
+                <primitiveref id="demoTorus" />
             </children>
         </component>
     </components>
