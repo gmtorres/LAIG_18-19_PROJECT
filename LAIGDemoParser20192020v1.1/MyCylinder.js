@@ -33,13 +33,13 @@ class MyCylinder extends CGFobject {
         this.normals = [];
 
         //change of radius with height
-        var dr = (this.r2 - this.r1) / this.h;
+        var dr = (this.r2 - this.r1) / (this.st-1);
 
         //vertices
         for(var stacks = 0, height = 0 , r = this.r1; stacks < this.st; stacks+=1 , height += this.dh , r+=dr){
             for(var slices = 0,thetha = 0; slices < this.sl; slices+=1 , thetha+= this.dp){
                 this.vertices.push(r* Math.cos(thetha),r* Math.sin(thetha), height );
-                this.normals.push(Math.cos(thetha),Math.sin(thetha),this.dh)
+                this.normals.push(Math.cos(thetha),Math.sin(thetha),-dr)
             }
         }
         //indices
@@ -62,6 +62,10 @@ class MyCylinder extends CGFobject {
     updateTexCoords(coords) {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
+    }
+    display(){
+        this.enableNormalViz();
+        super.display();
     }
 }
 

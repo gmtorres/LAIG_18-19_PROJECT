@@ -34,12 +34,12 @@ class MyTorus extends CGFobject {
             for(var thetha = 0, loops = 0; loops<this.lp ; thetha+= this.dt,loops+=1){
                 var R = (this.r1 + this.r2 * Math.cos(thetha));
 
-                var nx = Math.cos(phi);
-                var ny = Math.sin(phi);
+                var nx = Math.cos(phi)*Math.cos(thetha);
+                var ny = Math.sin(phi)*Math.cos(thetha);
                 var nz = Math.sin(thetha);
                 
                 this.normals.push(nx,ny,nz);//TODO:: Check if normals are correct calculated
-                this.vertices.push(R*nx,R*ny,this.r2 * nz);  
+                this.vertices.push(R*Math.cos(phi),R*Math.sin(phi),this.r2 * Math.sin(thetha));  
 
                 this.indices.push(slices*this.lp + (loops + 1) % this.lp ,slices*this.lp + loops , ((slices+1)%this.sl)*this.lp + loops);
                 this.indices.push(slices*this.lp + (loops + 1) % this.lp,((slices+1)%this.sl)*this.lp + loops,((slices+1)%this.sl)*this.lp + (loops + 1) % this.lp);
@@ -60,6 +60,10 @@ class MyTorus extends CGFobject {
     updateTexCoords(coords) {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
+    }
+    display(){
+        this.enableNormalViz();
+        super.display();
     }
 }
 
