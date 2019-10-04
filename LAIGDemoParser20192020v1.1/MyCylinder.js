@@ -32,23 +32,30 @@ class MyCylinder extends CGFobject {
 		//Facing Z positive
         this.normals = [];
 
+        this.texCoords = [];
+
         //change of radius with height
         var dr = (this.r2 - this.r1) / (this.st-1);
 
         //vertices
         for(var stacks = 0, height = 0 , r = this.r1; stacks < this.st; stacks+=1 , height += this.dh , r+=dr){
-            for(var slices = 0,thetha = 0; slices < this.sl; slices+=1 , thetha+= this.dp){
+            for(var slices = 0,thetha = 0; slices <= this.sl; slices+=1 , thetha+= this.dp){
                 this.vertices.push(r* Math.cos(thetha),r* Math.sin(thetha), height );
-                this.normals.push(Math.cos(thetha),Math.sin(thetha),-dr)
+                this.normals.push(Math.cos(thetha),Math.sin(thetha),-dr);
+                this.texCoords.push(thetha/(2*Math.PI + this.dp),height/this.h);
             }
         }
+
         //indices
         for(var a = 0; a < this.st-1 ; a++){
-            for(var b = 0; b < this.sl ; b++){
-                this.indices.push(a * this.sl + b , a * this.sl + (b + 1) % this.sl , (a+1) * this.sl + b);
-                this.indices.push((a+1) * this.sl + b , a * this.sl + (b + 1) % this.sl , (a+1) * this.sl + (b + 1) % this.sl );
+            for(var b = 0; b <= this.sl ; b++){
+                this.indices.push(a * (this.sl+1) + b , a * (this.sl+1) + (b + 1) % (this.sl+1) , (a+1) * (this.sl+1) + b);
+                this.indices.push((a+1) * (this.sl+1) + b , a * (this.sl+1) + (b + 1) % (this.sl+1) , (a+1) * (this.sl+1) + (b + 1) % (this.sl+1) ); 
             }
         }
+
+
+
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();

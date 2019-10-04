@@ -20,7 +20,7 @@ class MySphere extends CGFobject {
     }
 
     initBuffers() {
-        this.vertices = [
+        /*this.vertices = [
             0, 0,this.r ,//0
             0, 0,-this.r
 		];
@@ -54,6 +54,44 @@ class MySphere extends CGFobject {
             for(var b = 0; b < (2*this.st-1)-1; b++){
                 this.indices.push(a * (2*this.st-1) + b + 2, a * (2*this.st-1) + b + 3,(((a+1)%this.sl) * (2*this.st-1)) + b + 2 );
                 this.indices.push( (((a+1)%this.sl) * (2*this.st-1)) + b + 2, a * (2*this.st-1) + b + 3, (((a+1)%this.sl) * (2*this.st-1)) + b + 3 );
+            }
+        }*/
+
+        this.vertices = [];
+
+		//Counter-clockwise reference of vertices
+		this.indices = [];
+
+		//Facing Z positive
+        this.normals = [];
+
+        this.texCoords = [];
+    
+        for (var phi = 0, slice = 0; slice < this.sl + 1; phi += this.dp , slice+=1) {
+            //for (var thetha = Math.PI/2 - this.dt, stack = 0; thetha > -Math.PI/2; thetha -= this.dt , stack+=1) {
+            for(var stack = 0 , thetha = Math.PI/2 ; stack < 2*this.st+1; thetha -= this.dt , stack+=1){
+                var ct = Math.cos(thetha);
+                var cp = Math.cos(phi);
+                var st = Math.sin(thetha);
+                var sp = Math.sin(phi);
+
+                var nx = ct * cp;
+                var ny = ct * sp;
+                var nz = st;
+                this.vertices.push(this.r * nx, this.r * ny, this.r * nz);
+                this.normals.push(nx, ny, nz);
+
+                this.texCoords.push(slice/(this.sl + 1) , stack / (2*this.st+1));
+
+            }
+            //this.indices.push(0, slice*(2*this.st)  , (((slice+1)%this.sl) * (2*this.st)) );
+            //this.indices.push( slice*(2*this.st) + (this.st) * 2  , 1, (((slice)%this.sl) * (2*this.st)) + (this.st) * 2 );
+        }
+
+        for(var a = 0; a < this.sl ; a++){
+            for(var b = 0; b <= (2*this.st-1); b++){
+                this.indices.push(a * (2*this.st+1) + b , a * (2*this.st+1) + b + 1,(((a+1)%(this.sl+1)) * (2*this.st+1)) + b);
+                this.indices.push( (((a+1)%(this.sl+1)) * (2*this.st+1)) + b , a * (2*this.st+1) + b + 1, (((a+1)%(this.sl+1)) * (2*this.st+1)) + b + 1 );
             }
         }
 

@@ -2,17 +2,10 @@
     <scene root="demoRoot" axis_length="5"/>
 
     <views default="defaultCamera">
-
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
             <from x="30" y="15" z="30" />
             <to x="0" y="-2" z="0" />
         </perspective>
-
-        <ortho id="defaultOrtho"  near="0.1" far="500" left="500" right="500" top="100" bottom="100" >
-            <from x="-30" y="15" z="-30" />
-            <to x="0" y="0" z="0" />
-        </ortho>
-        
     </views>
 
     <ambient>
@@ -55,10 +48,10 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere r="1" slices="50" stacks="50" />
+            <sphere r="1" slices="50    " stacks="50" />
         </primitive>
         <primitive id="demoTorus">
-            <torus r1="2" r2="1" slices="30" loops="30" />
+            <torus r1="2" r2="1" slices="80" loops="30" />
         </primitive>
         <primitive id="demoCylinder">
             <cylinder r1="1" r2="1" height="4" slices="50" stacks="10" />

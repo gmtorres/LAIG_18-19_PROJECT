@@ -490,6 +490,41 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
         // For each texture in textures block, check ID and file URL
+
+        var children = texturesNode.children;
+
+        this.textures = [];
+
+        if (children.length == 0)
+            this.onXMLError('There has to be at least one texture. No texture found');
+
+        
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != 'texture') {
+                this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+                continue;
+            }
+
+            var textureID = this.reader.getString(children[i], 'id');
+            if (textureID == null) return 'no ID defined for texture';
+            // Checks for repeated IDs.
+            if (this.textures[textureID] != null)
+                return 'ID must be unique for each texture (conflict: ID = ' +
+                textureID + ')';
+
+            var textureFile = this.reader.getString(children[i],'file');
+            if (textureFile == null) return 'no File defined for texture';
+
+            var texture = new CGFtexture(this.scene,textureFile);
+            //texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+
+            this.textures[textureID] = texture;
+
+                
+        }
+
+
+
         this.onXMLMinorError('To do: Parse textures.');
         return null;
     }
@@ -922,13 +957,144 @@ class MySceneGraph {
             var childrenIndex = nodeNames.indexOf('children');
 
             this.onXMLMinorError('To do: Parse components.');
+
+            var component = [];
+
             // Transformations
+            
+            var transformation = grandChildren[transformationIndex].children;
+            
+            var transfMatrix = mat4.create();
+
+            for(var a = 0; a < transformation.length ; a++){
+                var tempMatrix = mat4.create();
+                switch (transformation[a].nodeName) {
+                    case 'translate':
+                        var coordinates = this.parseCoordinates3D(
+                            transformation[a],
+                            'translate transformation');
+                        if (!Array.isArray(coordinates)) return coordinates;
+
+                        tempMatrix =
+                            mat4.translate(tempMatrix, tempMatrix, coordinates);
+                        break;
+                    case 'scale':
+                        // this.onXMLMinorError('To do: Parse scale transformations.');
+                        var scalefactor = this.parseCoordinates3D(
+                            transformation[a],
+                            'scale transformation');
+                        if (!Array.isArray(scalefactor)) return scalefactor;
+
+                        tempMatrix = mat4.scale(tempMatrix, tempMatrix, scalefactor);
+                        break;
+                    case 'rotate':
+                        // Get axis
+                        var axis = this.reader.getString(transformation[a], 'axis');
+                        switch (axis) {
+                            case 'x':
+                                axis = vec3.fromValues(1, 0, 0);
+                                break;
+                            case 'y':
+                                axis = vec3.fromValues(0, 1, 0);
+                                break;
+                            case 'z':
+                                axis = vec3.fromValues(0, 0, 1);
+                                break;
+
+                            default:
+                                this.onXMLMinorError(
+                                    'axis ' + axis +
+                                    ' does not exist, skipping rotation in transformation ' +
+                                    transformationID + '.');
+                                continue;
+                                break;
+                        }
+
+                        // Get angle
+                        var angle = this.reader.getFloat(transformation[a], 'angle');
+                        if (angle == null) {
+                            this.onXMLMinorError(
+                                'angle does not exist or is not valid, skipping rotation in transformation ' +
+                                transformationID + '.');
+                            continue;
+                        }
+
+                        // Degrees to Radians
+                        angle *= DEGREE_TO_RAD;
+
+                        tempMatrix = mat4.rotate(tempMatrix, tempMatrix, angle, axis);
+                        break;
+                    case 'transformationref':
+                            var transformationrefID = this.reader.getFloat(transformation[a], 'id');
+                            tempMatrix = this.transformations[transformationrefID];
+                    break;
+                }
+                mat4.mul(transfMatrix,transfMatrix,tempMatrix);
+            }
+
+            component.transformation = transfMatrix;
+
 
             // Materials
 
+            var materialChild = grandChildren[materialsIndex].children;
+
+            if (materialChild[0].nodeName != 'material') {
+                this.onXMLMinorError('unknown tag <' + materialChild[0].nodeName + '>');
+                continue;
+            }
+
+            // Get id of the current material.
+            var materialID = this.reader.getString(materialChild[0], 'id');
+            if (materialID == null) return 'no ID defined for material';
+
+            if(materialID == 'inherit')
+                component.material = 'inherit';
+            else
+                component.material = this.materials[materialID];
+
             // Texture
 
+            var textureChild = grandChildren[textureIndex];
+
+            if (textureChild.nodeName != 'texture') {
+                this.onXMLMinorError('unknown tag <' + textureChild.nodeName + '>');
+                continue;
+            }
+
+            // Get id of the current texture.
+            var textureID = this.reader.getString(textureChild, 'id');
+            if (textureID == null) return 'no ID defined for texture';
+
+            if(textureID == 'inherit')
+                component.texture = 'inherit';
+            else if(textureID == 'none')
+                xcomponent.texture = 'none';
+            else
+                component.texture = this.textures[textureID];
+
             // Children
+
+            var cenas = grandChildren[childrenIndex].children;
+            var filhos = [];
+
+            for(var a = 0; a < cenas.length; a++){
+                switch (cenas[a].nodeName) {
+                    case 'primitiveref':
+                            var primitiveId = this.reader.getString(cenas[a], 'id');
+                            filhos.push(this.primitives[primitiveId]);
+                    break;
+                    case 'componentref' :
+                            var componentId = this.reader.getString(cenas[a], 'id');
+                            filhos.push(this.components[componentId]);
+                    break;
+                }
+            }
+            component.children = filhos;
+
+
+
+            this.components[componentID] = component;
         }
     }
 
@@ -1051,8 +1217,11 @@ class MySceneGraph {
         // To do: Create display loop for transversing the scene graph
         // To test the parsing/creation of the primitives, call the display function
         // directly
-        this.materials['demoMaterial'].apply();
-        this.primitives['demoRectangle'].display();
+        //this.materials['demoMaterial'].setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
+        //this.materials['demoMaterial'].apply();
+        
+        this.textures['demoTexture'].bind();
+        this.primitives['demoTorus'].display();
     }
 
 }
