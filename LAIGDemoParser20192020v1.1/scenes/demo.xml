@@ -24,6 +24,8 @@
 
     <textures>
         <texture id="demoTexture" file="scenes/images/vidral.jpg" />
+        <texture id="demoTexture2" file="scenes/images/leaves.jpg" />
+        <texture id="demoTexture3" file="scenes/images/bank.jpg" />
     </textures>
 
     <materials>
@@ -32,6 +34,12 @@
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="white" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.6" g="0.6" b="0.6" a="1.0" />
         </material>
     </materials>
 
@@ -48,10 +56,13 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere r="1" slices="50" stacks="50" />
+            <sphere r="1" slices="50    " stacks="50" />
         </primitive>
         <primitive id="demoTorus">
-            <torus r1="2" r2="1" slices="30" loops="30" />
+            <torus r1="2" r2="1" slices="80" loops="30" />
+        </primitive>
+        <primitive id="ring">
+            <torus r1="1" r2="0.05" slices="80" loops="30" />
         </primitive>
         <primitive id="demoCylinder">
             <cylinder r1="1" r2="1" height="4" slices="50" stacks="10" />
@@ -65,18 +76,119 @@
     </primitives>
 
     <components>
-        <component id="demoRoot">
+        
+        <component id="background">
             <transformation>
-                <translate x="0" y="0" z="1" />
-                <scale x="2" y="1" z="1" />
+                <translate x="0" y="0" z="-10" />
+                <scale x="10" y="10" z="1" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="demoTexture3"/>
+            <children>
+                <primitiveref id='demoRectangle' />
+            </children>
+        </component>
+
+        <component id="planet">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='demoSphere' />
+                <componentref id='ring1' />
+                <componentref id='ring2' />
+            </children>
+        </component>
+
+        <component id="ring">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="2" y="2" z="0.01" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='ring' />
+            </children>
+        </component>
+
+        <component id="ring2">
+            <transformation>
+                <rotate axis="x" angle="-10" />
+                <rotate axis="y" angle="-10" />
+                <rotate axis="z" angle="-10" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id='ring' />
+            </children>
+        </component>
+
+        <component id="ring1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='ring' />
+            </children>
+        </component>
+
+        <component id="planet1">
+            <transformation>
+                <translate x="3" y="0" z="0" />
+                <rotate axis='x' angle='90'/>
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
-            <texture id="demoTexture"/>
+            <texture id="demoTexture2"/>
             <children>
-                <primitiveref id="demoTorus" />
+                <componentref id='planet' />
             </children>
         </component>
+
+        <component id="planet2">
+            <transformation>
+                <translate x="-2" y="-1" z="0" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="demoTexture"/>
+            <children>
+                <componentref id='planet' />
+            </children>
+        </component>
+
+        <component id="demoRoot">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="demoTexture"/>
+            <children>
+                <componentref id='background'/>
+                <componentref id='planet1'/>
+                <componentref id='planet2'/>
+            </children>
+        </component>
+
     </components>
 </lxs>

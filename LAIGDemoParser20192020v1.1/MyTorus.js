@@ -29,9 +29,14 @@ class MyTorus extends CGFobject {
 
 		//Facing Z positive
         this.normals = [];
+
+        this.texCoords = [];
+
+        var s1 = this.sl + 1;
+        var l1 = this.lp + 1;
         
-        for(var phi = 0,slices = 0; slices < this.sl ; phi+=this.dp,slices+=1){
-            for(var thetha = 0, loops = 0; loops<this.lp ; thetha+= this.dt,loops+=1){
+        for(var phi = 0,slices = 0; slices < s1 ; phi+=this.dp,slices+=1){
+            for(var thetha = 0 + Math.PI, loops = 0; loops<l1; thetha+= this.dt,loops+=1){
                 var R = (this.r1 + this.r2 * Math.cos(thetha));
 
                 var nx = Math.cos(phi)*Math.cos(thetha);
@@ -41,8 +46,10 @@ class MyTorus extends CGFobject {
                 this.normals.push(nx,ny,nz);//TODO:: Check if normals are correct calculated
                 this.vertices.push(R*Math.cos(phi),R*Math.sin(phi),this.r2 * Math.sin(thetha));  
 
-                this.indices.push(slices*this.lp + (loops + 1) % this.lp ,slices*this.lp + loops , ((slices+1)%this.sl)*this.lp + loops);
-                this.indices.push(slices*this.lp + (loops + 1) % this.lp,((slices+1)%this.sl)*this.lp + loops,((slices+1)%this.sl)*this.lp + (loops + 1) % this.lp);
+                this.texCoords.push(slices/(s1), loops/(l1));
+
+                this.indices.push(slices*(l1)+ (loops + 1) % (l1),slices*(l1)+ loops , ((slices+1)%(s1))*(l1)+ loops);
+                this.indices.push(slices*(l1)+ (loops + 1) % (l1),((slices+1)%(s1))*(l1)+ loops,((slices+1)%(s1))*(l1)+ (loops + 1) % (l1));
                 
 
             }
