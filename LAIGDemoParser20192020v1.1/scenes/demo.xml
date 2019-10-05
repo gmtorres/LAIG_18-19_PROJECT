@@ -98,11 +98,25 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="demoTexture2"/>
+            <texture id="inherit"/>
             <children>
                 <primitiveref id='demoSphere' />
                 <componentref id='ring1' />
                 <componentref id='ring2' />
+            </children>
+        </component>
+
+        <component id="ring">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="2" y="2" z="0.01" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='ring' />
             </children>
         </component>
 
@@ -111,29 +125,25 @@
                 <rotate axis="x" angle="-10" />
                 <rotate axis="y" angle="-10" />
                 <rotate axis="z" angle="-10" />
-                <translate x="0" y="0" z="0" />
-                <scale x="2" y="2" z="0.01" />
             </transformation>
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="demoTexture2"/>
+            <texture id="none"/>
             <children>
-                <primitiveref id='ring' />
+                <componentref id='ring' />
             </children>
         </component>
 
         <component id="ring1">
             <transformation>
-                <translate x="0" y="0" z="0" />
-                <scale x="2" y="2" z="0.01" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="demoTexture2"/>
+            <texture id="inherit"/>
             <children>
-                <primitiveref id='ring' />
+                <componentref id='ring' />
             </children>
         </component>
 
@@ -157,7 +167,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="demoTexture2"/>
+            <texture id="demoTexture"/>
             <children>
                 <componentref id='planet' />
             </children>

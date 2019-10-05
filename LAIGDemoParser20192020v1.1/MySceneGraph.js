@@ -1250,7 +1250,8 @@ class MySceneGraph {
         var nodeTexture = currentNode.component.texture;
         if(nodeTexture == 'inherit'){
             nodeTexture = texture;
-            nodeTexture.bind();
+            if(texture != 'none')  
+                nodeTexture.bind();
         }
         else if(nodeTexture == 'none'){
             if(texture != 'none')   
