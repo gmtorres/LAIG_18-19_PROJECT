@@ -150,6 +150,7 @@
         <component id="planet1">
             <transformation>
                 <translate x="3" y="0" z="0" />
+                <rotate axis='x' angle='90'/>
             </transformation>
             <materials>
                 <material id="demoMaterial" />
