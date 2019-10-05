@@ -1236,6 +1236,9 @@ class MySceneGraph {
     displayFunction(node,matrix , material , texture){
         var currentNode = this.nodes[node];
 
+        if(currentNode == null)
+            return;
+
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.component.transformation);
 
