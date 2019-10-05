@@ -117,7 +117,7 @@ class MySceneGraph {
         }
 
         // <ambient>
-        if ((index = nodeNames.indexOf('ambient')) == -1)
+        if ((index = nodeNames.indexOf('globals')) == -1)
             return 'tag <ambient> missing';
         else {
             if (index != AMBIENT_INDEX)
@@ -795,6 +795,8 @@ class MySceneGraph {
             } else if (primitiveType == 'sphere') {
                 // r
                 var r = this.reader.getFloat(grandChildren[0], 'r');
+                if(r == null)
+                    var r = this.reader.getFloat(grandChildren[0], 'radius');
                 if (!(r != null && !isNaN(r) && r > 0))
                     return "unable to parse r of the primitive coordinates for ID = " + primitiveId;
 
@@ -813,11 +815,11 @@ class MySceneGraph {
                 this.primitives[primitiveId] = sphere;
             } else if (primitiveType == 'torus') {
                 // r1
-                var r1 = this.reader.getFloat(grandChildren[0], 'r1');
+                var r1 = this.reader.getFloat(grandChildren[0], 'outer');
                 if (!(r1 != null && !isNaN(r1) && r1 > 0))
                     return "unable to parse r1 of the primitive coordinates for ID = " + primitiveId;
                 // r2
-                var r2 = this.reader.getFloat(grandChildren[0], 'r2');
+                var r2 = this.reader.getFloat(grandChildren[0], 'inner');
                 if (!(r2 != null && !isNaN(r2) && r2 > 0))
                     return "unable to parse r2 of the primitive coordinates for ID = " + primitiveId;
 
@@ -836,11 +838,11 @@ class MySceneGraph {
                 this.primitives[primitiveId] = torus;
             } else if (primitiveType == 'cylinder') {
                 // r1
-                var r1 = this.reader.getFloat(grandChildren[0], 'r1');
+                var r1 = this.reader.getFloat(grandChildren[0], 'base');
                 if (!(r1 != null && !isNaN(r1) && r1 >= 0))
                     return "unable to parse r1 of the primitive coordinates for ID = " + primitiveId;
                 // r2
-                var r2 = this.reader.getFloat(grandChildren[0], 'r2');
+                var r2 = this.reader.getFloat(grandChildren[0], 'top');
                 if (!(r2 != null && !isNaN(r2) && r2 >= 0))
                     return "unable to parse r2 of the primitive coordinates for ID = " + primitiveId;
                 if (r2 == r1 && r2 == 0)

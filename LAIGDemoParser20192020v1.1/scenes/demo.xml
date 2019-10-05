@@ -8,10 +8,10 @@
         </perspective>
     </views>
 
-    <ambient>
+    <globals>
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <background r="0.0" g="0.0" b="0.0" a="1.0" />
-    </ambient>
+    </globals>
 
     <lights>
         <omni id="demoLight" enabled="1">
@@ -56,19 +56,19 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere r="1" slices="50    " stacks="50" />
+            <sphere radius="1" slices="50    " stacks="50" />
         </primitive>
         <primitive id="demoTorus">
-            <torus r1="2" r2="1" slices="80" loops="30" />
+            <torus outer="2" inner="1" slices="80" loops="30" />
         </primitive>
         <primitive id="ring">
-            <torus r1="1" r2="0.05" slices="80" loops="30" />
+            <torus outer="1" inner="0.05" slices="80" loops="30" />
         </primitive>
         <primitive id="demoCylinder">
-            <cylinder r1="1" r2="1" height="4" slices="50" stacks="10" />
+            <cylinder top="1" base="1" height="4" slices="50" stacks="10" />
         </primitive>
         <primitive id="demoCone">
-            <cylinder r1="1" r2="0" height="1" slices="50" stacks="10" />
+            <cylinder top="1" base="0" height="1" slices="50" stacks="10" />
         </primitive>
         <primitive id="demoTriangle">
             <triangle x1='0' y1='0' z1='2' x2='5' y2='0' z2='-1' x3='2' y3='2' z3='0' />
