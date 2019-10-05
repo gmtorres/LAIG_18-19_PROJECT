@@ -24,6 +24,7 @@
 
     <textures>
         <texture id="demoTexture" file="scenes/images/vidral.jpg" />
+        <texture id="demoTexture2" file="scenes/images/leaves.jpg" />
     </textures>
 
     <materials>
@@ -65,16 +66,44 @@
     </primitives>
 
     <components>
+        <component id="demoTest">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="demoSphere" />
+            </children>
+        </component>
+        <component id="demoTest2">
+            <transformation>
+                <translate x="0" y="0" z="-3" />
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture2"/>
+            <children>
+                <primitiveref id="demoCone" />
+            </children>
+        </component>
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="0" z="1" />
                 <scale x="2" y="1" z="1" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="inherit" />
             </materials>
             <texture id="demoTexture"/>
             <children>
+                <componentref id='demoTest2' />
+                <componentref id='demoTest' />
                 <primitiveref id="demoTorus" />
             </children>
         </component>

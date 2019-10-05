@@ -1069,32 +1069,40 @@ class MySceneGraph {
             if(textureID == 'inherit')
                 component.texture = 'inherit';
             else if(textureID == 'none')
-                xcomponent.texture = 'none';
+                component.texture = 'none';
             else
                 component.texture = this.textures[textureID];
 
             // Children
 
             var cenas = grandChildren[childrenIndex].children;
-            var filhos = [];
+            
+            var node = [];
+
+            node.component = component;
+            node.leafs = [];
+            node.child = [];
 
             for(var a = 0; a < cenas.length; a++){
                 switch (cenas[a].nodeName) {
                     case 'primitiveref':
                             var primitiveId = this.reader.getString(cenas[a], 'id');
-                            filhos.push(this.primitives[primitiveId]);
-                    break;
+                            //filhos.push(this.primitives[primitiveId]);
+                            node.leafs.push(this.primitives[primitiveId]);
+                        break;
                     case 'componentref' :
-                            var componentId = this.reader.getString(cenas[a], 'id');
-                            filhos.push(this.components[componentId]);
+                            var rcomponentId = this.reader.getString(cenas[a], 'id');
+                            //filhos.push(this.components[componentId]);
+                            node.child.push(rcomponentId);
                     break;
                 }
             }
-            component.children = filhos;
+            //component.children = filhos;
 
+            this.nodes[componentID] = node;
 
-
-            this.components[componentID] = component;
+            //this.components[componentID] = component;
+            //this.nodes[componentID] = this.components[componentID];
         }
     }
 
@@ -1220,8 +1228,42 @@ class MySceneGraph {
         //this.materials['demoMaterial'].setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
         //this.materials['demoMaterial'].apply();
         
-        this.textures['demoTexture'].bind();
-        this.primitives['demoTorus'].display();
+        //this.textures['demoTexture'].bind();
+        //this.primitives['demoTorus'].display();
+        this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , 'none');
+    }
+
+    displayFunction(node,matrix , material , texture){
+        var currentNode = this.nodes[node];
+
+        this.scene.pushMatrix();
+        this.scene.multMatrix(currentNode.component.transformation);
+
+        var nodeMaterial = currentNode.component.material;
+        if(nodeMaterial == 'inherit')
+            nodeMaterial = material; 
+        nodeMaterial.apply();
+
+        var nodeTexture = currentNode.component.texture;
+        if(nodeTexture == 'inherit'){
+            nodeTexture = texture;
+            nodeTexture.bind();
+        }
+        else if(nodeTexture == 'none'){
+            if(texture != 'none')   
+                texture.unbind();
+        }
+        else
+            nodeTexture.bind();
+
+        for(var a  = 0; a < currentNode.leafs.length ; a++){
+            currentNode.leafs[a].display();
+        }
+
+        for(var a = 0; a < currentNode.child.length ; a++){
+            this.displayFunction(currentNode.child[a] , matrix , nodeMaterial , nodeTexture);
+        }
+        this.scene.popMatrix();
     }
 
 }
