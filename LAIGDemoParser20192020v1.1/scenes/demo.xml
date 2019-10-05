@@ -167,6 +167,8 @@
             </transformation>
             <materials>
                 <material id="white" />
+                <material id="inherit" />
+                <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture"/>
             <children>

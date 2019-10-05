@@ -39,6 +39,8 @@ class MySceneGraph {
         // File reading
         this.reader = new CGFXMLreader();
 
+        this.materialIndex = 0;
+
         /*
          * Read the contents of the xml file, and refer to this class for loading
          * and error handlers. After the file is read, the reader calls onXMLReady
@@ -1039,19 +1041,25 @@ class MySceneGraph {
 
             var materialChild = grandChildren[materialsIndex].children;
 
-            if (materialChild[0].nodeName != 'material') {
-                this.onXMLMinorError('unknown tag <' + materialChild[0].nodeName + '>');
-                continue;
+            component.material = [];
+
+            for(var b = 0; b < materialChild.length; b++){
+
+                if (materialChild[b].nodeName != 'material') {
+                    this.onXMLMinorError('unknown tag <' + materialChild[b].nodeName + '>');
+                    continue;
+                }
+
+                // Get id of the current material.
+                var materialID = this.reader.getString(materialChild[b], 'id');
+                if (materialID == null) return 'no ID defined for material';
+
+
+                if(materialID == 'inherit')
+                    component.material.push('inherit');
+                else
+                    component.material.push(this.materials[materialID]);
             }
-
-            // Get id of the current material.
-            var materialID = this.reader.getString(materialChild[0], 'id');
-            if (materialID == null) return 'no ID defined for material';
-
-            if(materialID == 'inherit')
-                component.material = 'inherit';
-            else
-                component.material = this.materials[materialID];
 
             // Texture
 
@@ -1217,19 +1225,10 @@ class MySceneGraph {
     log(message) {
         console.log('   ' + message);
     }
-
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        // To do: Create display loop for transversing the scene graph
-        // To test the parsing/creation of the primitives, call the display function
-        // directly
-        //this.materials['demoMaterial'].setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
-        //this.materials['demoMaterial'].apply();
-        
-        //this.textures['demoTexture'].bind();
-        //this.primitives['demoTorus'].display();
         this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , 'none');
     }
 
@@ -1242,7 +1241,7 @@ class MySceneGraph {
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.component.transformation);
 
-        var nodeMaterial = currentNode.component.material;
+        var nodeMaterial = currentNode.component.material[this.materialIndex % currentNode.component.material.length];
         if(nodeMaterial == 'inherit')
             nodeMaterial = material; 
         nodeMaterial.apply();

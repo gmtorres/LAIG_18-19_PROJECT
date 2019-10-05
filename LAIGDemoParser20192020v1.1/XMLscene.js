@@ -38,6 +38,8 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
 
         this.camerasIds = [];
+
+        this.keyMHelper = false;
     }
 
     /**
@@ -119,6 +121,16 @@ class XMLscene extends CGFscene {
 
 
         // this.interface.gui.add(this, 0, this.camerasIds);
+    }
+
+    update(){   
+        if(this.gui.isKeyPressed('KeyM')){
+            this.keyMHelper = true;
+        }else if(this.keyMHelper == true){
+            this.keyMHelper = false;
+            this.graph.materialIndex++;
+            console.log("kdos");
+        }
     }
 
     /**
