@@ -108,6 +108,17 @@ class MySphere extends CGFobject {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
     }
+
+    changeTexCoords(u,v){
+		/*for(var a = 0;a < this.texCoords.length/2;a++){
+			this.texCoords[2*a] = this.texCoords[2*a] * this.u_length / u ;
+			this.texCoords[2*a+1] = this.texCoords[2*a+1] * this.v_length / v ;
+		}
+		this.u_length = u;
+		this.v_length = v;
+		this.updateTexCoordsGLBuffers();*/
+	}
+
     display(){
         //this.enableNormalViz();
         super.display();

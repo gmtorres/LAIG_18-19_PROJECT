@@ -23,9 +23,16 @@
     </lights>
 
     <textures>
-        <texture id="demoTexture" file="scenes/images/vidral.jpg" />
-        <texture id="demoTexture2" file="scenes/images/leaves.jpg" />
-        <texture id="demoTexture3" file="scenes/images/bank.jpg" />
+        <texture id="demoTexture" file="scenes/images/vidral.jpg" u_length='1' v_length='1' />
+        <texture id="demoTexture2" file="scenes/images/leaves.jpg" u_length='1' v_length='1'/>
+        <texture id="demoTexture3" file="scenes/images/bank.jpg" u_length='1' v_length='1'/>
+        <texture id="vidral" file="scenes/images/vidral.jpg" u_length='1' v_length='1'/>
+        <texture id="leaves" file="scenes/images/leaves.jpg" u_length='1' v_length='1'/>
+        <texture id="bank" file="scenes/images/bank.jpg" u_length='1' v_length='1'/>
+        <texture id="rocks" file="scenes/images/rocks.jpg" u_length='1' v_length='1'/>
+        <texture id="trunk" file="scenes/images/trunk-image.jpg" u_length='1' v_length='1'/>
+        <texture id="football_ball" file="scenes/images/football_ball.jpg" u_length='1' v_length='1'/>
+        <texture id="sand" file="scenes/images/sand.jpg" u_length='1' v_length='1'/>
     </textures>
 
     <materials>
@@ -184,11 +191,9 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="demoTexture"/>
+            <texture id="vidral"/>
             <children>
-                <componentref id='background'/>
-                <componentref id='planet1'/>
-                <componentref id='planet2'/>
+                <primitiveref id='demoTriangle'/>
             </children>
         </component>
 

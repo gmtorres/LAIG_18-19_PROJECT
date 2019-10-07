@@ -13,6 +13,9 @@ class MyTriangle extends CGFobject {
 		this.p3 = [x3,y3,z3];
 
 		this.initBuffers();
+
+		this.u_length = 1;
+		this.v_length = 1;
 	}
 	
 	initBuffers() {
@@ -47,14 +50,19 @@ class MyTriangle extends CGFobject {
 		v
         t
         */
-        a = Math.sqrt(Math.pow(this.p1[0] - this.p3[0],2) + Math.pow(this.p1[1] - this.p3[1],2) + Math.pow(this.p1[2] - this.p3[2],2));
-        b = Math.sqrt(Math.pow(this.p1[0] - this.p2[0],2) + Math.pow(this.p1[1] - this.p2[1],2) + Math.pow(this.p1[2] - this.p2[2],2));
-        c = Math.sqrt(Math.pow(this.p2[0] - this.p3[0],2) + Math.pow(this.p2[1] - this.p3[1],2) + Math.pow(this.p2[2] - this.p3[2],2));
-        var beta = Math.acos((a*a-b*b+c*c)/(2*a*c));
+        a = Math.sqrt(Math.pow(this.p1[0] - this.p2[0],2) + Math.pow(this.p1[1] - this.p2[1],2) + Math.pow(this.p1[2] - this.p2[2],2));
+        b = Math.sqrt(Math.pow(this.p3[0] - this.p2[0],2) + Math.pow(this.p3[1] - this.p2[1],2) + Math.pow(this.p3[2] - this.p2[2],2));
+		c = Math.sqrt(Math.pow(this.p1[0] - this.p3[0],2) + Math.pow(this.p1[1] - this.p3[1],2) + Math.pow(this.p1[2] - this.p3[2],2));
+		var m = Math.max(a,b,c);
+		a = a/m;
+		b = b/m;
+		c = c/m;
+		var alpha = Math.acos((a*a-b*b+c*c)/(2*a*c));
+		
 		this.texCoords = [
 			0, 1,
-			c, 1,
-			c - a * Math.cos(beta), 1 - a*Math.sin(beta)
+			a, 1,
+			1-c*Math.cos(alpha), 1 - c*Math.sin(alpha)
 		]
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
@@ -67,6 +75,15 @@ class MyTriangle extends CGFobject {
 	 */
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
+		this.updateTexCoordsGLBuffers();
+	}
+	changeTexCoords(u,v){
+		for(var a = 0;a < this.texCoords.length/2;a++){
+			this.texCoords[2*a] = this.texCoords[2*a] * this.u_length / u ;
+			this.texCoords[2*a+1] = this.texCoords[2*a+1] * this.v_length / v ;
+		}
+		this.u_length = u;
+		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
 	}
 	display(){

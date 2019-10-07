@@ -517,17 +517,30 @@ class MySceneGraph {
             var textureFile = this.reader.getString(children[i],'file');
             if (textureFile == null) return 'no File defined for texture';
 
-            var texture = new CGFtexture(this.scene,textureFile);
+            var u_length = this.reader.getString(children[i],'u_length');
+            if (u_length == null) return 'no u_length defined for texture';
+
+            var v_length = this.reader.getString(children[i],'v_length');
+            if (v_length == null) return 'no v_length defined for texture';
+
+            var texture = []
+            texture.tex = new CGFtexture(this.scene,textureFile);
+            texture.u_length = u_length;
+            texture.v_length = v_length;
             //texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
+
+
             this.textures[textureID] = texture;
+
+
 
                 
         }
 
 
 
-        this.onXMLMinorError('To do: Parse textures.');
+        this.onXMLMinorError('Parse textures done.');
         return null;
     }
 
@@ -1075,11 +1088,11 @@ class MySceneGraph {
             // Get id of the current texture.
             var textureID = this.reader.getString(textureChild, 'id');
             if (textureID == null) return 'no ID defined for texture';
-
+            component.texture = [];
             if(textureID == 'inherit')
-                component.texture = 'inherit';
+                component.texture.tex = 'inherit';
             else if(textureID == 'none')
-                component.texture = 'none';
+                component.texture.tex = 'none';
             else
                 component.texture = this.textures[textureID];
 
@@ -1231,7 +1244,9 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , 'none');
+        var tempTex = [];
+        tempTex.tex = 'none';
+        this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
     }
 
     displayFunction(node,matrix , material , texture){
@@ -1249,19 +1264,23 @@ class MySceneGraph {
         nodeMaterial.apply();
 
         var nodeTexture = currentNode.component.texture;
-        if(nodeTexture == 'inherit'){
-            nodeTexture = texture;
-            if(texture != 'none')  
-                nodeTexture.bind();
+        if(nodeTexture.tex == 'inherit'){
+            nodeTexture.tex = texture.tex;
+            if(texture.tex != 'none')  
+                nodeTexture.tex.bind();
         }
-        else if(nodeTexture == 'none'){
-            if(texture != 'none')   
-                texture.unbind();
+        else if(nodeTexture.tex == 'none'){
+            if(texture.tex != 'none')   
+                texture.tex.unbind();
         }
-        else
-            nodeTexture.bind();
+        else{
+            nodeTexture.tex.bind();
+        }
 
         for(var a  = 0; a < currentNode.leafs.length ; a++){
+            if(nodeTexture.tex !='inherit' && nodeTexture.tex != 'none'){
+                currentNode.leafs[a].changeTexCoords(nodeTexture.u_length,nodeTexture.v_length);
+            }
             currentNode.leafs[a].display();
         }
 
