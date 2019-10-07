@@ -18,6 +18,9 @@ class MyTorus extends CGFobject {
         this.dp = 2 * Math.PI / sl;
         this.dt = 2 * Math.PI / lp;
 
+        this.u_length = 1;
+		this.v_length = 1;
+
         this.initBuffers();
     }
 
@@ -70,13 +73,15 @@ class MyTorus extends CGFobject {
     }
 
     changeTexCoords(u,v){
-		/*for(var a = 0;a < this.texCoords.length/2;a++){
+        if(u == this.u_length && v == this.v_length)
+            return;
+		for(var a = 0;a < this.texCoords.length/2;a++){
 			this.texCoords[2*a] = this.texCoords[2*a] * this.u_length / u ;
 			this.texCoords[2*a+1] = this.texCoords[2*a+1] * this.v_length / v ;
 		}
 		this.u_length = u;
 		this.v_length = v;
-		this.updateTexCoordsGLBuffers();*/
+		this.updateTexCoordsGLBuffers();
 	}
 
     display(){
