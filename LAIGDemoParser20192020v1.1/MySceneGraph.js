@@ -1127,6 +1127,12 @@ class MySceneGraph {
             //this.components[componentID] = component;
             //this.nodes[componentID] = this.components[componentID];
         }
+        for(var i in this.nodes){
+            this.nodes[i].componentref = [];
+            for(var a = 0; a < this.nodes[i].child.length;a++){
+                this.nodes[i].componentref.push(this.nodes[this.nodes[i].child[a]]);
+            }
+        }
     }
 
 
@@ -1246,11 +1252,13 @@ class MySceneGraph {
     displayScene() {
         var tempTex = [];
         tempTex.tex = 'none';
-        this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
+        //this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
+        this.displayFunction(this.nodes[this.idRoot] , mat4.create() , new CGFappearance(this.scene) , tempTex);
     }
 
     displayFunction(node,matrix , material , texture){
-        var currentNode = this.nodes[node];
+        //var currentNode = this.nodes[node];
+        var currentNode = node;
 
         if(currentNode == null)
             return;
@@ -1284,8 +1292,11 @@ class MySceneGraph {
             currentNode.leafs[a].display();
         }
 
-        for(var a = 0; a < currentNode.child.length ; a++){
+        /*for(var a = 0; a < currentNode.child.length ; a++){
             this.displayFunction(currentNode.child[a] , matrix , nodeMaterial , nodeTexture);
+        }*/
+        for(var a = 0; a < currentNode.componentref.length ; a++){
+            this.displayFunction(currentNode.componentref[a] , matrix , nodeMaterial , nodeTexture);
         }
         this.scene.popMatrix();
     }

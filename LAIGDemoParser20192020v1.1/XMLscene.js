@@ -40,6 +40,9 @@ class XMLscene extends CGFscene {
         this.camerasIds = [];
 
         this.keyMHelper = false;
+
+        this.selectView = 1;
+        this.views = ["a","b"];    
     }
 
     /**
