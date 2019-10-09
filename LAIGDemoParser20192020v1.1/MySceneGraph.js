@@ -325,7 +325,11 @@ class MySceneGraph {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
                 continue;
             }
+            //this.scene.camerasIds.push(viewID);
         }
+
+        //this.scene.gui
+
         this.log('Parsed views');
         return null;
     }

@@ -31,7 +31,6 @@ main=function()
     app.init();
 
     app.setScene(myScene);
-    app.setInterface(myInterface);
 
     myInterface.setActiveCamera(myScene.camera);
 
@@ -42,7 +41,10 @@ main=function()
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
+    var myGraph = new MySceneGraph(filename, myScene);
+
+    app.setInterface(myInterface);
+    
 	
 	// start
     app.run();

@@ -41,8 +41,8 @@ class XMLscene extends CGFscene {
 
         this.keyMHelper = false;
 
-        this.selectView = 1;
-        this.views = ["a","b"];    
+        this.selectView = ""; 
+
     }
 
     /**
@@ -92,7 +92,7 @@ class XMLscene extends CGFscene {
         }
     }
     updateCamera() {
-        
+        this.camera = this.cameras[this.selectView];
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -122,8 +122,10 @@ class XMLscene extends CGFscene {
             this.camerasIds.push(key);
         }
 
+        this.interface.gui.add(this,"selectView",this.camerasIds).listen().name("Select View").onChange(this.updateCamera.bind(this));
+        
 
-        // this.interface.gui.add(this, 0, this.camerasIds);
+        //this.interface.gui.add(this, 0, this.camerasIds);
     }
 
     update(){   
