@@ -544,7 +544,7 @@ class MySceneGraph {
 
 
 
-        this.onXMLMinorError('Parse textures done.');
+        this.log('Parse textures done.');
         return null;
     }
 
@@ -811,9 +811,7 @@ class MySceneGraph {
                 this.primitives[primitiveId] = rect;
             } else if (primitiveType == 'sphere') {
                 // r
-                var r = this.reader.getFloat(grandChildren[0], 'r');
-                if(r == null)
-                    var r = this.reader.getFloat(grandChildren[0], 'radius');
+                var r = this.reader.getFloat(grandChildren[0], 'radius');
                 if (!(r != null && !isNaN(r) && r > 0))
                     return "unable to parse r of the primitive coordinates for ID = " + primitiveId;
 
@@ -928,7 +926,7 @@ class MySceneGraph {
                 this.primitives[primitiveId] = triangle;
             }
             else {
-                console.warn("To do: Parse other primitives.");
+                //console.warn("To do: Parse other primitives.");
             }
         }
 
@@ -977,7 +975,7 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf('texture');
             var childrenIndex = nodeNames.indexOf('children');
 
-            this.onXMLMinorError('To do: Parse components.');
+            //this.onXMLMinorError('To do: Parse components.');
 
             var component = [];
 
@@ -1076,8 +1074,19 @@ class MySceneGraph {
 
                 if(materialID == 'inherit')
                     component.material.push('inherit');
-                else
-                    component.material.push(this.materials[materialID]);
+                else{
+                    var tempmaterial = this.materials[materialID];
+                    if(tempmaterial == null){
+                        tempmaterial = new CGFappearance(this.scene);
+                        tempmaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
+                        tempmaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
+                        tempmaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
+                        tempmaterial.setShininess(10.0);
+                        this.onXMLMinorError("Could not find material with id " + materialID);
+                    }
+                    component.material.push(tempmaterial);
+                }
+            
             }
 
             // Texture
@@ -1097,8 +1106,13 @@ class MySceneGraph {
                 component.texture.tex = 'inherit';
             else if(textureID == 'none')
                 component.texture.tex = 'none';
-            else
-                component.texture = this.textures[textureID];
+            else{
+                var temptex = this.textures[textureID];
+                if(temptex == null){
+                    component.texture.tex = 'none';
+                    this.onXMLMinorError("Could not find texture with id " + textureID);
+                }else  component.texture = temptex;
+            }
 
             // Children
 
@@ -1115,7 +1129,8 @@ class MySceneGraph {
                     case 'primitiveref':
                             var primitiveId = this.reader.getString(cenas[a], 'id');
                             //filhos.push(this.primitives[primitiveId]);
-                            node.leafs.push(this.primitives[primitiveId]);
+                            var prim = this.primitives[primitiveId];
+                            if(prim != null)    node.leafs.push(this.primitives[primitiveId]);
                         break;
                     case 'componentref' :
                             var rcomponentId = this.reader.getString(cenas[a], 'id');
@@ -1134,7 +1149,9 @@ class MySceneGraph {
         for(var i in this.nodes){
             this.nodes[i].componentref = [];
             for(var a = 0; a < this.nodes[i].child.length;a++){
-                this.nodes[i].componentref.push(this.nodes[this.nodes[i].child[a]]);
+                var tempcomp = this.nodes[this.nodes[i].child[a]];
+                if(tempcomp != null)
+                    this.nodes[i].componentref.push(tempcomp);
             }
         }
     }

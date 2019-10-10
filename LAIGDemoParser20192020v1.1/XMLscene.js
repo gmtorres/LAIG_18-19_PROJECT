@@ -93,6 +93,7 @@ class XMLscene extends CGFscene {
     }
     updateCamera() {
         this.camera = this.cameras[this.selectView];
+        this.interface.setActiveCamera(this.camera);
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -122,7 +123,7 @@ class XMLscene extends CGFscene {
             this.camerasIds.push(key);
         }
 
-        this.interface.gui.add(this,"selectView",this.camerasIds).listen().name("Select View").onChange(this.updateCamera.bind(this));
+        this.interface.gui.add(this,"selectView",this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
         
 
         //this.interface.gui.add(this, 0, this.camerasIds);

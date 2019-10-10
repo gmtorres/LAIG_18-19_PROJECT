@@ -1,9 +1,9 @@
 <lxs>
     <scene root="demoRoot" axis_length="5"/>
 
-    <views default="defaultCamera">
+    <views default="defaultCamera1">
         <perspective id="defaultCamera1" near="0.1" far="500" angle="45">
-            <from x="30" y="15" z="30" />
+            <from x="10" y="15" z="30" />
             <to x="0" y="-2" z="0" />
         </perspective>
         <perspective id="defaultCamera2" near="0.1" far="500" angle="45">
@@ -78,6 +78,12 @@
             <ambient r="1" g="1.0" b="0" a="1.0" />
             <diffuse r="0.6" g="0.6" b="0" a="1.0" />
             <specular r="0.6" g="0.6" b="0" a="1.0" />
+        </material>
+        <material id="sun_yellow" shininess="10">
+            <emission r="0" g="0" b="0.0" a="1.0" />
+            <ambient r="1" g="1.0" b="0" a="1.0" />
+            <diffuse r="1" g="1" b="0" a="1.0" />
+            <specular r="1" g="1" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -773,7 +779,7 @@
                 <translate x="-30" y="7" z="-10" />
             </transformation>
             <materials>
-                <material id="yellow" />
+                <material id="sun_yellow" />
             </materials>
             <texture id="sand"/>
             <children>
