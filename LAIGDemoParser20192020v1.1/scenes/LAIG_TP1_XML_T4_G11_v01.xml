@@ -40,6 +40,7 @@
         <texture id="sand" file="scenes/images/sand.jpg" u_length='1' v_length='1'/>
         <texture id="green_playground" file="scenes/images/green_playground.jpg" u_length='1' v_length='1'/>
         <texture id="red_playground" file="scenes/images/red_playground.jpg" u_length='1' v_length='1'/>
+        <texture id="grass" file="scenes/images/grass.jpg" u_length='1' v_length='1'/>
     </textures>
 
     <materials>
@@ -146,6 +147,31 @@
     </primitives>
 
     <components>
+
+        <component id="dualRectangle">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='dualRectangle_1'/>
+                <primitiveref id='demoRectangle'/>
+            </children>
+        </component>
+        <component id="dualRectangle_1">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <primitiveref id='demoRectangle'/>
+            </children>
+        </component>
         
         <component id="floor">
             <transformation>
@@ -155,6 +181,7 @@
             </transformation>
             <materials>
                 <material id="red_playground" />
+                <material id="green_playground" />
             </materials>
                 <texture id="red_playground"/>
             <children>
@@ -167,6 +194,83 @@
                 <componentref id='chao7'/>
                 <componentref id='chao8'/>
                 <componentref id='chao9'/>
+
+                <componentref id='grass_border'/>
+            </children>
+        </component>
+
+        <component id="grass_border">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+                <scale x="1" y="1" z="1" />
+                <rotate axis='x' angle='0'/>
+            </transformation>
+            <materials>
+                <material id="greenDark" />
+            </materials>
+                <texture id="grass"/>
+            <children>
+                <componentref id='chao_grass1'/>
+                <componentref id='chao_grass2'/>
+                <componentref id='chao_grass3'/>
+                <componentref id='chao_grass4'/>
+            </children>
+        </component>
+
+        <component id="chao_grass1">
+            <transformation>
+                <translate x="11.5" y="0" z="0" />
+                <scale x="2.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='chao'/>
+            </children>
+        </component>
+        <component id="chao_grass2">
+            <transformation>
+                <translate x="-11.5" y="0" z="0" />
+                <scale x="2.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='chao'/>
+            </children>
+        </component>
+
+        <component id="chao_grass3">
+            <transformation>
+                <translate x="0" y="0" z="-16.5" />
+                <scale x="1" y="1" z="2.5" />
+                <rotate axis='y' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='chao'/>
+            </children>
+        </component>
+
+        <component id="chao_grass4">
+            <transformation>
+                <translate x="0" y="0" z="16.5" />
+                <scale x="1" y="1" z="2.5" />
+                <rotate axis='y' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='chao'/>
             </children>
         </component>
 
@@ -841,6 +945,7 @@
             <materials>
                 <material id="blue" />
                 <material id="red" />
+                <material id="blue" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -856,6 +961,7 @@
             <materials>
                 <material id="red" />
                 <material id="blue" />
+                <material id="red" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -1091,6 +1197,441 @@
             </children>
         </component>
 
+        <component id="slide">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_deslizador'/>
+                <componentref id='slide_topo'/>
+                <componentref id='slide_escadas'/>
+                <componentref id='slide_suporte'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="dark_grey" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_suporte1'/>
+                <componentref id='slide_suporte2'/>
+                <componentref id='slide_suporte3'/>
+                <componentref id='slide_suporte4'/>
+                <componentref id='slide_suporte5'/>
+                <componentref id='slide_suporte6'/>
+                <componentref id='slide_suporte7'/>
+                <componentref id='slide_suporte8'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte1">
+            <transformation>
+                <translate x="-0.4" y="0" z="2.3" />
+                <scale x="0.07" y="0.22" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte2">
+            <transformation>
+                <translate x="0.4" y="0" z="2.3" />
+                <scale x="0.07" y="0.22" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte3">
+            <transformation>
+                <translate x="-0.4" y="0" z="1.7" />
+                <scale x="0.07" y="0.22" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte4">
+            <transformation>
+                <translate x="0.4" y="0" z="1.7" />
+                <scale x="0.07" y="0.22" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte5">
+            <transformation>
+                <translate x="-0.6" y="0" z="-2.7" />
+                <scale x="0.07" y="2.5" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte6">
+            <transformation>
+                <translate x="0.6" y="0" z="-2.7" />
+                <scale x="0.07" y="2.5" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte7">
+            <transformation>
+                <translate x="-0.6" y="0" z="-3.7" />
+                <scale x="0.07" y="2.5" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_suporte8">
+            <transformation>
+                <translate x="0.6" y="0" z="-3.7" />
+                <scale x="0.07" y="2.5" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_escadas">
+            <transformation>
+                <translate x="0" y="0" z="-4.4" />
+                <rotate axis='x' angle='+10'/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_barras_laterais'/>
+                <componentref id='slide_barras_horizontais'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_laterais">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_barras_laterais1'/>
+                <componentref id='slide_barras_laterais2'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_laterais1">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <scale x="0.07" y="3" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_laterais2">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <scale x="0.07" y="3" z="0.07" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_horizontais">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_barras_horizontais1'/>
+                <componentref id='slide_barras_horizontais2'/>
+                <componentref id='slide_barras_horizontais3'/>
+                <componentref id='slide_barras_horizontais4'/>
+                <componentref id='slide_barras_horizontais5'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_horizontais1">
+            <transformation>
+                <translate x="0.53" y="0.6" z="0" />
+                <scale x="1.15" y="0.07" z="0.07" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_horizontais2">
+            <transformation>
+                <translate x="0.53" y="1.1" z="0" />
+                <scale x="1.15" y="0.07" z="0.07" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_horizontais3">
+            <transformation>
+                <translate x="0.53" y="1.6" z="0" />
+                <scale x="1.15" y="0.07" z="0.07" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_barras_horizontais4">
+            <transformation>
+                <translate x="0.53" y="2.1" z="0" />
+                <scale x="1.15" y="0.07" z="0.07" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='barra'/>
+            </children>
+        </component>
+
+        <component id="slide_topo">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide_topo1'/>
+            </children>
+        </component>
+
+         <component id="slide_topo1">
+            <transformation>
+                <translate x="0" y="2.22" z="-3.2" />
+                <scale x="1.5" y="0.1" z="1.5" />
+                <rotate axis="x" angle='-90'/> 
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="trunk"/>
+            <children>
+                <componentref id='cube'/>
+            </children>
+        </component>
+
+        <component id="slide_deslizador">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='deslizador_parte1'/>
+                <componentref id='deslizador_parte2'/>
+                <componentref id='deslizador_parte3'/>
+            </children>
+        </component>
+
+        <component id="deslizador_parte3">
+            <transformation>
+                <translate x="0" y="2.22" z="-2.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='deslizador_parte1_1'/>
+                <componentref id='deslizador_parte1_2'/>
+                <componentref id='deslizador_parte1_3'/>
+            </children>
+        </component>
+
+        <component id="deslizador_parte2">
+            <transformation>
+                <translate x="0" y="-0.35" z="-1.02" />
+                <rotate axis="x" angle='30'/> 
+                <translate x="0" y="1.8" z="0" />
+                <scale x="1" y="1" z="5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='deslizador_parte1_1'/>
+                <componentref id='deslizador_parte1_2'/>
+                <componentref id='deslizador_parte1_3'/>
+            </children>
+        </component>
+
+        <component id="deslizador_parte1">
+            <transformation>
+                <translate x="0" y="0.2" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='deslizador_parte1_1'/>
+                <componentref id='deslizador_parte1_2'/>
+                <componentref id='deslizador_parte1_3'/>
+            </children>
+        </component>
+
+        <component id="deslizador_parte1_1">
+            <transformation>
+                <scale x="1" y="1" z="0.4" />
+                <rotate axis="x" angle='-90'/> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualRectangle'/>
+            </children>
+        </component>
+        <component id="deslizador_parte1_2">
+            <transformation>
+                <translate x="-0.5" y="0.1" z="0" />
+                <scale x="1" y="0.1" z="0.8" />
+                <rotate axis="y" angle='-90'/> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualRectangle'/>
+            </children>
+        </component>
+
+        <component id="deslizador_parte1_3">
+            <transformation>
+                <translate x="0.5" y="0.1" z="0" />
+                <scale x="1" y="0.1" z="0.8" />
+                <rotate axis="y" angle='-90'/> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualRectangle'/>
+            </children>
+        </component>
+
+        <component id="slide1">
+            <transformation>
+                <translate x="-3" y="0" z="3" />
+                <rotate axis="y" angle='90'/> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='slide'/>
+            </children>
+        </component>
 
         <component id="demoRoot">
             <transformation>
@@ -1108,6 +1649,7 @@
                 <componentref id='sandbox'/>
                 <componentref id='swings'/>
                 <componentref id='sun'/>
+                <componentref id='slide1'/>
             </children>
         </component>
 
