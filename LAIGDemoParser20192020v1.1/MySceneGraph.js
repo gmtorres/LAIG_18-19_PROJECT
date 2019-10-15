@@ -227,6 +227,8 @@ class MySceneGraph {
         // this.onXMLMinorError("To do: Parse views and create cameras.");
         var children = viewsNode.children;
 
+        this.scene.selectView = this.reader.getString(viewsNode, 'default');
+
 
         if (children.length == 0)
             this.onXMLError('There has to be at least one view. No views found');
@@ -415,7 +417,7 @@ class MySceneGraph {
                     'unable to parse value component of the \'enable light\' field for ID = ' +
                     lightId + '; assuming \'value = 1\'');
 
-            enableLight = aux || 1;
+            enableLight = aux;
 
             // Add enabled boolean and type name to light info
             global.push(enableLight);

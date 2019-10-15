@@ -125,8 +125,25 @@ class XMLscene extends CGFscene {
 
         this.interface.gui.add(this,"selectView",this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
         
+        var lights = this.interface.gui.addFolder('Lights');
+        this.lightsVar = false;
+        var i = 0;
+        for(var light in this.graph.lights){
+            lights.add(this,"lightsVar").name(light).onChange(this.updateLights.bind(this,i));
+            i++;
+        }
+        lights.open();
+        this.updateCamera();
 
         //this.interface.gui.add(this, 0, this.camerasIds);
+    }
+
+    updateLights(i,value){
+        if(value)
+            this.lights[i].enable();
+        else 
+            this.lights[i].disable();
+        this.lights[i].update();
     }
 
     update(){   
