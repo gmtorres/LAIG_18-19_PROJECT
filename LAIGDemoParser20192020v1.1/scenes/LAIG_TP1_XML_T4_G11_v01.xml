@@ -22,7 +22,7 @@
     </globals>
 
     <lights>
-        <omni id="demoLight" enabled="0">
+        <omni id="demoLight" enabled="1">
             <location x="9.8" y="11.9" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -47,6 +47,7 @@
         <texture id="green_playground" file="scenes/images/green_playground.jpg" u_length='1' v_length='1'/>
         <texture id="red_playground" file="scenes/images/red_playground.jpg" u_length='1' v_length='1'/>
         <texture id="grass" file="scenes/images/grass.jpg" u_length='1' v_length='1'/>
+        <texture id="stone_walkway" file="scenes/images/stone_walkway.jpg" u_length='1' v_length='1'/>
     </textures>
 
     <materials>
@@ -1979,6 +1980,22 @@
             </children>
         </component>
 
+        <component id="path">
+            <transformation>
+                <translate x="0" y="0.01" z="-16.5" />
+                <rotate axis='y' angle='-90'/>
+                <scale x="5" y="1" z="1.5" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="stone_walkway"/>
+            <children>
+                <primitiveref id='demoRectangle'/>
+            </children>
+        </component>
+
 
         <component id="demoRoot">
             <transformation>
@@ -1999,7 +2016,7 @@
                 <componentref id='slide1'/>
                 <componentref id='tunel_1'/>
                 <componentref id='lampadas'/>
-               
+               <componentref id='path'/>
             </children>
         </component>
 

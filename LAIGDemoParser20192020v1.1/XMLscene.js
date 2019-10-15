@@ -129,6 +129,7 @@ class XMLscene extends CGFscene {
         this.lightsVar = false;
         var i = 0;
         for(var light in this.graph.lights){
+            this.lightsVar = this.graph.lights[light][0];
             lights.add(this,"lightsVar").name(light).onChange(this.updateLights.bind(this,i));
             i++;
         }
