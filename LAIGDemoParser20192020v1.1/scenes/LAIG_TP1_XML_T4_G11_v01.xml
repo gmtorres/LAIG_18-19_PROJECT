@@ -37,17 +37,17 @@
     </lights>
 
     <textures>
-        <texture id="vidral" file="scenes/images/vidral.jpg" u_length='1' v_length='1'/>
-        <texture id="leaves" file="scenes/images/leaves.jpg" u_length='1' v_length='1'/>
-        <texture id="bank" file="scenes/images/bank.jpg" u_length='1' v_length='1'/>
-        <texture id="rocks" file="scenes/images/rocks.jpg" u_length='1' v_length='1'/>
-        <texture id="trunk" file="scenes/images/trunk-image.jpg" u_length='1' v_length='1'/>
-        <texture id="football_ball" file="scenes/images/football_ball.jpg" u_length='1' v_length='1'/>
-        <texture id="sand" file="scenes/images/sand.jpg" u_length='1' v_length='1'/>
-        <texture id="green_playground" file="scenes/images/green_playground.jpg" u_length='1' v_length='1'/>
-        <texture id="red_playground" file="scenes/images/red_playground.jpg" u_length='1' v_length='1'/>
-        <texture id="grass" file="scenes/images/grass.jpg" u_length='1' v_length='1'/>
-        <texture id="stone_walkway" file="scenes/images/stone_walkway.jpg" u_length='1' v_length='1'/>
+        <texture id="vidral" file="scenes/images/vidral.jpg"/>
+        <texture id="leaves" file="scenes/images/leaves.jpg"/>
+        <texture id="bank" file="scenes/images/bank.jpg"/>
+        <texture id="rocks" file="scenes/images/rocks.jpg"/>
+        <texture id="trunk" file="scenes/images/trunk-image.jpg"/>
+        <texture id="football_ball" file="scenes/images/football_ball.jpg"/>
+        <texture id="sand" file="scenes/images/sand.jpg"/>
+        <texture id="green_playground" file="scenes/images/green_playground.jpg"/>
+        <texture id="red_playground" file="scenes/images/red_playground.jpg"/>
+        <texture id="grass" file="scenes/images/grass.jpg" />
+        <texture id="stone_walkway" file="scenes/images/stone_walkway.jpg"/>
     </textures>
 
     <materials>
@@ -218,7 +218,7 @@
                 <material id="red_playground" />
                 <material id="green_playground" />
             </materials>
-                <texture id="red_playground"/>
+                <texture id="red_playground"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='chao1'/>
                 <componentref id='chao2'/>
@@ -243,7 +243,7 @@
             <materials>
                 <material id="greenDark" />
             </materials>
-                <texture id="grass"/>
+                <texture id="grass"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='chao_grass1'/>
                 <componentref id='chao_grass2'/>
@@ -591,7 +591,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="football_ball"/>
+            <texture id="football_ball"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id="demoSphere"/>
             </children>
@@ -708,7 +708,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="trunk"/>
+            <texture id="trunk"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='demoCylinder'/>
             </children>
@@ -723,7 +723,7 @@
             <materials>
                 <material id="green" />
             </materials>
-            <texture id="leaves"/>
+            <texture id="leaves"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='treeTop'/>
             </children>
@@ -737,7 +737,7 @@
             <materials>
                 <material id="green" />
             </materials>
-            <texture id="leaves"/>
+            <texture id="leaves"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='football_ball'/>
             </children>
@@ -934,7 +934,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="bank"/>
+            <texture id="bank"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='border1'/>
                 <componentref id='border2'/>
@@ -953,7 +953,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="sand"/>
+            <texture id="sand"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='demoRectangle'/>
             </children>
@@ -1054,7 +1054,7 @@
             <materials>
                 <material id="dark_grey" />
             </materials>
-            <texture id="bank"/>
+            <texture id="bank"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='demoTorus'/>
             </children>
@@ -1107,7 +1107,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="bank"/>
+            <texture id="bank"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='apoio1'/>
                 <componentref id='apoio2'/>
@@ -1226,7 +1226,7 @@
             <materials>
                 <material id="sun_yellow" />
             </materials>
-            <texture id="sand"/>
+            <texture id="sand"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='demoSphere'/>
             </children>
@@ -1544,7 +1544,7 @@
             <materials>
                 <material id="red" />
             </materials>
-            <texture id="bank"/>
+            <texture id="bank"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='dualTriangle'/>
             </children>
@@ -1559,7 +1559,7 @@
             <materials>
                 <material id="red" />
             </materials>
-            <texture id="bank"/>
+            <texture id="bank"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='dualTriangle'/>
             </children>
@@ -1574,7 +1574,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="trunk"/>
+            <texture id="trunk"  length_s="1" length_t="1"/>
             <children>
                 <componentref id='cube'/>
             </children>
@@ -1990,7 +1990,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="stone_walkway"/>
+            <texture id="stone_walkway"  length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='demoRectangle'/>
             </children>

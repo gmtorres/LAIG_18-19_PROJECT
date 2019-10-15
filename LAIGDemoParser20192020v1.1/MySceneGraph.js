@@ -523,16 +523,16 @@ class MySceneGraph {
             var textureFile = this.reader.getString(children[i],'file');
             if (textureFile == null) return 'no File defined for texture';
 
-            var u_length = this.reader.getString(children[i],'u_length');
+            /*var u_length = this.reader.getString(children[i],'u_length');
             if (u_length == null) return 'no u_length defined for texture';
 
             var v_length = this.reader.getString(children[i],'v_length');
-            if (v_length == null) return 'no v_length defined for texture';
+            if (v_length == null) return 'no v_length defined for texture';*/
 
             var texture = []
             texture.tex = new CGFtexture(this.scene,textureFile);
-            texture.u_length = u_length;
-            texture.v_length = v_length;
+            //texture.u_length = u_length;
+            //texture.v_length = v_length;
             //texture.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 
@@ -1114,7 +1114,14 @@ class MySceneGraph {
                     component.texture.tex = 'none';
                     this.onXMLMinorError("Could not find texture with id " + textureID);
                 }else  component.texture = temptex;
+                var texLength_s = this.reader.getString(textureChild, 'length_s');
+                if (texLength_s == null) return 'no texLength_s defined for texture';
+                var texLength_t = this.reader.getString(textureChild, 'length_t');
+                if (texLength_t == null) return 'no texLength_t defined for texture';
+                component.length_s = texLength_s;
+                component.length_t = texLength_t;
             }
+
 
             // Children
 
@@ -1276,10 +1283,10 @@ class MySceneGraph {
         var tempTex = [];
         tempTex.tex = 'none';
         //this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
-        this.displayFunction(this.nodes[this.idRoot] , mat4.create() , new CGFappearance(this.scene) , tempTex);
+        this.displayFunction(this.nodes[this.idRoot] , mat4.create() , new CGFappearance(this.scene) , tempTex,1,1);
     }
 
-    displayFunction(node,matrix , material , texture){
+    displayFunction(node,matrix , material , texture, s_length, t_length){
         //var currentNode = this.nodes[node];
         var currentNode = node;
 
@@ -1303,14 +1310,18 @@ class MySceneGraph {
         else if(nodeTexture.tex == 'none'){
             if(texture.tex != 'none')   
                 texture.tex.unbind();
+            s_length = 1;
+            t_length = 1;
         }
         else{
             nodeTexture.tex.bind();
+            s_length = currentNode.component.length_s;
+            t_length = currentNode.component.length_t;
         }
 
         for(var a  = 0; a < currentNode.leafs.length ; a++){
             if(nodeTexture.tex !='inherit' && nodeTexture.tex != 'none'){
-                currentNode.leafs[a].changeTexCoords(nodeTexture.u_length,nodeTexture.v_length);
+                currentNode.leafs[a].changeTexCoords(s_length,t_length);
             }
             currentNode.leafs[a].display();
         }
@@ -1319,7 +1330,7 @@ class MySceneGraph {
             this.displayFunction(currentNode.child[a] , matrix , nodeMaterial , nodeTexture);
         }*/
         for(var a = 0; a < currentNode.componentref.length ; a++){
-            this.displayFunction(currentNode.componentref[a] , matrix , nodeMaterial , nodeTexture);
+            this.displayFunction(currentNode.componentref[a] , matrix , nodeMaterial , nodeTexture,s_length,t_length);
         }
         this.scene.popMatrix();
     }
