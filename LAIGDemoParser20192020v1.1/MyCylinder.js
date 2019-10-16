@@ -18,7 +18,7 @@ class MyCylinder extends CGFobject {
         this.st = st+1;
 
         this.dp = 2 * Math.PI / sl;
-        this.dh = h / this.st;
+        this.dh = h / (this.st-1);
 
         this.u_length = 1;
 		this.v_length = 1;

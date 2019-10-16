@@ -1314,6 +1314,8 @@ class MySceneGraph {
             t_length = 1;
         }
         else{
+            //nodeMaterial.setTextureWrap('REPEAT', 'REPEAT');
+            //nodeMaterial.apply();
             nodeTexture.tex.bind();
             s_length = currentNode.component.length_s;
             t_length = currentNode.component.length_t;
