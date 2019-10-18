@@ -3912,7 +3912,19 @@
             <texture id="none" />
             <children>
                  <componentref id='cerca_frente'/>
+            </children>
+        </component>
 
+        <component id="cerca_tras">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='cerca_tras_lados'/>
+                 <componentref id='cerca11'/>
             </children>
         </component>
 
