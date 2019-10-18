@@ -313,7 +313,7 @@ class MySceneGraph {
                         continue;
                     }
                     var up;
-                    var index_up = nodeNames.indexOf('to');
+                    var index_up = nodeNames.indexOf('up');
                     if (index_up == -1) {
                         this.onXMLMinorError('no up element found, using default 0,1,0');
                         up = vec3.fromValues(0, 1, 0);
@@ -1304,19 +1304,28 @@ class MySceneGraph {
         var nodeTexture = currentNode.component.texture;
         if(nodeTexture.tex == 'inherit'){
             nodeTexture = texture;
-            if(texture.tex != 'none')  
-                nodeTexture.tex.bind();
+            if(texture.tex != 'none'){ 
+                //nodeTexture.tex.bind();
+                nodeMaterial.setTextureWrap('REPEAT', 'REPEAT');
+                nodeMaterial.setTexture(nodeTexture.tex)
+                nodeMaterial.apply();
+            }
         }
         else if(nodeTexture.tex == 'none'){
-            if(texture.tex != 'none')   
-                texture.tex.unbind();
+            if(texture.tex != 'none'){  
+                //texture.tex.unbind();
+                nodeMaterial.setTexture(null)
+                nodeMaterial.apply();
+            }
             s_length = 1;
             t_length = 1;
         }
         else{
-            //nodeMaterial.setTextureWrap('REPEAT', 'REPEAT');
-            //nodeMaterial.apply();
-            nodeTexture.tex.bind();
+            
+            nodeMaterial.setTextureWrap('REPEAT', 'REPEAT');
+            nodeMaterial.setTexture(nodeTexture.tex)
+            nodeMaterial.apply();
+            
             s_length = currentNode.component.length_s;
             t_length = currentNode.component.length_t;
         }
@@ -1334,6 +1343,7 @@ class MySceneGraph {
         for(var a = 0; a < currentNode.componentref.length ; a++){
             this.displayFunction(currentNode.componentref[a] , matrix , nodeMaterial , nodeTexture,s_length,t_length);
         }
+        nodeMaterial.setTexture(null);
         this.scene.popMatrix();
     }
 
