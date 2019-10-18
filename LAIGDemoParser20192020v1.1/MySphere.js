@@ -102,11 +102,11 @@ class MySphere extends CGFobject {
         this.initGLBuffers();
     }
 
-	/**
-	 * @method updateTexCoords
-	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
-	 */
+    /**
+     * @method updateTexCoords
+     * Updates the list of texture coordinates of the rectangle
+     * @param {Array} coords - Array of texture coordinates
+     */
     updateTexCoords(coords) {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
@@ -119,7 +119,7 @@ class MySphere extends CGFobject {
 			this.texCoords[2*a] = this.texCoords[2*a] * this.u_length / u ;
 			this.texCoords[2*a+1] = this.texCoords[2*a+1] * this.v_length / v ;
 		}
-		this.u_length = u;
+		this.u_length = u;  
 		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
 	}

@@ -89,7 +89,7 @@ class MyTriangle extends CGFobject {
 		this.updateTexCoordsGLBuffers();
 	}
 	display(){
-        //this.enableNormalViz();
+        // this.enableNormalViz();
         super.display();
     }
 }
