@@ -1,7 +1,7 @@
 <lxs>
     <scene root="demoRoot" axis_length="5"/>
 
-    <views default="defaultCamera1">
+    <views default="defaultCamera3">
         <perspective id="defaultCamera1" near="0.1" far="500" angle="45">
             <from x="15" y="10" z="5" />
             <to x="0" y="0" z="0" />
@@ -10,10 +10,10 @@
             <from x="30" y="15" z="-20" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="defaultCamera3" near="0.1" far="500" angle="45">
+        <ortho id="defaultCamera3" near="0.1" far="500" left="-30" right="30" top="20" bottom="-20">
             <from x="30" y="15" z="10" />
             <to x="0" y="-2" z="0" />
-        </perspective>
+        </ortho>
     </views>
 
     <globals>
@@ -34,6 +34,14 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
+        <spot id="rightSpot" enabled="0" angle="40" exponent="3">
+            <location x="8.77" y="8.3" z="1.1" w="1.0" />
+            <target x="0" y="0" z="10" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.2" g="0.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
     </lights>
 
     <textures>

@@ -313,7 +313,7 @@ class MySceneGraph {
                         continue;
                     }
                     var up;
-                    var index_up = nodeNames.indexOf('to');
+                    var index_up = nodeNames.indexOf('up');
                     if (index_up == -1) {
                         this.onXMLMinorError('no up element found, using default 0,1,0');
                         up = vec3.fromValues(0, 1, 0);
