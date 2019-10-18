@@ -10,10 +10,10 @@
             <from x="30" y="15" z="-20" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="defaultCamera3" near="0.1" far="500" angle="45">
+        <ortho id="defaultCamera3" near="0.1" far="500" left="-30" right="30" top="20" bottom="-20">
             <from x="30" y="15" z="10" />
             <to x="0" y="-2" z="0" />
-        </perspective>
+        </ortho>
         <perspective id="defaultCamera4" near="0.1" far="1000" angle="45">
             <from x="0" y="40" z="1" />
             <to x="0" y="-1" z="0" />
@@ -38,6 +38,14 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
+        <spot id="rightSpot" enabled="0" angle="40" exponent="3">
+            <location x="8.77" y="8.3" z="1.1" w="1.0" />
+            <target x="0" y="0" z="10" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.2" g="0.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
     </lights>
 
     <textures>
@@ -53,6 +61,7 @@
         <texture id="grass" file="scenes/images/grass.jpg" />
         <texture id="stone_walkway" file="scenes/images/stone_walkway.jpg"/>
         <texture id="rope" file="scenes/images/rope.jpg"/>
+        <texture id="roof" file="scenes/images/roof.png"/>
     </textures>
 
     <materials>
@@ -154,7 +163,7 @@
             <cylinder top="1" base="0" height="1" slices="50" stacks="10" />
         </primitive>
         <primitive id="demoTriangle">
-            <triangle x1='0' y1='1' z1='0' x2='-1' y2='0' z2='0' x3='1' y3='0' z3='0' />
+            <triangle x3='0' y3='1' z3='0' x1='-1' y1='0' z1='0' x2='1' y2='0' z2='0' />
         </primitive>
         <primitive id="treeTop">
             <sphere radius="1" slices="6" stacks="2" />
@@ -1406,6 +1415,18 @@
             </materials>
             <texture id="inherit"/>
             <children>
+                <componentref id='escadas'/>
+            </children>
+        </component>
+
+        <component id="escadas">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
                 <componentref id='slide_barras_laterais'/>
                 <componentref id='slide_barras_horizontais'/>
             </children>
@@ -1473,7 +1494,7 @@
         <component id="slide_barras_horizontais1">
             <transformation>
                 <translate x="0.53" y="0.6" z="0" />
-                <scale x="1.15" y="0.07" z="0.07" />
+                <scale x="1.05" y="0.07" z="0.07" />
                 <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
@@ -1488,7 +1509,7 @@
         <component id="slide_barras_horizontais2">
             <transformation>
                 <translate x="0.53" y="1.1" z="0" />
-                <scale x="1.15" y="0.07" z="0.07" />
+                <scale x="1.05" y="0.07" z="0.07" />
                 <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
@@ -1503,7 +1524,7 @@
         <component id="slide_barras_horizontais3">
             <transformation>
                 <translate x="0.53" y="1.6" z="0" />
-                <scale x="1.15" y="0.07" z="0.07" />
+                <scale x="1.05" y="0.07" z="0.07" />
                 <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
@@ -1518,7 +1539,7 @@
         <component id="slide_barras_horizontais4">
             <transformation>
                 <translate x="0.53" y="2.1" z="0" />
-                <scale x="1.15" y="0.07" z="0.07" />
+                <scale x="1.05" y="0.07" z="0.07" />
                 <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
@@ -2762,7 +2783,6 @@
             <texture id="none"/>
             <children>
                 <componentref id='rope11'/>
-                <componentref id='rope12'/>
                 <componentref id='ropeSphere2'/>
                 <componentref id='ropeSphere1'/>
             </children>
@@ -2797,32 +2817,479 @@
             </children>
         </component>
 
-        <component id="rope12">
+        <component id="rope11">
             <transformation>
-                <translate x="0" y="0.8" z="0" />
-                <scale x="0.05" y=".2" z="0.05" />
+                <scale x="0.05" y=".4" z="0.05" />
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id="rope" length_s='1' length_t='0.5'/>
             <children>
                 <primitiveref id='demoCylinder'/>
             </children>
         </component>
 
-        <component id="rope11">
+        <component id="castel1">
             <transformation>
-                <scale x="0.05" y=".2" z="0.05" />
+                <translate x="8" y="0" z="14" />
+                <rotate axis='y' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel'/>
+            </children>
+        </component>
+
+        <component id="castel">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_div1'/>
+                <componentref id='castel_div2'/>
+                <componentref id='castel_roof'/>
+            </children>
+        </component>
+
+        <component id="castel_roof">
+            <transformation>
+                <translate x="0" y="6" z="0" />
+                <scale x="3.4" y="1" z="3.4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="roof" length_s='1' length_t='1'/>
+            <children>
+                <componentref id='castel_roof1'/>
+                <componentref id='castel_roof2'/>
+                <componentref id='castel_roof3'/>
+                <componentref id='castel_roof4'/>
+            </children>
+        </component>
+
+        <component id="castel_roof1">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis='x' angle='30'/>
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+        <component id="castel_roof2">
+            <transformation>
+                <rotate axis='y' angle='90'/>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis='x' angle='30'/>
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+        <component id="castel_roof3">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis='x' angle='30'/>
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+        <component id="castel_roof4">
+            <transformation>
+                <rotate axis='y' angle='-90'/>
+                <translate x="0" y="0" z="-0.5" />
+                <rotate axis='x' angle='30'/>
+                <scale x="0.5" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+
+        <component id="castel_div2">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_walls2'/>
+                <componentref id='castel_pilares1'/>
+            </children>
+        </component>
+
+        <component id="castel_div2">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_walls2'/>
+                <componentref id='castel_pilares1'/>
+            </children>
+        </component>
+        
+        <component id="castel_pilares1">
+            <transformation>
+                <translate x="0" y="3" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_pilares'/>
+            </children>
+        </component>
+
+        <component id="castel_pilares">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_pilar1'/>
+                <componentref id='castel_pilar2'/>
+                <componentref id='castel_pilar3'/>
+                <componentref id='castel_pilar4'/>
+            </children>
+        </component>
+
+        <component id="castel_pilar1">
+            <transformation>
+                <translate x="1.4" y="0" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_pilar2">
+            <transformation>
+                <translate x="-1.4" y="0" z="1.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_pilar3">
+            <transformation>
+                <translate x="1.4" y="0" z="-1.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_pilar4">
+            <transformation>
+                <translate x="-1.4" y="0" z="-1.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+
+        <component id="castel_walls2">
+            <transformation>
+                <translate x="0.2" y="3" z="0" />
+                <scale x="1" y="0.5" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_walls'/>
+            </children>
+        </component>
+
+        <component id="castel_walls">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_wall1'/>
+                <componentref id='castel_wall2'/>
+                <componentref id='castel_wall3'/>
+            </children>
+        </component>
+
+        <component id="castel_div1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_walls'/>
+                <componentref id='castel_floor'/>
+                <componentref id='castel_escadas'/>
+            </children>
+        </component>
+
+        <component id="castel_escadas">
+            <transformation>
+                <translate x="2" y="0" z="0" />
+                <rotate axis='y' angle='-90'/>
+                <rotate axis='x' angle='+10'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='escadas'/>
+            </children>
+        </component>
+
+        <component id="castel_floor">
+            <transformation>
+                <translate x="0" y="3" z="0.05" />
+                <scale x="3" y="0.1" z="3.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='cube'/>
+            </children>
+        </component>
+
+        <component id="castel_wall1">
+            <transformation>
+                <translate x="-1.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_wall'/>
+            </children>
+        </component>
+        <component id="castel_wall2">
+            <transformation>
+                <translate x="0" y="0" z="1.5" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_wall'/>
+            </children>
+        </component>
+        <component id="castel_wall3">
+            <transformation>
+                <translate x="0" y="0" z="-1.5" />
+                <rotate axis='y' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_wall'/>
+            </children>
+        </component>
+        <component id="castel_wall4">
+            <transformation>
+                <translate x="-1.5" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_wall'/>
+            </children>
+        </component>
+
+        <component id="castel_wall">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua1'/>
+                <componentref id='castel_tabua2'/>
+                <componentref id='castel_tabua3'/>
+                <componentref id='castel_tabua4'/>
+                <componentref id='castel_tabua5'/>
+                <componentref id='castel_tabua6'/>
+                <componentref id='castel_tabua7'/>
+            </children>
+        </component>
+
+        <component id="castel_tabua1">
+            <transformation>
+                <translate x="0" y="0" z="-1.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua2">
+            <transformation>
+                <translate x="0" y="0" z="-0.8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua3">
+            <transformation>
+                <translate x="0" y="0" z="-0.4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua4">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua5">
+            <transformation>
+                <translate x="0" y="0" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua6">
+            <transformation>
+                <translate x="0" y="0" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+        <component id="castel_tabua7">
+            <transformation>
+                <translate x="0" y="0" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='castel_tabua'/>
+            </children>
+        </component>
+
+        <component id="castel_tabua">
+            <transformation>
+                <rotate axis='y' angle='90'/>
+                <translate x="0" y="1.5" z="0" />
+                <rotate axis='x' angle='90'/>
+                <translate x="0" y="0.05" z="0" />
+                <scale x="0.2" y="0.1" z="3" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='cube'/>
+            </children>
+        </component>
+
+        <component id="teste">
+            <transformation>
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id="rope" length_s='1' length_t='0.5'/>
             <children>
-                <primitiveref id='demoCylinder'/>
+                <componentref id='dualCylinder'/>
             </children>
         </component>
 
@@ -3435,7 +3902,7 @@
             </children>
         </component>
 
-        <component id="cerca_tras">
+        <component id="cerca_tras_lados">
             <transformation>
                 <translate x="0" y="0" z="36.5" />
             </transformation>
@@ -3445,8 +3912,20 @@
             <texture id="none" />
             <children>
                  <componentref id='cerca_frente'/>
-                <componentref id='cerca'/>
 
+            </children>
+        </component>
+
+        <component id="cerca_tras">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='cerca_tras_lados'/>
+                 <componentref id='cerca11'/>
             </children>
         </component>
 
@@ -3476,8 +3955,7 @@
                 <componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
                 <componentref id='cerca_tras'/>
-                <componentref id='cerca11'/>
-                <!-- <componentref id='pico_cerca1'/>
+                <componentref id='castel1'/>
             </children>
         </component>
 
