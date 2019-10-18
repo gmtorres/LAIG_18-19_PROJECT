@@ -2766,7 +2766,6 @@
             <texture id="none"/>
             <children>
                 <componentref id='rope11'/>
-                <componentref id='rope12'/>
                 <componentref id='ropeSphere2'/>
                 <componentref id='ropeSphere1'/>
             </children>
@@ -2801,30 +2800,15 @@
             </children>
         </component>
 
-        <component id="rope12">
-            <transformation>
-                <translate x="0" y="0.8" z="0" />
-                <scale x="0.05" y=".2" z="0.05" />
-                <rotate axis='x' angle='-90'/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
-            <children>
-                <primitiveref id='demoCylinder'/>
-            </children>
-        </component>
-
         <component id="rope11">
             <transformation>
-                <scale x="0.05" y=".2" z="0.05" />
+                <scale x="0.05" y=".4" z="0.05" />
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id="rope" length_s='1' length_t='0.5'/>
             <children>
                 <primitiveref id='demoCylinder'/>
             </children>

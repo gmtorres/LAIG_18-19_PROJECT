@@ -60,9 +60,9 @@ class MyTriangle extends CGFobject {
 		var alpha = Math.acos((a*a-b*b+c*c)/(2*a*c));
 		
 		this.texCoords = [
-			0, 1,
-			a, 1,
-			1-c*Math.cos(alpha), 1 - c*Math.sin(alpha)
+			0, 2,
+			2*a, 2,
+			2*(1-c*Math.cos(alpha)),2*( 1 - c*Math.sin(alpha))
 		]
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
