@@ -1,20 +1,20 @@
 <lxs>
     <scene root="demoRoot" axis_length="5"/>
 
-    <views default="defaultCamera4">
-        <perspective id="defaultCamera1" near="0.1" far="500" angle="45">
+    <views default="P_Camera2">
+        <perspective id="P_Camera1" near="0.1" far="500" angle="45">
             <from x="15" y="10" z="5" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <perspective id="defaultCamera2" near="0.1" far="500" angle="45">
+        <perspective id="P_Camera2" near="0.1" far="500" angle="45">
             <from x="30" y="15" z="-20" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <ortho id="defaultCamera3" near="0.1" far="500" left="-30" right="30" top="20" bottom="-20">
+        <ortho id="Ortho_Camera1" near="0.1" far="500" left="-30" right="30" top="20" bottom="-20">
             <from x="30" y="15" z="10" />
             <to x="0" y="-2" z="0" />
         </ortho>
-        <perspective id="defaultCamera4" near="0.1" far="1000" angle="45">
+        <perspective id="P_Camera3" near="0.1" far="1000" angle="45">
             <from x="0" y="40" z="1" />
             <to x="0" y="-1" z="0" />
         </perspective>
@@ -26,25 +26,25 @@
     </globals>
 
     <lights>
-        <omni id="demoLight" enabled="1">
+        <omni id="Omni1" enabled="1">
             <location x="9.8" y="11.9" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
-        <omni id="demoLight2" enabled="0">
+        <omni id="Omni2" enabled="0">
             <location x="0.8" y="11.9" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
-        <spot id="rightSpot" enabled="0" angle="40" exponent="3">
-            <location x="8.77" y="8.3" z="1.1" w="1.0" />
-            <target x="0" y="0" z="10" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.2" g="0.0" b="1.0" a="1.0" />
-            <attenuation constant="0" linear="1" quadratic="0" />
+        <spot id="Spot1" enabled="0" angle="30" exponent="3">
+            <location x="0" y="2" z="0" w="1.0" />
+            <target x="0" y="0" z="0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="0.5" quadratic="0" />
         </spot>
     </lights>
 
@@ -62,6 +62,8 @@
         <texture id="stone_walkway" file="scenes/images/stone_walkway.jpg"/>
         <texture id="rope" file="scenes/images/rope.jpg"/>
         <texture id="roof" file="scenes/images/roof.png"/>
+        <texture id="tire" file="scenes/images/tire.jpg"/>
+
     </textures>
 
     <materials>
@@ -158,6 +160,9 @@
         </primitive>
         <primitive id="barra">
             <cylinder top="1" base="1" height="1" slices="50" stacks="10" />
+        </primitive>
+        <primitive id="barra_quadrado">
+            <cylinder top="1" base="1" height="1" slices="4" stacks="1" />
         </primitive>
         <primitive id="demoCone">
             <cylinder top="1" base="0" height="1" slices="50" stacks="10" />
@@ -2443,7 +2448,7 @@
 
         <component id="path">
             <transformation>
-                <translate x="0" y="0.01" z="-16.5" />
+                <translate x="-1.5" y="0.01" z="-16.5" />
                 <rotate axis='y' angle='-90'/>
                 <scale x="5" y="1" z="1.5" />
                 <rotate axis='x' angle='-90'/>
@@ -2849,7 +2854,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="greenDark" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -2883,7 +2888,7 @@
                 <scale x="0.5" y="1" z="1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="white" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -3102,7 +3107,7 @@
                 <scale x="3" y="0.1" z="3.1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="red" />
             </materials>
             <texture id="inherit"/>
             <children>
@@ -3293,13 +3298,16 @@
             </children>
         </component>
 
+
+
+
         <component id="tabua_cerca1">
             <transformation>
                 <scale x="0.5" y="1" z="0.5" />
                 <translate x="-0.5" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3312,13 +3320,15 @@
             <transformation>
                 <rotate axis='y' angle='-180'/>
                 <translate x="0.5" y="0" z="0.25"/>
+                <scale x="0.5" y="1" z="0.5" />
+                <translate x="-0.5" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='tabua_cerca1'/>
+                <primitiveref id="demoRectangle"/>
             </children>
 
         </component>
@@ -3330,7 +3340,7 @@
                 <rotate axis='y' angle='90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3343,13 +3353,16 @@
             <transformation>
                 <translate x="-0.5" y="0" z="0" />
                 <scale x="1" y="-1" z="1" />
+                <translate x="0" y="0" z="-0.125" />
+                <scale x="0.25" y="1" z="0.25" />
+                <rotate axis='y' angle='90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='tabua_cerca3'/>
+                <primitiveref id="demoRectangle" />
             </children>
 
         </component>
@@ -3362,7 +3375,7 @@
                 <rotate axis='z' angle='90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3378,7 +3391,7 @@
                 <!-- <scale x="-1" y="1" z="1" /> -->
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3394,7 +3407,7 @@
                 <rotate axis='y' angle='180'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3408,7 +3421,7 @@
                 <scale x="0.25" y="0.5" z="0.25" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3426,7 +3439,7 @@
                 <scale x="0.25" y="0.275" z="0.25" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3443,7 +3456,7 @@
                 <translate x="0.25" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3457,7 +3470,7 @@
                 <translate x="-0.25" y="1.98" z="-0.125" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3471,10 +3484,10 @@
 
         <component id="corpo_cerca">
             <transformation>
-            <translate x="0" y="1" z="0" />
+                <translate x="0" y="1" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3482,7 +3495,7 @@
                 <componentref id='tabua_cerca3'/>
                 <componentref id='tabua_cerca2'/>
                 <componentref id='tabua_cerca4'/>
-                <componentref id='tabua_cerca5'/>
+                <!-- <componentref id='tabua_cerca5'/> -->
             </children>
 
         </component>
@@ -3491,110 +3504,107 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
                 <componentref id='corpo_cerca'/>
                 <componentref id='cabeca_cerca'/>
             </children>
-
         </component>
 
         <component id="tabua_comp_cerca1">
             <transformation>
-            <translate x="0.5" y="0" z="0" />
+                <translate x="0.5" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='corpo_cerca'/>
-                <componentref id='cabeca_cerca'/>
+                <componentref id='tabua_comp_cerca'/>
             </children>
-
         </component>
 
         <component id="tabua_comp_cerca2">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="1.22" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca1"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
         
         <component id="tabua_comp_cerca3">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="1.94" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca2"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
 
         <component id="tabua_comp_cerca4">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="2.66" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca3"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
 
         <component id="tabua_comp_cerca5">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="3.38" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca4"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
 
         <component id="tabua_comp_cerca6">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="4.1" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca5"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
         <component id="tabua_comp_cerca7">
             <transformation>
-            <translate x="0.6" y="0" z="0" />
+                <translate x="4.1" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="tabua_comp_cerca6"/>
+                <componentref id="tabua_comp_cerca"/>
             </children>
 
         </component>
@@ -3604,13 +3614,14 @@
                 <rotate axis='x' angle='90'/>
                 <rotate axis='y' angle='90'/>
                 <rotate axis='z' angle='30'/>
+                <scale x="1" y="1" z="1.1" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='banco_acento_tabua1'/>
+                <componentref id='banco_acento_tabua'/>
             </children>
 
         </component>
@@ -3620,7 +3631,7 @@
                 <translate x="2.05" y="1.5" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3631,14 +3642,14 @@
 
         <component id="suporte_cerca2">
             <transformation>
-                <translate x="0" y="-1" z="0" />
+                <translate x="2.05" y="0.5" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='suporte_cerca1'/>
+                <componentref id='suporte_cerca'/>
             </children>
 
         </component>
@@ -3647,7 +3658,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3657,7 +3668,7 @@
                 <componentref id='tabua_comp_cerca4'/>
                 <componentref id='tabua_comp_cerca5'/>
                 <componentref id='tabua_comp_cerca6'/>
-                <componentref id='tabua_comp_cerca7'/>
+                <!--<componentref id='tabua_comp_cerca7'/> -->
                 <componentref id='suporte_cerca1'/>
                 <componentref id='suporte_cerca2'/>
             </children>
@@ -3669,19 +3680,11 @@
                 <translate x="7.6" y="0" z="-18" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='tabua_comp_cerca1'/>
-                <componentref id='tabua_comp_cerca2'/>
-                <componentref id='tabua_comp_cerca3'/>
-                <componentref id='tabua_comp_cerca4'/>
-                <componentref id='tabua_comp_cerca5'/>
-                <componentref id='tabua_comp_cerca6'/>
-                <componentref id='tabua_comp_cerca7'/>
-                <componentref id='suporte_cerca1'/>
-                <componentref id='suporte_cerca2'/>
+                <componentref id='cerca'/>
             </children>
 
         </component>
@@ -3691,7 +3694,7 @@
                 <translate x="-3" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3704,7 +3707,7 @@
                 <translate x="-3" y="0" z="0" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3718,7 +3721,7 @@
                 <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3728,14 +3731,15 @@
 
         <component id="cerca5">
             <transformation>
-                <translate x="0" y="0" z="3" />
+                <translate x="11.6" y="0" z="-15" />
+                <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='cerca4'/>
+                <componentref id='cerca'/>
             </children>
         </component>
 
@@ -3744,7 +3748,7 @@
                 <translate x="0" y="0" z="6" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3758,7 +3762,7 @@
                 <translate x="0" y="0" z="6" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3771,7 +3775,7 @@
                 <translate x="0" y="0" z="12" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3785,7 +3789,7 @@
                 <translate x="0" y="0" z="27" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3798,7 +3802,7 @@
                 <translate x="0" y="0" z="2.4" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3811,7 +3815,7 @@
                 <translate x="-2.05" y="0" z="18.5" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3823,7 +3827,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3841,7 +3845,7 @@
                 <translate x="-11.7" y="0" z="18" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3853,7 +3857,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3864,9 +3868,10 @@
 
         <component id="cerca_lado_dir">
             <transformation>
+                <translate x="0" y="0" z="-0.3" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3880,25 +3885,191 @@
             </children>
         </component>
 
-        <component id="cerca_lado_esq">
+        <component id="cerca_lado_dir_test">
             <transformation>
-                <translate x="-11.6" y="0" z="-18" />
-                <translate x="0" y="0" z="36.5" />
-                <rotate axis='y' angle='180'/>
-                <translate x="-11.6" y="0" z="18" />
+                <translate x="11.7" y="0" z="0" />
+                <scale x='1' y='1' z='1.02'/>
+                <rotate axis='y'  angle='-90'/>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id='cerca4'/>
-                <componentref id='cerca5'/>
-                <componentref id='cerca6'/>
-                <componentref id='cerca7'/>
-                <componentref id='cerca8'/>
-                <componentref id='cerca9'/>
-                <componentref id='cerca10'/>
+                <componentref id='cerca_test1'/>
+                <componentref id='cerca_test2'/>
+                <componentref id='cerca_test3'/>
+                <componentref id='cerca_test4'/>
+                <componentref id='cerca_test5'/>
+                <componentref id='cerca_test6'/>
+                <componentref id='cerca_test7'/>
+                <componentref id='cerca_test8'/>
+            </children>
+        </component>
+
+        <component id="cerca_tras_test">
+            <transformation>
+                <translate x="0" y="0" z="18" />
+                <scale x='0.9' y='1' z='1'/>
+                <rotate axis='y'  angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca_test1'/>
+                <componentref id='cerca_test2'/>
+                <componentref id='cerca_test3'/>
+                <componentref id='cerca_test7'/>
+                <componentref id='cerca_test5'/>
+                <componentref id='cerca_test6'/>
+            </children>
+        </component>
+        <component id="cerca_frente_test">
+            <transformation>
+                <translate x="0" y="0" z="-18" />
+                <scale x='0.9' y='1' z='1'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca_test1'/>
+                <componentref id='cerca_test2'/>
+                <componentref id='cerca_test3'/>
+                <componentref id='cerca_test7'/>
+                <componentref id='cerca_test6'/>
+            </children>
+        </component>
+
+        <component id="cerca_lado_esq_test">
+            <transformation>
+                <rotate axis='y'  angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca_lado_dir_test'/>
+            </children>
+        </component>
+
+        <component id="cerca_test1">
+            <transformation>
+                <translate x="0.2" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test2">
+            <transformation>
+                <translate x="4.6" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test3">
+            <transformation>
+                <translate x="9.0" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test4">
+            <transformation>
+                <translate x="13.4" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+        <component id="cerca_test5">
+            <transformation>
+                <translate x="-4.2" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test6">
+            <transformation>
+                <translate x="-8.6" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test7">
+            <transformation>
+                <translate x="-13" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_test8">
+            <transformation>
+                <translate x="-17.4" y="0" z="-0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca'/>
+            </children>
+        </component>
+
+        <component id="cerca_lado_esq">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id='cerca_lado_dir'/>
             </children>
         </component>
 
@@ -3907,7 +4078,7 @@
                 <translate x="0" y="0" z="36.5" />
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3919,7 +4090,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3932,7 +4103,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="white" />
+                <material id="inherit" />
             </materials>
             <texture id="none" />
             <children>
@@ -3940,6 +4111,78 @@
                  <componentref id='cerca11'/>
             </children>
         </component>
+
+        <component id="tires">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='tire1'/>
+                 <componentref id='tire2'/>
+                 <componentref id='tire3'/>
+            </children>
+        </component>
+        <component id="tire1">
+            <transformation>
+                <translate x="6.3" y="0" z="-13.5" />
+            </transformation>
+            <materials>
+                <material id="green" />
+                <material id="yellow" />
+                <material id="red" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='tire'/>
+            </children>
+        </component>
+        <component id="tire2">
+            <transformation>
+                <translate x="5" y="0" z="-15" />
+            </transformation>
+            <materials>
+                <material id="yellow" />
+                <material id="red" />
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='tire'/>
+            </children>
+        </component>
+        <component id="tire3">
+            <transformation>
+                <translate x="3.6" y="0" z="-13.5" />
+            </transformation>
+            <materials>
+                <material id="red" />
+                <material id="green" />
+                <material id="yellow" />
+            </materials>
+            <texture id="none" />
+            <children>
+                 <componentref id='tire'/>
+            </children>
+        </component>
+
+        <component id="tire">
+            <transformation>
+                <translate x="0" y="0.3" z="0" />
+                <scale x=".3" y=".3" z=".3" />
+                <rotate axis='x' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="tire"  length_s='0.5' length_t='0.5'/>
+            <children>
+                 <primitiveref id='demoTorus'/>
+            </children>
+        </component>
+
 
         <component id="demoRoot">
             <transformation>
@@ -3962,17 +4205,21 @@
                 <componentref id='lampadas'/>
                 <componentref id='barras'/>
                 <componentref id='bancos'/>
-                <componentref id='rope'/>
-                <componentref id='cerca_frente'/>
-                <componentref id='cerca_lado_dir'/>
+                <componentref id='castel1'/>
+                <componentref id='tires'/>
+                
+
+                 <componentref id='cerca_lado_dir_test'/> 
+                <componentref id='cerca_lado_esq_test'/>
+                <componentref id='cerca_tras_test'/>
+                <componentref id='cerca_frente_test'/> 
+                <!--<componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
                 <componentref id='cerca_tras'/>
-                <componentref id='castel1'/>
+                <componentref id='cerca_frente'/>-->
+                
             </children>
         </component>
-
-        
-
 
     </components>
 </lxs>

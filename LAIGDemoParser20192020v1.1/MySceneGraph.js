@@ -475,7 +475,17 @@ class MySceneGraph {
                 } else
                     return 'light target undefined for ID = ' + lightId;
 
-                global.push(...[angle, exponent, targetLight])
+                var atenuationIndex = nodeNames.indexOf('attenuation');
+
+                if (atenuationIndex == -1) 
+                return 'light attenuation undefined for ID = ' + lightId;
+
+                var constant = this.reader.getFloat(grandChildren[atenuationIndex],'constant');
+                var linear = this.reader.getFloat(grandChildren[atenuationIndex],'linear');
+                var quadratic = this.reader.getFloat(grandChildren[atenuationIndex],'quadratic');
+
+
+                global.push(...[angle, exponent, targetLight,constant,linear,quadratic]);
             }
 
             this.lights[lightId] = global;
