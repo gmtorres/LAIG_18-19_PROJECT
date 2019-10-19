@@ -860,7 +860,7 @@ class MySceneGraph {
                 if (!(loops != null && !isNaN(loops) && loops > 0))
                     return "unable to parse loops of the primitive coordinates for ID = " + primitiveId;
 
-                var torus = new MyTorus(this.scene, primitiveId, r1, r2, slices, loops);
+                var torus = new MyTorus(this.scene, primitiveId, r1, r2, loops, slices);
 
                 this.primitives[primitiveId] = torus;
             } else if (primitiveType == 'cylinder') {
@@ -1290,6 +1290,8 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
+        
+
         var tempTex = [];
         tempTex.tex = 'none';
         //this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);

@@ -119,7 +119,7 @@
             <sphere radius="1" slices="50" stacks="50" />
         </primitive>
         <primitive id="demoTorus">
-            <torus outer="2" inner="1" slices="80" loops="30" />
+            <torus outer="2" inner="1" slices="80" loops="4" />
         </primitive>
         <primitive id="ring">
             <torus outer="1" inner="0.05" slices="80" loops="30" />
