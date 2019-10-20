@@ -98,6 +98,10 @@
         <texture id="skyboxup" file="scenes/images/ely_hills/hills_dn/hills_up.png"/>
         <texture id="skyside" file="scenes/images/ely_hills/hills_dn/result.png"/>
         <texture id="skyboxdn" file="scenes/images/ely_hills/hills_dn/hills_up.png"/>
+        <texture id="hills_lf" file="scenes/images/ely_hills/hills_dn/hills_lf.png"/>
+        <texture id="hills_ft" file="scenes/images/ely_hills/hills_dn/hills_ft.png"/>
+        <texture id="hills_rt" file="scenes/images/ely_hills/hills_dn/hills_rt.png"/>
+        <texture id="hills_bk" file="scenes/images/ely_hills/hills_dn/hills_bk.png"/>
         <texture id="lightwood_texture" file="scenes/images/lightwood_texture.jpg"/>
     </textures>
 
@@ -179,7 +183,7 @@
             <cylinder top="1" base="1" height="1" slices="4" stacks="4" />
         </primitive>
         <primitive id="demoSquare">
-            <rectangle x1="0" y1="0" x2="1.41421356237" y2="1.41421356237" />
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
         <primitive id="demoRectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
@@ -1288,7 +1292,7 @@
 
         <component id="sun">
             <transformation>
-                <translate x="-30" y="7" z="-10" />
+                <translate x="-25" y="20" z="-10" />
             </transformation>
             <materials>
                 <material id="sun_yellow" />
@@ -4217,8 +4221,7 @@
         <component id="skyboxside">
             <transformation>
                 
-                <scale x='-1' y='1' z='-1'/>
-                <scale x='-1' y='-1' z='-1'/>
+                <scale x='-1' y='1' z='1'/>
 
             </transformation>
             <materials>
@@ -4230,16 +4233,88 @@
             </children>
         </component>
 
-        <component id="skybot">
+        <component id="skyboxside2">
             <transformation>
-            <translate x="1" y="0" z="1" />
-            <rotate axis='z' angle='45'/>
-            <rotate axis='y' angle='180'/>
             </transformation>
             <materials>
-                <material id="green" />
+                <material id="inherit" />
             </materials>
-            <texture id="grass"  length_s='1' length_t='1'/>
+            <texture id="none"/>
+            <children>
+                <componentref id='skybox_face1'/>
+                <componentref id='skybox_face2'/>
+                <componentref id='skybox_face3'/>
+                <componentref id='skybox_face4'/>
+            </children>
+        </component>
+
+        <component id="skybox_face1">
+            <transformation>
+                <scale x='1' y='0.5' z='1'/>
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="hills_ft" length_s='1' length_t='2'/>
+            <children>
+                <primitiveref id='demoSquare'/>
+            </children>
+        </component>
+
+        <component id="skybox_face2">
+            <transformation>
+                <scale x='1' y='0.5' z='1'/>
+                <rotate axis='y' angle='-90'/>
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="hills_rt" length_s='1' length_t='2'/>
+            <children>
+                <primitiveref id='demoSquare'/>
+            </children>
+        </component>
+        <component id="skybox_face3">
+            <transformation>
+                <scale x='1' y='0.5' z='1'/>
+                <rotate axis='y' angle='-180'/>
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="hills_bk" length_s='1' length_t='2'/>
+            <children>
+                <primitiveref id='demoSquare'/>
+            </children>
+        </component>
+        <component id="skybox_face4">
+            <transformation>
+                <scale x='1' y='0.5' z='1'/>
+                <rotate axis='y' angle='90'/>
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="hills_lf" length_s='1' length_t='2'/>
+            <children>
+                <primitiveref id='demoSquare'/>
+            </children>
+        </component>
+
+        <component id="skybot">
+            <transformation>    
+                <scale x='1.5' y='1.5' z='1.5'/>
+                <translate x="0" y="-0.001" z="0" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="greenDark" />
+            </materials>
+            <texture id="grass"  length_s='0.1' length_t='0.1'/>
             <children>
                 <primitiveref id='demoSquare'/>  
             </children>
@@ -4247,8 +4322,8 @@
 
         <component id="skytop">
             <transformation>
-                <translate x="0" y="-1" z="0" />
-                <rotate axis='z' angle='45'/>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis='x' angle='90'/>
             </transformation>
             <materials>
                 <material id="white" />
@@ -4261,11 +4336,7 @@
 
         <component id="skybox">
             <transformation>
-                <translate x="0" y="-0.1" z="0" />
-                <scale x='50' y='50' z='50'/>
-                <rotate axis='y' angle='45'/>
-                <translate x="0" y="1" z="0" />
-                <rotate axis='x' angle='90'/>
+                <scale x='60' y='60' z='60'/>
             </transformation>
             <materials>
                 <material id="white" />
@@ -4274,13 +4345,13 @@
             <children>
                 <componentref id='skytop'/> 
                 <componentref id='skybot'/> 
-                <componentref id='skyboxside'/> 
+                <componentref id='skyboxside2'/> 
             </children>
         </component>
 
         <component id="demoRoot">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="0" y="-5" z="0" />
                 <scale x="1" y="1" z="1" />
             </transformation>
             <materials>
