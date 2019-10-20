@@ -26,14 +26,14 @@
     </globals>
 
     <lights>
-        <omni id="Omni1" enabled="1">
-            <location x="9.8" y="11.9" z="10" w="1.0" />
-            <ambient r="0" g="0" b="0" a="1.0" />
+        <omni id="Sun" enabled="1">
+            <location x="-25" y="12" z="13" w="1.0" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
-        <omni id="Omni2" enabled="0">
-            <location x="0" y="11.9" z="-10" w="1.0" />
+        <omni id="Omni2" enabled="1">
+            <location x="0" y="12" z="0" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -1292,7 +1292,7 @@
 
         <component id="sun">
             <transformation>
-                <translate x="-25" y="20" z="-10" />
+                <translate x="-30" y="17" z="13" />
             </transformation>
             <materials>
                 <material id="sun_yellow" />
@@ -4271,7 +4271,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="hills_rt" length_s='1' length_t='2'/>
+            <texture id="hills_lf" length_s='1' length_t='2'/>
             <children>
                 <primitiveref id='demoSquare'/>
             </children>
@@ -4299,7 +4299,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="hills_lf" length_s='1' length_t='2'/>
+            <texture id="hills_rt" length_s='1' length_t='2'/>
             <children>
                 <primitiveref id='demoSquare'/>
             </children>
@@ -4322,6 +4322,7 @@
 
         <component id="skytop">
             <transformation>
+                <rotate axis='y' angle='90'/>
                 <translate x="0" y="0.5" z="0" />
                 <rotate axis='x' angle='90'/>
             </transformation>
