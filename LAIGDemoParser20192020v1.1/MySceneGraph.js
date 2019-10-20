@@ -572,7 +572,7 @@ class MySceneGraph {
 
         // Check if there is at least one material
         if (children.length == 0)
-            this.onXMLError('There has to be at least one view. No views found');
+            this.onXMLError('There has to be at least one material. No materials found');
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -657,6 +657,9 @@ class MySceneGraph {
      */
     parseTransformations(transformationsNode) {
         var children = transformationsNode.children;
+
+        if (children.length == 0)
+            this.onXMLError('There has to be at least one transformation. No transformations found');
 
         this.transformations = [];
 
@@ -755,6 +758,9 @@ class MySceneGraph {
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
+
+        if (children.length == 0)
+            this.onXMLError('There has to be at least one primitive. No primitives found');
 
         this.primitives = [];
 
@@ -1068,6 +1074,11 @@ class MySceneGraph {
                             tempMatrix = this.transformations[transformationrefID];
                             
                     break;
+                    default:
+                            this.onXMLMinorError(
+                                'could not solve transformation tag ' +
+                                transformationrefID + '.');
+                    break;
                 }
                 mat4.mul(transfMatrix,transfMatrix,tempMatrix);
             }
@@ -1091,7 +1102,7 @@ class MySceneGraph {
 
                 // Get id of the current material.
                 var materialID = this.reader.getString(materialChild[b], 'id');
-                if (materialID == null) return 'no ID defined for material';
+                if (materialID == null) return 'no ID defined for material in ' + componentID;
 
 
                 if(materialID == 'inherit')
@@ -1104,7 +1115,8 @@ class MySceneGraph {
                         tempmaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
                         tempmaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
                         tempmaterial.setShininess(10.0);
-                        this.onXMLMinorError("Could not find material with id " + materialID);
+                        this.onXMLMinorError("Could not find material with id " + materialID+' in ' + componentID 
+                        + ", creating default material");
                     }
                     component.material.push(tempmaterial);
                 }
@@ -1134,12 +1146,18 @@ class MySceneGraph {
                 var temptex = this.textures[textureID];
                 if(temptex == null ){
                     component.texture.tex = 'none';
-                    this.onXMLMinorError("Could not find texture with id " + textureID);
+                    this.onXMLMinorError("Could not find texture with id " + textureID + ' in ' + componentID);
                 }else  component.texture = temptex;
                 var texLength_s = this.reader.getString(textureChild, 'length_s');
-                if (texLength_s == null) return 'no texLength_s defined for texture';
+                if (texLength_s == null){
+                    this.onXMLMinorError('no texLength_s defined for texture in ' + componentID + " , assuming 1");
+                    texLength_s = 1;
+                }
                 var texLength_t = this.reader.getString(textureChild, 'length_t');
-                if (texLength_t == null) return 'no texLength_t defined for texture';
+                if (texLength_t == null){
+                    this.onXMLMinorError('no texLength_t defined for texture in ' + componentID + " , assuming 1");
+                    texLength_t = 1;
+                } 
                 component.length_s = texLength_s;
                 component.length_t = texLength_t;
             }
@@ -1189,7 +1207,7 @@ class MySceneGraph {
                 var tempcomp = this.nodes[this.nodes[i].child[a]];
                 if(tempcomp != null)
                     this.nodes[i].componentref.push(tempcomp);
-                else this.onXMLMinorError('no component with id ' + this.nodes[i].child[a] +' found');
+                else this.onXMLMinorError('no reference to component with id ' + this.nodes[i].child[a] +' found');
             }
         }
     }
@@ -1314,10 +1332,18 @@ class MySceneGraph {
         var tempTex = [];
         tempTex.tex = 'none';
         //this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
-        this.displayFunction(this.nodes[this.idRoot] , mat4.create() , new CGFappearance(this.scene) , tempTex,1,1);
+        this.displayFunction(this.nodes[this.idRoot] , new CGFappearance(this.scene) , tempTex,1,1);
     }
 
-    displayFunction(node,matrix , material , texture, s_length, t_length){
+    /**
+     * Callback to be executed on any message.
+     * @param node current node/component to display
+     * @param material current material to apply and pass to children
+     * @param texture  current texture to apply and pass to children
+     * @param s_length length_s of the current texture
+     * @param t_length length_t of the current texture
+     */
+    displayFunction(node, material , texture, s_length, t_length){
         //var currentNode = this.nodes[node];
         var currentNode = node;
 
@@ -1372,7 +1398,7 @@ class MySceneGraph {
             this.displayFunction(currentNode.child[a] , matrix , nodeMaterial , nodeTexture);
         }*/
         for(var a = 0; a < currentNode.componentref.length ; a++){
-            this.displayFunction(currentNode.componentref[a] , matrix , nodeMaterial , nodeTexture,s_length,t_length);
+            this.displayFunction(currentNode.componentref[a] , nodeMaterial , nodeTexture,s_length,t_length);
         }
         nodeMaterial.setTexture(null);
         this.scene.popMatrix();
