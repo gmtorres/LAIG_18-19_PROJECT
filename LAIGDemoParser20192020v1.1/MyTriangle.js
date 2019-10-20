@@ -32,7 +32,12 @@ class MyTriangle extends CGFobject {
         //cross product
         var a = v1[1] * v2[2] - v1[2] * v2[1];
         var b = -(v1[0] * v2[2] - v1[2] * v2[0]);
-        var c = v1[0] * v2[1] - v1[1]*v2[0];
+		var c = v1[0] * v2[1] - v1[1]*v2[0];
+		
+		var d = Math.sqrt(a*a+b*b+c*c);
+		a/=d;
+		b/=d;
+		c/=d;
 
 		//Facing Z positive
 		this.normals = [
@@ -89,7 +94,7 @@ class MyTriangle extends CGFobject {
 		this.updateTexCoordsGLBuffers();
 	}
 	display(){
-        // this.enableNormalViz();
+        //this.enableNormalViz();
         super.display();
     }
 }

@@ -33,7 +33,7 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </omni>
         <omni id="Omni2" enabled="0">
-            <location x="0.8" y="11.9" z="10" w="1.0" />
+            <location x="0" y="11.9" z="-10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -44,7 +44,7 @@
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
-            <attenuation constant="0" linear="0.5" quadratic="0" />
+            <attenuation constant="0" linear="0.3" quadratic="0.05" />
         </spot>
         <spot id="Lamp1" enabled="0" angle="50" exponent="3">
             <location x="11" y="3.7" z="17" w="1.0" />
@@ -176,31 +176,31 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere radius="1" slices="30" stacks="15" />
+            <sphere radius="1" slices="25" stacks="15" />
         </primitive>
         <primitive id="demoTorus">
-            <torus outer="2" inner="1" slices="20" loops="30" />
+            <torus outer="2" inner="1" slices="15" loops="25" />
         </primitive>
         <primitive id="ring">
-            <torus outer="1" inner="0.05" slices="20" loops="30" />
+            <torus outer="1" inner="0.05" slices="15" loops="25" />
         </primitive>
         <primitive id="tunel_torus">
-            <torus outer="1" inner="0.10" slices="20" loops="30" />
+            <torus outer="1" inner="0.10" slices="15" loops="25" />
         </primitive>
         <primitive id="demoCylinder">
-            <cylinder top="1" base="1" height="4" slices="20" stacks="4" />
+            <cylinder top="1" base="1" height="4" slices="15" stacks="3" />
         </primitive>
         <primitive id="barra">
-            <cylinder top="1" base="1" height="1" slices="20" stacks="4" />
+            <cylinder top="1" base="1" height="1" slices="15" stacks="3" />
         </primitive>
         <primitive id="barra_quadrado">
             <cylinder top="1" base="1" height="1" slices="4" stacks="1" />
         </primitive>
         <primitive id="demoCone">
-            <cylinder top="1" base="0" height="1" slices="20" stacks="4" />
+            <cylinder top="1" base="0" height="1" slices="15" stacks="3" />
         </primitive>
         <primitive id="protecao">
-            <cylinder top="1" base="0" height="1" slices="6" stacks="4" />
+            <cylinder top="1" base="0" height="1" slices="6" stacks="3" />
         </primitive>
         <primitive id="demoTriangle">
             <triangle x3='0' y3='1' z3='0' x1='-1' y1='0' z1='0' x2='1' y2='0' z2='0' />
@@ -1527,7 +1527,7 @@
                 <componentref id='slide_barras_horizontais2'/>
                 <componentref id='slide_barras_horizontais3'/>
                 <componentref id='slide_barras_horizontais4'/>
-                <componentref id='slide_barras_horizontais5'/>
+                
             </children>
         </component>
 
@@ -2797,11 +2797,6 @@
             </children>
         </component>
 
-        
-
-
-
-
         <component id="rope">
             <transformation>
             </transformation>
@@ -2973,19 +2968,6 @@
             <texture id="inherit"/>
             <children>
                 <componentref id='dualTriangle'/>
-            </children>
-        </component>
-
-        <component id="castel_div2">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit"/>
-            <children>
-                <componentref id='castel_walls2'/>
-                <componentref id='castel_pilares1'/>
             </children>
         </component>
 
@@ -3550,7 +3532,7 @@
 
         <component id="tabua_comp_cerca1">
             <transformation>
-                <translate x="0.5" y="0" z="0" />
+                <translate x="0.8" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -3563,7 +3545,7 @@
 
         <component id="tabua_comp_cerca2">
             <transformation>
-                <translate x="1.22" y="0" z="0" />
+                <translate x="2.3" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -3577,7 +3559,7 @@
         
         <component id="tabua_comp_cerca3">
             <transformation>
-                <translate x="1.94" y="0" z="0" />
+                <translate x="3.8" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -3591,7 +3573,7 @@
 
         <component id="tabua_comp_cerca4">
             <transformation>
-                <translate x="2.66" y="0" z="0" />
+                <translate x="3.95" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -3605,7 +3587,7 @@
 
         <component id="tabua_comp_cerca5">
             <transformation>
-                <translate x="3.38" y="0" z="0" />
+                <translate x="4.1" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -3700,9 +3682,9 @@
                 <componentref id='tabua_comp_cerca1'/>
                 <componentref id='tabua_comp_cerca2'/>
                 <componentref id='tabua_comp_cerca3'/>
-                <componentref id='tabua_comp_cerca4'/>
-                <componentref id='tabua_comp_cerca5'/>
-                <componentref id='tabua_comp_cerca6'/>
+                <!--<componentref id='tabua_comp_cerca4'/> -->
+                <!-- <componentref id='tabua_comp_cerca5'/> -->
+                <!--<componentref id='tabua_comp_cerca6'/> -->
                 <!--<componentref id='tabua_comp_cerca7'/> -->
                 <componentref id='suporte_cerca1'/>
                 <componentref id='suporte_cerca2'/>
@@ -3719,6 +3701,7 @@
             </materials>
             <texture id="inherit" />
             <children>
+                <componentref id='cerca'/>
                 <componentref id='cerca'/>
             </children>
 
@@ -4121,18 +4104,7 @@
             </children>
         </component>
 
-        <component id="cerca_tras">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                 <componentref id='cerca_tras_lados'/>
-                 <componentref id='cerca11'/>
-            </children>
-        </component>
+
 
         <component id="cerca_tras">
             <transformation>
