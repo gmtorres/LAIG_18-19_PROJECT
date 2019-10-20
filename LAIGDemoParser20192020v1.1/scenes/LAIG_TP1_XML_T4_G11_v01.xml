@@ -95,7 +95,7 @@
         <texture id="rope" file="scenes/images/rope.jpg"/>
         <texture id="roof" file="scenes/images/roof.png"/>
         <texture id="tire" file="scenes/images/tire.jpg"/>
-
+        <texture id="lightwood_texture" file="scenes/images/lightwood_texture.jpg"/>
     </textures>
 
     <materials>
@@ -176,31 +176,31 @@
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
         <primitive id="demoSphere">
-            <sphere radius="1" slices="40" stacks="40" />
+            <sphere radius="1" slices="30" stacks="15" />
         </primitive>
         <primitive id="demoTorus">
-            <torus outer="2" inner="1" slices="30" loops="60" />
+            <torus outer="2" inner="1" slices="20" loops="30" />
         </primitive>
         <primitive id="ring">
-            <torus outer="1" inner="0.05" slices="30" loops="50" />
+            <torus outer="1" inner="0.05" slices="20" loops="30" />
         </primitive>
         <primitive id="tunel_torus">
-            <torus outer="1" inner="0.10" slices="30" loops="50" />
+            <torus outer="1" inner="0.10" slices="20" loops="30" />
         </primitive>
         <primitive id="demoCylinder">
-            <cylinder top="1" base="1" height="4" slices="30" stacks="4" />
+            <cylinder top="1" base="1" height="4" slices="20" stacks="4" />
         </primitive>
         <primitive id="barra">
-            <cylinder top="1" base="1" height="1" slices="30" stacks="4" />
+            <cylinder top="1" base="1" height="1" slices="20" stacks="4" />
         </primitive>
         <primitive id="barra_quadrado">
             <cylinder top="1" base="1" height="1" slices="4" stacks="1" />
         </primitive>
         <primitive id="demoCone">
-            <cylinder top="1" base="0" height="1" slices="30" stacks="10" />
+            <cylinder top="1" base="0" height="1" slices="20" stacks="4" />
         </primitive>
         <primitive id="protecao">
-            <cylinder top="1" base="0" height="1" slices="6" stacks="10" />
+            <cylinder top="1" base="0" height="1" slices="6" stacks="4" />
         </primitive>
         <primitive id="demoTriangle">
             <triangle x3='0' y3='1' z3='0' x1='-1' y1='0' z1='0' x2='1' y2='0' z2='0' />
@@ -3344,7 +3344,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle"/>
             </children>
@@ -3361,7 +3361,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle"/>
             </children>
@@ -3377,7 +3377,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle" />
             </children>
@@ -3395,7 +3395,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle" />
             </children>
@@ -3412,7 +3412,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle"/>
             </children>
@@ -3428,7 +3428,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='pico_cerca'/>
             </children>
@@ -3444,7 +3444,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='pico_cerca'/>
             </children>
@@ -3458,7 +3458,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoTriangle" />
             </children>
@@ -3476,7 +3476,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="demoRectangle"/>
             </children>
@@ -3493,7 +3493,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='lado_pico_cerca1'/>
             </children>
@@ -3507,7 +3507,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='pico_cerca1'/>
                 <componentref id='pico_cerca2'/>
@@ -3524,7 +3524,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='tabua_cerca1'/>
                 <componentref id='tabua_cerca3'/>
@@ -3541,7 +3541,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='corpo_cerca'/>
                 <componentref id='cabeca_cerca'/>
@@ -3555,7 +3555,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='tabua_comp_cerca'/>
             </children>
@@ -3568,7 +3568,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3582,7 +3582,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3596,7 +3596,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3610,7 +3610,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3624,7 +3624,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3637,7 +3637,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id="tabua_comp_cerca"/>
             </children>
@@ -3654,7 +3654,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='banco_acento_tabua'/>
             </children>
@@ -3666,9 +3666,9 @@
                 <translate x="2.05" y="1.5" z="0" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="dark_grey" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='suporte_cerca'/>
             </children>
@@ -3680,9 +3680,9 @@
                 <translate x="2.05" y="0.5" z="0" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="dark_grey" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='suporte_cerca'/>
             </children>
@@ -3695,7 +3695,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='tabua_comp_cerca1'/>
                 <componentref id='tabua_comp_cerca2'/>
@@ -3717,7 +3717,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -3731,7 +3731,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca1'/>
             </children>
@@ -3744,7 +3744,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca2'/>
             </children>
@@ -3758,7 +3758,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -3772,7 +3772,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -3785,7 +3785,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca4'/>
                 <componentref id='cerca5'/>
@@ -3799,7 +3799,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca6'/>
             </children>
@@ -3812,7 +3812,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca6'/>
                 <componentref id='cerca7'/>
@@ -3826,7 +3826,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca5'/>
             </children>
@@ -3839,7 +3839,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca9'/>
             </children>
@@ -3852,7 +3852,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -3864,7 +3864,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca1'/>
                 <componentref id='cerca2'/>
@@ -3882,7 +3882,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_frente_dir'/>
             </children>
@@ -3894,7 +3894,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_frente_dir'/>
                 <componentref id='cerca_frente_esq'/>
@@ -3908,7 +3908,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca4'/>
                 <componentref id='cerca5'/>
@@ -3929,7 +3929,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_test1'/>
                 <componentref id='cerca_test2'/>
@@ -3951,7 +3951,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_test1'/>
                 <componentref id='cerca_test2'/>
@@ -3969,7 +3969,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_test1'/>
                 <componentref id='cerca_test2'/>
@@ -3986,7 +3986,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_lado_dir_test'/>
             </children>
@@ -3999,7 +3999,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4012,7 +4012,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4025,7 +4025,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4038,7 +4038,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4050,7 +4050,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4063,7 +4063,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4076,7 +4076,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4089,7 +4089,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca'/>
             </children>
@@ -4102,7 +4102,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                 <componentref id='cerca_lado_dir'/>
             </children>
@@ -4115,7 +4115,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                  <componentref id='cerca_frente'/>
             </children>
@@ -4127,7 +4127,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                  <componentref id='cerca_tras_lados'/>
                  <componentref id='cerca11'/>
@@ -4140,7 +4140,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="none" />
+            <texture id="inherit" />
             <children>
                  <componentref id='cerca_tras_lados'/>
                  <componentref id='cerca11'/>
@@ -4218,6 +4218,21 @@
             </children>
         </component>
 
+        <component id="cerca_toda">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="lightwood_texture"  length_s='1' length_t='1'/>
+            <children>
+                <componentref id='cerca_lado_dir_test'/> 
+                <componentref id='cerca_lado_esq_test'/>
+                <componentref id='cerca_tras_test'/>
+                <componentref id='cerca_frente_test'/> 
+            </children>
+        </component>
+
 
         <component id="demoRoot">
             <transformation>
@@ -4242,12 +4257,9 @@
                 <componentref id='bancos'/>
                 <componentref id='castel1'/>
                 <componentref id='tires'/>
+                <componentref id='cerca_toda'/>
                 
-
-                 <componentref id='cerca_lado_dir_test'/> 
-                <componentref id='cerca_lado_esq_test'/>
-                <componentref id='cerca_tras_test'/>
-                <componentref id='cerca_frente_test'/> 
+                
                 <!--<componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
                 <componentref id='cerca_tras'/>
