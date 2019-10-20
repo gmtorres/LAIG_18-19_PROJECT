@@ -971,7 +971,7 @@ class MySceneGraph {
             if (componentID == null) return 'no ID defined for componentID';
 
             // Checks for repeated IDs.
-            if (this.components[componentID] != null)
+            if (this.nodes[componentID] != null)
                 return 'ID must be unique for each component (conflict: ID = ' +
                     componentID + ')';
 
@@ -996,7 +996,7 @@ class MySceneGraph {
             var transformation = grandChildren[transformationIndex].children;
             
             var transfMatrix = mat4.create();
-            console.log("transformations " + componentID);
+            //console.log("transformations " + componentID);
 
             for(var a = 0; a < transformation.length ; a++){
                 var tempMatrix = mat4.create();
@@ -1076,7 +1076,7 @@ class MySceneGraph {
 
 
             // Materials
-            console.log("Materials");
+            //console.log("Materials");
 
             var materialChild = grandChildren[materialsIndex].children;
 
@@ -1112,7 +1112,7 @@ class MySceneGraph {
             }
 
             // Texture
-            console.log("Texture");
+            //console.log("Texture");
 
 
             var textureChild = grandChildren[textureIndex];
@@ -1132,7 +1132,7 @@ class MySceneGraph {
                 component.texture.tex = 'none';
             else{
                 var temptex = this.textures[textureID];
-                if(temptex == null){
+                if(temptex == null ){
                     component.texture.tex = 'none';
                     this.onXMLMinorError("Could not find texture with id " + textureID);
                 }else  component.texture = temptex;
@@ -1146,7 +1146,7 @@ class MySceneGraph {
 
 
             // Children
-            console.log("Children");
+            //console.log("Children");
 
 
             var cenas = grandChildren[childrenIndex].children;
@@ -1164,6 +1164,8 @@ class MySceneGraph {
                             //filhos.push(this.primitives[primitiveId]);
                             var prim = this.primitives[primitiveId];
                             if(prim != null)    node.leafs.push(this.primitives[primitiveId]);
+                            else    
+                                return 'no primitive with id ' + primitiveId +' found';
                         break;
                     case 'componentref' :
                             var rcomponentId = this.reader.getString(cenas[a], 'id');
@@ -1178,7 +1180,7 @@ class MySceneGraph {
 
             //this.components[componentID] = component;
             //this.nodes[componentID] = this.components[componentID];
-            console.log("End");
+            //console.log("End");
             
         }
         for(var i in this.nodes){
@@ -1187,6 +1189,7 @@ class MySceneGraph {
                 var tempcomp = this.nodes[this.nodes[i].child[a]];
                 if(tempcomp != null)
                     this.nodes[i].componentref.push(tempcomp);
+                else return 'no component with id ' + this.nodes[i].child[a] +' found';
             }
         }
     }
