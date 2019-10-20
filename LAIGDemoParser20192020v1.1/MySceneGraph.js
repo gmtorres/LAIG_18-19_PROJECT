@@ -996,6 +996,7 @@ class MySceneGraph {
             var transformation = grandChildren[transformationIndex].children;
             
             var transfMatrix = mat4.create();
+            console.log("transformations " + componentID);
 
             for(var a = 0; a < transformation.length ; a++){
                 var tempMatrix = mat4.create();
@@ -1056,8 +1057,16 @@ class MySceneGraph {
                         tempMatrix = mat4.rotate(tempMatrix, tempMatrix, angle, axis);
                         break;
                     case 'transformationref':
-                            var transformationrefID = this.reader.getFloat(transformation[a], 'id');
+                            var transformationrefID = this.reader.getString(transformation[a], 'id');
+                            if(transformationrefID == null || this.transformations[transformationrefID]==undefined){
+                                this.onXMLMinorError(
+                                    'transformation does not exist or is not valid, skipping transformation in transformation ' +
+                                    transformationrefID + '.');
+                                continue;
+                            }
+    
                             tempMatrix = this.transformations[transformationrefID];
+                            
                     break;
                 }
                 mat4.mul(transfMatrix,transfMatrix,tempMatrix);
@@ -1067,6 +1076,7 @@ class MySceneGraph {
 
 
             // Materials
+            console.log("Materials");
 
             var materialChild = grandChildren[materialsIndex].children;
 
@@ -1102,6 +1112,8 @@ class MySceneGraph {
             }
 
             // Texture
+            console.log("Texture");
+
 
             var textureChild = grandChildren[textureIndex];
 
@@ -1134,6 +1146,8 @@ class MySceneGraph {
 
 
             // Children
+            console.log("Children");
+
 
             var cenas = grandChildren[childrenIndex].children;
             
@@ -1164,6 +1178,8 @@ class MySceneGraph {
 
             //this.components[componentID] = component;
             //this.nodes[componentID] = this.components[componentID];
+            console.log("End");
+            
         }
         for(var i in this.nodes){
             this.nodes[i].componentref = [];
