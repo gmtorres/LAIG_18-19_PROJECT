@@ -71,6 +71,9 @@
         <primitive id="ring">
             <torus outer="1" inner="0.05" slices="80" loops="30" />
         </primitive>
+        <primitive id="demoSkybox">
+            <cylinder top="1" base="1" height="4" slices="4" stacks="4" />
+        </primitive>
         <primitive id="demoCylinder">
             <cylinder top="1" base="1" height="4" slices="50" stacks="10" />
         </primitive>

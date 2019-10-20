@@ -95,6 +95,9 @@
         <texture id="rope" file="scenes/images/rope.jpg"/>
         <texture id="roof" file="scenes/images/roof.png"/>
         <texture id="tire" file="scenes/images/tire.jpg"/>
+        <texture id="skyboxup" file="scenes/images/ely_hills/hills_dn/hills_up.png"/>
+        <texture id="skyside" file="scenes/images/ely_hills/hills_dn/result.png"/>
+        <texture id="skyboxdn" file="scenes/images/ely_hills/hills_dn/hills_up.png"/>
         <texture id="lightwood_texture" file="scenes/images/lightwood_texture.jpg"/>
     </textures>
 
@@ -172,6 +175,12 @@
     </transformations>
 
     <primitives>
+        <primitive id="demoSkybox">
+            <cylinder top="1" base="1" height="1" slices="4" stacks="4" />
+        </primitive>
+        <primitive id="demoSquare">
+            <rectangle x1="0" y1="0" x2="1.41421356237" y2="1.41421356237" />
+        </primitive>
         <primitive id="demoRectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
         </primitive>
@@ -4233,6 +4242,69 @@
             </children>
         </component>
 
+        <component id="skyboxside">
+            <transformation>
+                
+                <scale x='-1' y='1' z='-1'/>
+                <scale x='-1' y='-1' z='-1'/>
+
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skyside"  length_s='1' length_t='1'/>
+            <children>
+                <primitiveref id='demoSkybox'/>
+            </children>
+        </component>
+
+        <component id="skybot">
+            <transformation>
+            <translate x="1" y="0" z="1" />
+            <rotate axis='z' angle='45'/>
+            <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="grass"  length_s='1' length_t='1'/>
+            <children>
+                <primitiveref id='demoSquare'/>  
+            </children>
+        </component>
+
+        <component id="skytop">
+            <transformation>
+                <translate x="0" y="-1" z="0" />
+                <rotate axis='z' angle='45'/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="skyboxup"  length_s='1' length_t='1'/>
+            <children>
+                <primitiveref id='demoSquare'/>  
+            </children>
+        </component>
+
+        <component id="skybox">
+            <transformation>
+                <translate x="0" y="-0.1" z="0" />
+                <scale x='50' y='50' z='50'/>
+                <rotate axis='y' angle='45'/>
+                <translate x="0" y="1" z="0" />
+                <rotate axis='x' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="none"  length_s='1' length_t='1'/>
+            <children>
+                <componentref id='skytop'/> 
+                <componentref id='skybot'/> 
+                <componentref id='skyboxside'/> 
+            </children>
+        </component>
 
         <component id="demoRoot">
             <transformation>
@@ -4259,7 +4331,7 @@
                 <componentref id='tires'/>
                 <componentref id='cerca_toda'/>
                 
-                
+                <componentref id='skybox'/>
                 <!--<componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
                 <componentref id='cerca_tras'/>
