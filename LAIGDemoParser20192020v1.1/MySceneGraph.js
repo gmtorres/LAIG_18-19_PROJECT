@@ -1189,7 +1189,7 @@ class MySceneGraph {
                 var tempcomp = this.nodes[this.nodes[i].child[a]];
                 if(tempcomp != null)
                     this.nodes[i].componentref.push(tempcomp);
-                else return 'no component with id ' + this.nodes[i].child[a] +' found';
+                else this.onXMLMinorError('no component with id ' + this.nodes[i].child[a] +' found');
             }
         }
     }

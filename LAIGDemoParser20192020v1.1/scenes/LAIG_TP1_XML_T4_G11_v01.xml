@@ -183,7 +183,7 @@
             <cylinder top="1" base="1" height="1" slices="4" stacks="4" />
         </primitive>
         <primitive id="demoSquare">
-            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+            <rectangle x1="-0.501" y1="-0.501" x2="0.501" y2="0.501" />
         </primitive>
         <primitive id="demoRectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
