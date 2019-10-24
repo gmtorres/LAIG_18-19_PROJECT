@@ -791,7 +791,9 @@ class MySceneGraph {
                     grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' &&
                     grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus')) {
+                    grandChildren[0].nodeName != 'torus' &&
+                    grandChildren[0].nodeName != 'plane' &&
+                    grandChildren[0].nodeName != 'cylinder2')) {
                 return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)'
             }
 
@@ -942,6 +944,26 @@ class MySceneGraph {
                 var triangle = new MyTriangle(this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
                 this.primitives[primitiveId] = triangle;
+            } else if (primitiveType == 'plane') {
+                // x1
+                var nPartsU = this.reader.getFloat(grandChildren[0], 'nPartsU');
+                if (!(nPartsU != null && !isNaN(nPartsU)))
+                    return "unable to parse nPartsU of the primitive coordinates for ID = " + primitiveId;
+                
+                var nPartsV = this.reader.getFloat(grandChildren[0], 'nPartsV');
+                if (!(nPartsV != null && !isNaN(nPartsV)))
+                    return "unable to parse nPartsV of the primitive coordinates for ID = " + primitiveId;
+
+
+                var plane = new MyPlane(this.scene, primitiveId, nPartsU,nPartsV);
+
+                this.primitives[primitiveId] = plane;
+            }else if (primitiveType == 'cylinder2') {
+               
+
+                var plane = new MyCylinder2(this.scene, primitiveId, 20,20);
+
+                this.primitives[primitiveId] = plane;
             }
             else {
                 //console.warn("To do: Parse other primitives.");

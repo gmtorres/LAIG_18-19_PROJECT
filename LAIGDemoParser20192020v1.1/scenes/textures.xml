@@ -142,6 +142,12 @@
         <primitive id="treeTop">
             <sphere radius="1" slices="6" stacks="2" />
         </primitive>
+        <primitive id='demoPlane'>
+            <plane nPartsU='20' nPartsV='20'/>
+        </primitive>
+        <primitive id='demoCylinder2'>
+            <cylinder2 />
+        </primitive>
     </primitives>
 
     <components>
@@ -197,9 +203,10 @@
             </materials>
             <texture id="none"/>
             <children>
-                <componentref id='cylinder'/>
+                <!--<componentref id='cylinder'/>
                 <componentref id='triangle'/>
-                <componentref id='torus'/>
+                <componentref id='torus'/>-->
+                <primitiveref id='demoCylinder2'/>
             </children>
         </component>
 
