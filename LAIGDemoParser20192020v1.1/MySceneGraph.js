@@ -961,7 +961,7 @@ class MySceneGraph {
             }else if (primitiveType == 'cylinder2') {
                
 
-                var plane = new MyCylinder2(this.scene, primitiveId, 20,20);
+                var plane = new MyCylinder2(this.scene, primitiveId, 2,10);
 
                 this.primitives[primitiveId] = plane;
             }
