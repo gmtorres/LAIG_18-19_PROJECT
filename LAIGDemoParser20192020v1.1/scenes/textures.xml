@@ -143,10 +143,22 @@
             <sphere radius="1" slices="6" stacks="2" />
         </primitive>
         <primitive id='demoPlane'>
-            <plane nPartsU='20' nPartsV='20'/>
+            <plane npartsU='20' npartsV='20'/>
         </primitive>
         <primitive id='demoCylinder2'>
             <cylinder2 />
+        </primitive>
+        <primitive id='demoPatch'>
+            <patch npointsU='3' npointsV='2' npartsU='33' npartsV='23' >
+                <controlpoint x='1' y='3' z='1' />
+                <controlpoint x='-1' y='3' z='1' />
+
+                <controlpoint x='1' y='0' z='-1' />
+                <controlpoint x='-1' y='0' z='-1' />
+
+                <controlpoint x='4' y='3' z='-1' />
+                <controlpoint x='1' y='3' z='-1' />
+            </patch>
         </primitive>
     </primitives>
 
@@ -206,7 +218,7 @@
                 <!--<componentref id='cylinder'/>
                 <componentref id='triangle'/>
                 <componentref id='torus'/>-->
-                <primitiveref id='demoCylinder2'/>
+                <primitiveref id='demoPatch'/>
             </children>
         </component>
 
