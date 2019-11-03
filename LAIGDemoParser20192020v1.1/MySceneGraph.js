@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATION_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -169,6 +170,17 @@ class MySceneGraph {
             // Parse transformations block
             if ((error = this.parseTransformations(nodes[index])) != null)
                 return error;
+        }
+
+        // <animations>
+        if ((index = nodeNames.indexOf('animations')) == -1)
+            return 'tag <animations> missing';
+        else {
+            if (index != ANIMATION_INDEX)
+                this.onXMLMinorError('tag <animations> out of order');
+
+            // Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null) return error;
         }
 
         // <primitives>
@@ -752,6 +764,77 @@ class MySceneGraph {
         return null;
     }
 
+    parseAnimations(animationsNode){
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        var grandChildren = [];
+        
+        for(var i = 0; i < children.length; i++){
+
+            var animation = new Animation(this.scene);
+
+            if(children[i].nodeName != 'animation') {
+                this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+                continue;
+            }
+
+            var animationId = this.reader.getString(children[i], 'id');
+            if (animationId == null) return 'no ID defined for animation';
+
+            // Checks for repeated IDs.
+            if (this.animations[animationId] != null)
+                return 'ID must be unique for each animation (conflict: ID = ' +
+                    animationId + ')';
+
+            grandChildren = children[i].children;
+
+            for(var a = 0; a < grandChildren.length ; a++){
+
+                if(grandChildren[a].nodeName != 'keyframe'){
+                    this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+                    continue;
+                }
+
+                var instant = this.reader.getFloat(grandChildren[a], 'instant');
+                if (instant == null) return 'no instant defined for keyframe';
+
+                var props = grandChildren[a].children;
+
+                if(props[0].nodeName != 'translate' )
+                    return 'translate tag missing or out of order';
+                var translation = this.parseCoordinates3D(
+                    props[0],
+                    'translate transformation');
+                if (!Array.isArray(translation)) return translation;
+
+                if(props[1].nodeName != 'rotate' )
+                    return 'rotate tag missing or out of order';
+                var rotation = this.parseCoordinates3D(
+                    props[1],
+                    'rotate transformation');
+                for(var b = 0; b < rotation.length;b++) rotation[b] *= DEGREE_TO_RAD;
+                if (!Array.isArray(rotation)) return rotation;
+                
+                if(props[2].nodeName != 'scale' )
+                    return 'scale tag missing or out of order';
+                var scale = this.parseCoordinates3D(
+                    props[2],
+                    'scale transformation');
+                if (!Array.isArray(scale)) return scale;
+
+                var keyframe = new KeyframeAnimation(animation.helpMatrix,instant, translation,rotation,scale);
+
+                animation.keyframes.push(keyframe);
+
+            }
+            this.animations[animationId] = animation;
+
+        }
+
+    }
+
     /**
      * Parses the <primitives> block.
      * @param {primitives block element} primitivesNode
@@ -1055,6 +1138,7 @@ class MySceneGraph {
             }
 
             var transformationIndex = nodeNames.indexOf('transformation');
+            var animationIndex = nodeNames.indexOf('animationref');
             var materialsIndex = nodeNames.indexOf('materials');
             var textureIndex = nodeNames.indexOf('texture');
             var childrenIndex = nodeNames.indexOf('children');
@@ -1150,6 +1234,23 @@ class MySceneGraph {
             }
 
             component.transformation = transfMatrix;
+
+            // Animation
+
+            if(animationIndex == -1){
+                component.animation = null;
+            }else{
+                var animationChild = grandChildren[animationIndex];
+
+                if(animationChild.nodeName != 'animationref') {
+                    this.onXMLMinorError('unknown tag <' + animationChild.nodeName + '>');
+                    continue;
+                }
+
+                var animationId = this.reader.getString(animationChild, 'id');
+
+                component.animation = this.animations[animationId];
+            }
 
 
             // Materials
@@ -1418,6 +1519,10 @@ class MySceneGraph {
 
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.component.transformation);
+        if(currentNode.component.animation != null){
+            currentNode.component.animation.update(this.scene.time);
+            currentNode.component.animation.apply();
+        }
 
         var nodeMaterial = currentNode.component.material[this.materialIndex % currentNode.component.material.length];
         if(nodeMaterial == 'inherit')

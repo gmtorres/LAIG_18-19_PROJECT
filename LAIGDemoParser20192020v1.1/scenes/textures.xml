@@ -111,6 +111,36 @@
         </transformation>
     </transformations>
 
+   <animations>
+        <animation id='demoAnimation'>
+            <keyframe instant='10'>
+                <translate x='1' y='5' z='3'/>
+                <rotate x='0' y='90' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='15'>
+                <translate x='1' y='5' z='3'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='2' y='2' z='1'/>
+            </keyframe>
+            <keyframe instant='20'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='21'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='360' z='0'/>
+                <scale x='3' y='3' z='3'/>
+            </keyframe>
+            <keyframe instant='22'>
+                <translate x='0' y='0' z='3'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe> 
+        </animation>
+   </animations> 
+
     <primitives>
         <primitive id="demoRectangle">
             <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
@@ -171,6 +201,7 @@
             </transformation>
             <materials>
                 <material id="inherit" />
+                <material id="green" />
             </materials>
             <texture id="rope" length_s='1' length_t='1'/>
             <children>
@@ -196,6 +227,7 @@
             <transformation>
                 <translate x="-2" y="0" z="-4" />
             </transformation>
+            <animationref id='demoAnimation'/>
             <materials>
                 <material id="inherit" />
             </materials>
@@ -210,14 +242,15 @@
                 <translate x="0" y="0" z="0" />
                 <scale x="2" y="2" z="2" />
             </transformation>
+            <animationref id='demoAnimation'/>
             <materials>
                 <material id="white" />
             </materials>
             <texture id="none"/>
             <children>
-                <!--<componentref id='cylinder'/>
+                <componentref id='cylinder'/>
                 <componentref id='triangle'/>
-                <componentref id='torus'/>-->
+                <componentref id='torus'/>
                 <primitiveref id='demoPatch'/>
             </children>
         </component>

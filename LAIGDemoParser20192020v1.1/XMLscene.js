@@ -19,6 +19,7 @@ class XMLscene extends CGFscene {
      * @param {CGFApplication} application
      */
     init(application) {
+        this.startTime = new Date();
         super.init(application);
 
         this.sceneInited = false;
@@ -186,7 +187,7 @@ class XMLscene extends CGFscene {
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].setVisible(false);
             //this.lights[i].enable();
-            //this.lights[i].update();
+            this.lights[i].update();
         }
 
         if (this.sceneInited) {
@@ -194,6 +195,7 @@ class XMLscene extends CGFscene {
             this.setDefaultAppearance();
 
             // Displays the scene (MySceneGraph function).
+            this.time = (new Date() - this.startTime)/1000;
             this.graph.displayScene();
         }
 
