@@ -179,6 +179,42 @@
         </transformation>
     </transformations>
 
+    <animations>
+        <animation id='ballBouce'>
+            <keyframe instant='1'>
+                <translate x='5' y='5' z='3'/>
+                <rotate x='-180' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='2'>
+                <translate x='9' y='9' z='0'/>
+                <rotate x='-380' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='3'>
+                <translate x='12' y='12' z='2'/>
+                <rotate x='-540' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='4'>
+                <translate x='14' y='14' z='0'/>
+                <rotate x='-720' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='5'>
+                <translate x='15' y='15' z='1'/>
+                <rotate x='-900' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='6'>
+                <translate x='16' y='16' z='0'/>
+                <rotate x='-950' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+
+        </animation>
+   </animations> 
+
     <primitives>
         <primitive id="demoSkybox">
             <cylinder top="1" base="1" height="1" slices="4" stacks="4" />
@@ -657,6 +693,7 @@
                 <scale x="0.5" y="0.5" z="0.5" />
                 <rotate axis='x' angle='-90'/>
             </transformation>
+            <animationref id='ballBouce'/>
             <materials>
                 <material id="white" />
             </materials>
@@ -4374,7 +4411,7 @@
                 <componentref id='bancos'/>
                 <componentref id='castel1'/>
                 <componentref id='tires'/>
-                <componentref id='cerca_toda'/>
+                <!-- <componentref id='cerca_toda'/> -->
                 
                 <componentref id='skybox'/>
                 <!--<componentref id='cerca_lado_dir'/>

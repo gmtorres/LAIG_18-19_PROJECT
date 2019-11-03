@@ -806,7 +806,7 @@ class MySceneGraph {
                     return 'translate tag missing or out of order';
                 var translation = this.parseCoordinates3D(
                     props[0],
-                    'translate transformation');
+                    'translate transformation on animation');
                 if (!Array.isArray(translation)) return translation;
 
                 if(props[1].nodeName != 'rotate' )
@@ -1523,7 +1523,7 @@ class MySceneGraph {
             currentNode.component.animation.update(this.scene.time);
             currentNode.component.animation.apply();
         }
-
+        
         var nodeMaterial = currentNode.component.material[this.materialIndex % currentNode.component.material.length];
         if(nodeMaterial == 'inherit')
             nodeMaterial = material; 
