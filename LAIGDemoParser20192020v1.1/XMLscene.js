@@ -44,6 +44,18 @@ class XMLscene extends CGFscene {
 
         this.selectView = ""; 
 
+        this.securityCameraShader = new CGFshader(this.gl,"shaders/security.vert","shaders/security.frag");
+        this.securityCameraShader.setUniformsValues({uSampler: 1});
+
+        this.securityCamera = new MySecurityCamera(this,"MySecurityCamera");
+
+        var canvas = document.body;
+        this.canvasWidth = canvas.clientWidth;
+        this.canvasHeight = canvas.clientHeight;
+        this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
+
+        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-20, 15, 15), vec3.fromValues(0, 0, 0));
+
     }
 
     /**
@@ -161,10 +173,11 @@ class XMLscene extends CGFscene {
         }
     }
 
-    /**
-     * Displays the scene.
-     */
-    display() {
+    render(camera){
+        if(camera != undefined){
+            this.camera = camera;
+            this.interface.setActiveCamera(this.camera);
+        }
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
@@ -184,22 +197,45 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
         this.axis.display();
 
+        this.setActiveShader(this.defaultShader);
+
         for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].setVisible(false);
             //this.lights[i].enable();
             this.lights[i].update();
         }
-
-        if (this.sceneInited) {
-            // Draw axis
-            this.setDefaultAppearance();
-
-            // Displays the scene (MySceneGraph function).
-            this.time = (new Date() - this.startTime)/1000;
-            this.graph.displayScene();
-        }
+        
+        this.setDefaultAppearance();
+        // Displays the scene (MySceneGraph function).
+        this.time = (new Date() - this.startTime)/1000;
+        this.graph.displayScene();
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    /**
+     * Displays the scene.
+     */
+
+    display(){
+        if (this.sceneInited) {
+        
+            this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
+
+            this.textureRTT.attachToFrameBuffer();
+            this.render(this.securityCamera.camera);
+            this.textureRTT.detachFromFrameBuffer();
+
+            this.render(this.cameras[this.selectView]);
+            
+            this.setActiveShader(this.securityCameraShader);
+            this.textureRTT.bind();
+            this.securityCameraShader.setUniformsValues({timeFactor: this.time});
+            this.securityCamera.display();
+
+            this.setActiveShader(this.defaultShader);
+
+        }
     }
 }

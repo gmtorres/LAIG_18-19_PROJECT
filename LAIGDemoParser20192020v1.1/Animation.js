@@ -19,7 +19,7 @@ class Animation{
         var next = this.keyframes[0];
 
         for(var i = 0; i < this.keyframes.length; i++){
-            if(this.keyframes[i].instant <= time && this.keyframes[i].instant > previous.instant)
+            if(this.keyframes[i].instant <= time && this.keyframes[i].instant >= previous.instant)
                 previous = this.keyframes[i];
             else if(this.keyframes[i].instant > time && (this.keyframes[i].instant <next.instant || next.instant < time))
                 next = this.keyframes[i];

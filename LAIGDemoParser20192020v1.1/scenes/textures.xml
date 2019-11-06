@@ -113,7 +113,7 @@
 
    <animations>
         <animation id='demoAnimation'>
-            <keyframe instant='10'>
+            <keyframe instant='1'>
                 <translate x='1' y='5' z='3'/>
                 <rotate x='0' y='90' z='0'/>
                 <scale x='1' y='1' z='1'/>
