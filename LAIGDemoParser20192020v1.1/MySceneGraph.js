@@ -1045,9 +1045,9 @@ class MySceneGraph {
             }else if (primitiveType == 'cylinder2') {
                
 
-                var plane = new MyCylinder2(this.scene, primitiveId, 2,10);
+                var cylinder = new MyCylinder2(this.scene, primitiveId, 10,10);
 
-                this.primitives[primitiveId] = plane;
+                this.primitives[primitiveId] = cylinder;
             } else if (primitiveType == 'patch') {
 
                 var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');

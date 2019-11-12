@@ -205,7 +205,7 @@
             </materials>
             <texture id="rope" length_s='1' length_t='1'/>
             <children>
-                <primitiveref id='demoCylinder'/>
+                <primitiveref id='demoCylinder2'/>
             </children>
         </component>
 
@@ -246,7 +246,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="none"/>
+            <texture id="grass" length_s='1' length_t='1'/>
             <children>
                 <componentref id='cylinder'/>
                 <componentref id='triangle'/>

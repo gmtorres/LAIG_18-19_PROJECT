@@ -139,17 +139,34 @@ class XMLscene extends CGFscene {
             this.camerasIds.push(key);
         }
 
+        //Interface
+
         this.interface.gui.add(this,"selectView",this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
         
-        var lights = this.interface.gui.addFolder('Lights');
+        var lightsFolder = this.interface.gui.addFolder('Lights');
         this.lightsVar = false;
         var i = 0;
         for(var light in this.graph.lights){
             this.lightsVar = this.graph.lights[light][0];
-            lights.add(this,"lightsVar").name(light).onChange(this.updateLights.bind(this,i));
+            lightsFolder.add(this,"lightsVar").name(light).onChange(this.updateLights.bind(this,i));
             i++;
         }
-        lights.open();
+        lightsFolder.open();
+
+
+        var SecurityCameraFolder = this.interface.gui.addFolder('Security Camera');
+        var SecurityCameraFolderPosition = SecurityCameraFolder.addFolder('Position');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'0',-30,30).name('x');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'1',-30,30).name('y');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'2',-30,30).name('z');
+        SecurityCameraFolderPosition.open();
+        var SecurityCameraFolderTarget = SecurityCameraFolder.addFolder('Target');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'0',-30,30).name('x');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'1',-30,30).name('y');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'2',-30,30).name('z');
+        SecurityCameraFolderTarget.open();
+        SecurityCameraFolder.open();
+
         this.updateCamera();
 
         //this.interface.gui.add(this, 0, this.camerasIds);
@@ -221,17 +238,19 @@ class XMLscene extends CGFscene {
     display(){
         if (this.sceneInited) {
         
-            this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
-
+            //this.textureRTT = new CGFtextureRTpT(this,this.canvasWidth,this.canvasHeight);
+            //gerar securtity camera e escrever imagem na RTT texture
             this.textureRTT.attachToFrameBuffer();
             this.render(this.securityCamera.camera);
             this.textureRTT.detachFromFrameBuffer();
 
+            //render da imagem no ecra
             this.render(this.cameras[this.selectView]);
             
+            //display da security camera no ecra
             this.setActiveShader(this.securityCameraShader);
             this.textureRTT.bind();
-            this.securityCameraShader.setUniformsValues({timeFactor: this.time});
+            this.securityCameraShader.setUniformsValues({timeFactor: this.time * 1000});
             this.securityCamera.display();
 
             this.setActiveShader(this.defaultShader);

@@ -16,5 +16,8 @@ class MyPatch extends CGFobject{
     }
     display(){
         this.obj.display();
-    }               
+    }
+    changeTexCoords(u,v){
+		
+	}               
 }
