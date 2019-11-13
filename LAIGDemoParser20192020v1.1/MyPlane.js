@@ -7,6 +7,9 @@ class MyPlane extends CGFobject {
         this.dU = 1/npartsU;
         this.dV = 1/npartsV;    
 
+        this.u_length = 1;
+		this.v_length = 1;
+
         this.initBuffers();
     }
     initBuffers(){
@@ -27,6 +30,19 @@ class MyPlane extends CGFobject {
     }
     display(){
         this.obj.display();
+        this.obj.enableNormalViz();
     }
+
+    changeTexCoords(u,v){
+		if(u == this.u_length && v == this.v_length)
+            return;
+		for(var a = 0;a < this.obj.texCoords.length/2;a++){
+			this.obj.texCoords[2*a] = this.obj.texCoords[2*a] * this.u_length / u ;
+			this.obj.texCoords[2*a+1] = this.obj.texCoords[2*a+1] * this.v_length / v ;
+		}
+		this.u_length = u;
+		this.v_length = v;
+		this.updateTexCoordsGLBuffers();
+	}
 
 }

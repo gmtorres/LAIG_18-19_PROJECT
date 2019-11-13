@@ -45,7 +45,9 @@ class XMLscene extends CGFscene {
         this.selectView = ""; 
 
         this.securityCameraShader = new CGFshader(this.gl,"shaders/security.vert","shaders/security.frag");
-        this.securityCameraShader.setUniformsValues({uSampler: 1});
+        this.securityCameraShader.setUniformsValues({securityCameraSampler : 1 ,uSampler: 0});
+
+        this.securityCameraRecordingTexture = new CGFtexture(this, "scenes/images/security_camera.jpg"); 
 
         this.securityCamera = new MySecurityCamera(this,"MySecurityCamera");
 
@@ -54,7 +56,7 @@ class XMLscene extends CGFscene {
         this.canvasHeight = canvas.clientHeight;
         this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
 
-        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-20, 15, 15), vec3.fromValues(0, 0, 0));
+        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 0, -15), vec3.fromValues(-5, -3, 5));
 
     }
 
@@ -248,12 +250,8 @@ class XMLscene extends CGFscene {
             this.render(this.cameras[this.selectView]);
             
             //display da security camera no ecra
-            this.setActiveShader(this.securityCameraShader);
-            this.textureRTT.bind();
-            this.securityCameraShader.setUniformsValues({timeFactor: this.time * 1000});
+            
             this.securityCamera.display();
-
-            this.setActiveShader(this.defaultShader);
 
         }
     }

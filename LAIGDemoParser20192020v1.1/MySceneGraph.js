@@ -1045,7 +1045,7 @@ class MySceneGraph {
             }else if (primitiveType == 'cylinder2') {
                
 
-                var cylinder = new MyCylinder2(this.scene, primitiveId, 10,10);
+                var cylinder = new MyCylinder2(this.scene, primitiveId, 100,100);
 
                 this.primitives[primitiveId] = cylinder;
             } else if (primitiveType == 'patch') {
@@ -1315,12 +1315,12 @@ class MySceneGraph {
                     component.texture.tex = 'none';
                     this.onXMLMinorError("Could not find texture with id " + textureID + ' in ' + componentID);
                 }else  component.texture = temptex;
-                var texLength_s = this.reader.getString(textureChild, 'length_s');
+                var texLength_s = this.reader.getFloat(textureChild, 'length_s');
                 if (texLength_s == null){
                     this.onXMLMinorError('no texLength_s defined for texture in ' + componentID + " , assuming 1");
                     texLength_s = 1;
                 }
-                var texLength_t = this.reader.getString(textureChild, 'length_t');
+                var texLength_t = this.reader.getFloat(textureChild, 'length_t');
                 if (texLength_t == null){
                     this.onXMLMinorError('no texLength_t defined for texture in ' + componentID + " , assuming 1");
                     texLength_t = 1;

@@ -7,7 +7,6 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
-uniform float timeFactor;
 
 
 void main() {
