@@ -1044,8 +1044,15 @@ class MySceneGraph {
                 this.primitives[primitiveId] = plane;
             }else if (primitiveType == 'cylinder2') {
                
+                var nPartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
+                if (!(nPartsU != null && !isNaN(nPartsU)))
+                    return "unable to parse nPartsU of the primitive coordinates for ID = " + primitiveId;
+                
+                var nPartsV = this.reader.getFloat(grandChildren[0], 'npartsV');
+                if (!(nPartsV != null && !isNaN(nPartsV)))
+                    return "unable to parse nPartsV of the primitive coordinates for ID = " + primitiveId;
 
-                var cylinder = new MyCylinder2(this.scene, primitiveId, 100,100);
+                var cylinder = new MyCylinder2(this.scene, primitiveId, nPartsU,nPartsV);
 
                 this.primitives[primitiveId] = cylinder;
             } else if (primitiveType == 'patch') {

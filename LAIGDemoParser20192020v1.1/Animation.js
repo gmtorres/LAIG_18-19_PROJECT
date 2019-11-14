@@ -14,6 +14,33 @@ class Animation{
         return temp;
     }
 
+    sigmoid(x,d,b){
+        return (d-b)/(1 + Math.exp(-x*5)) + b;
+    }
+
+    diff_sig(arr1,arr2,d){
+
+        var temp = [];
+        for(var i = 0; i < arr1.length;i++){
+            var res = this.sigmoid((d * 2 -1)  , arr2[i],arr1[i]);
+            temp.push(res);
+        }
+        return temp;
+    }
+
+    sine(x,d,b){
+        return 0.5*(Math.sin((x-0.5)*Math.PI)+1)*(d-b)+b;
+    }
+    
+    diff_sin(arr1,arr2,d){
+        var temp = [];
+        for(var i = 0; i < arr1.length;i++){
+            var res = this.sine(d , arr2[i],arr1[i]);
+            temp.push(res);
+        }
+        return temp;
+    }
+
     update(time){ //atualizar o seu estado em função do tempo
         var previous = new KeyframeAnimation(this.helpMatrix,0,[0,0,0],[0,0,0],[1,1,1]);
         var next = this.keyframes[0];

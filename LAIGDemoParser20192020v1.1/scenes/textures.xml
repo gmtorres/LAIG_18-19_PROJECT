@@ -139,6 +139,19 @@
                 <scale x='1' y='1' z='1'/>
             </keyframe> 
         </animation>
+
+        <animation id='demoAnimation2'>
+             <keyframe instant='2'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='2' y='2' z='2'/>
+            </keyframe>
+            <keyframe instant='4'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='4' y='4' z='4'/>
+            </keyframe>
+        </animation>
    </animations> 
 
     <primitives>
@@ -176,7 +189,7 @@
             <plane npartsU='20' npartsV='20'/>
         </primitive>
         <primitive id='demoCylinder2'>
-            <cylinder2 />
+            <cylinder2 npartsU='2' npartsV='2'/>
         </primitive>
         <primitive id='demoPatch'>
             <patch npointsU='5' npointsV='5' npartsU='30' npartsV='30' >
@@ -248,7 +261,7 @@
             <transformation>
                 <translate x="-2" y="0" z="-4" />
             </transformation>
-            <animationref id='demoAnimation'/>
+            <animationref id='demoAnimation2'/>
             <materials>
                 <material id="inherit" />
             </materials>
