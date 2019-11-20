@@ -7,6 +7,12 @@ uniform sampler2D uSampler;
 uniform sampler2D securityCameraSampler;
 uniform float timeFactor;
 
+float random (vec2 st) {
+    return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+
 vec4 draw_line(float y,vec4 color , float time , float delta){
 
 	float newy = -time + delta;
@@ -15,8 +21,10 @@ vec4 draw_line(float y,vec4 color , float time , float delta){
 		newy+= 1.0;
 
 	if(y > newy && y < 0.01 + newy){
-		return vec4(color[0] * 0.6 + 0.4,color[1]* 0.6 + 0.4,color[2]* 0.6 + 0.4,1);
-	}else return color;
+		float r = random(vTextureCoord);
+		if(r > 0.5)
+			return vec4(color[0] * 0.6 + 0.4,color[1]* 0.6 + 0.4,color[2]* 0.6 + 0.4,1);
+	}return color;
 }
 
 bool greenCheck(vec4 compare){

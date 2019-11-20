@@ -1,17 +1,17 @@
 <lxs>
     <scene root="demoRoot" axis_length="5"/>
 
-    <views default="P_Camera1">
+    <views default="P_Camera2">
         <perspective id="P_Camera1" near="0.1" far="500" angle="45">
             <from x="15" y="10" z="5" />
             <to x="0" y="-5" z="0" />
         </perspective>
         <perspective id="P_Camera2" near="0.1" far="500" angle="45">
-            <from x="30" y="15" z="-20" />
+            <from x="25" y="15" z="-20" />
             <to x="0" y="-5" z="0" />
         </perspective>
-        <perspective id="P_Camera3" near="0.1" far="1000" angle="45">
-            <from x="0" y="40" z="1" />
+        <perspective id="P_Camera3" near="0.1" far="500" angle="45">
+            <from x="0" y="10" z="1" />
             <to x="0" y="-1" z="0" />
         </perspective>
         <ortho id="Ortho_Camera1" near="0.1" far="500" left="-30" right="30" top="20" bottom="-20">
@@ -213,6 +213,308 @@
             </keyframe>
 
         </animation>
+
+        <animation id='baloicos'>
+            <keyframe instant='1'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-20'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='1.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-26'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='2'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-30'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='2.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-26'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='3'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-20'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='4'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='18'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='5.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='23'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='6'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='26'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='6.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='19'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='7'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='12'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='8'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='9'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-11'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='9.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-16'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='10'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-22'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='10.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-14'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='11'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-9'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='12'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='13'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='6'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='13.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='9'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='14'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='12'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='14.5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='7'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='15'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='16'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
+        <animation id='Pulsing'>
+            <keyframe instant='4'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='8'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='12'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='16'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='20'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='24'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='28'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='32'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='36'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='40'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='44'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='48'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
+        <animation id='tree_wind'>
+            <keyframe instant='1'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='2'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='3'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='4'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='5'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='-0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='6'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='7'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='8'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='9'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='10'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='11'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='12'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='13'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='14'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='15'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-3' y='0' z='-3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='16'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='3'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='17'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='18'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='3' y='0' z='-0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='19'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-2' y='0' z='2'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='20'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='1.5'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='21'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-1' y='0' z='1'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='22'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0.5'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='24'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
    </animations> 
 
     <primitives>
@@ -329,6 +631,31 @@
             </patch>
         </primitive>
 
+        <primitive id='drawing'>
+            <patch npointsU='6' npointsV='2' npartsU='30' npartsV='30' >
+                <controlpoint x='-5.5' y='0' z='-6' />
+                <controlpoint x='-5' y='0' z='-5.5' />
+
+                <controlpoint x='1' y='0' z='1.5' />
+                <controlpoint x='1.5' y='0' z='2' />
+
+                <controlpoint x='4' y='0' z='0.5' />
+                <controlpoint x='4.5' y='0' z='1' />
+
+                <controlpoint x='2.5' y='0' z='-1.4' />
+                <controlpoint x='3' y='0' z='-0.9' />
+
+                <controlpoint x='1.5' y='0' z='1.2' />
+                <controlpoint x='2' y='0' z='1.7' />
+
+                <controlpoint x='-10' y='0' z='-4' />
+                <controlpoint x='-9.5' y='0' z='-3.5' />
+
+
+
+            </patch>
+        </primitive>
+
     </primitives>
 
     <components>
@@ -385,7 +712,7 @@
         
         <component id="floor">
             <transformation>
-                <translate x="0" y="0" z="0" />
+                <translate x="0" y="-0.01" z="0" />
                 <scale x="1.3" y="1" z="1.3" />
                 <rotate axis='x' angle='0'/>
             </transformation>
@@ -794,6 +1121,7 @@
         <component id="tree1">
             <transformation>
                 <translate x="15" y="-0.2" z="2" />
+                <rotate axis='y' angle='-90'/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -806,6 +1134,7 @@
         <component id="tree2">
             <transformation>
                 <translate x="6" y="0" z="-22" />
+                <rotate axis='y' angle='-340'/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -818,6 +1147,7 @@
         <component id="tree3">
             <transformation>
                 <translate x="6" y="-0" z="21" />
+                <rotate axis='y' angle='50'/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -830,6 +1160,7 @@
         <component id="tree4">
             <transformation>
                 <translate x="-13" y="0" z="-1" />
+                <rotate axis='y' angle='-290'/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -842,6 +1173,7 @@
         <component id="tree5">
             <transformation>
                 <translate x="-14" y="-1.2" z="18" />
+                <rotate axis='y' angle='150'/>
             </transformation>
             <materials>
                 <material id="inherit" />
@@ -867,6 +1199,7 @@
         <component id="tree">
             <transformation>
             </transformation>
+            <animationref id='tree_wind'/>
             <materials>
                 <material id="inherit" />
             </materials>
@@ -1147,7 +1480,7 @@
             <texture id="inherit"/>
             <children>
                 <componentref id='swing_barras'/>
-                <componentref id='baloicos'/>
+                <componentref id='baloicos_Anim'/>
             </children>
         </component>
 
@@ -1183,8 +1516,23 @@
             </children>
         </component>
 
+                <component id="baloicos_Anim">
+            <transformation>
+                <translate x="0" y="2.8" z="0" />
+            </transformation>
+            <animationref id='baloicos'/>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id='baloicos'/>
+            </children>
+        </component>
+
         <component id="baloicos">
             <transformation>
+                <translate x="0" y="-2.8" z="0" />
             </transformation>
             <materials>
                 <material id="white" />
@@ -1401,8 +1749,21 @@
 
         <component id="sun">
             <transformation>
+            </transformation>
+            <materials>
+                <material id="sun_yellow" />
+            </materials>
+            <texture id="sand"  length_s="1" length_t="1"/>
+            <children>
+                <componentref id='sun2'/>
+            </children>
+        </component>
+
+        <component id="sun2">
+            <transformation>
                 <translate x="-30" y="17" z="13" />
             </transformation>
+            <animationref id='Pulsing'/>
             <materials>
                 <material id="sun_yellow" />
             </materials>
@@ -4461,6 +4822,7 @@
         
         <component id="playgroundFloor">
             <transformation>
+                <translate x="0" y="-0.01" z="0" />
                 <scale x='23' y='1' z='35'/>
             </transformation>
             <materials>
@@ -4546,6 +4908,19 @@
             </children>
         </component>
 
+        <component id="floorDrawing">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='drawing'/> 
+            </children>
+        </component>
+
+
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="-5" z="0" />
@@ -4557,6 +4932,7 @@
             <texture id="none"/>
             <children>
                 <componentref id='playgroundFloor'/>
+                
                 <componentref id='football_ball1'/>
                 <componentref id='trees'/>
                 <componentref id='sandbox'/>

@@ -56,7 +56,7 @@ class XMLscene extends CGFscene {
         this.canvasHeight = canvas.clientHeight;
         this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
 
-        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 0, -15), vec3.fromValues(-5, -3, 5));
+        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 0, 16), vec3.fromValues(7, -3, 5));
 
     }
 
