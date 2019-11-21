@@ -763,7 +763,7 @@ class MySceneGraph {
         this.log('Parsed transformations');
         return null;
     }
-
+    
     parseAnimations(animationsNode){
         var children = animationsNode.children;
 

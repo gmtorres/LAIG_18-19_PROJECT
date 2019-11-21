@@ -109,6 +109,9 @@ class XMLscene extends CGFscene {
             }
         }
     }
+    /**
+     * Updates scene camera and set that to the active camera, depending on the camera choosen in the interface
+     */
     updateCamera() {
         this.camera = this.cameras[this.selectView];
         this.interface.setActiveCamera(this.camera);
@@ -173,7 +176,11 @@ class XMLscene extends CGFscene {
 
         //this.interface.gui.add(this, 0, this.camerasIds);
     }
-
+    /**
+     * Enables or disables scene lights
+     * @param {*} i index of the light to change state
+     * @param {*} value true for enable, false to disable
+     */
     updateLights(i,value){
         if(value)
             this.lights[i].enable();
@@ -181,6 +188,10 @@ class XMLscene extends CGFscene {
             this.lights[i].disable();
         this.lights[i].update();
     }
+    /**
+     * function called by each updatePeriod that will check which key is being pressed, changing scene state, 
+     * in this case the current material for components that have more than one material
+     */
 
     update(){   
         if(this.gui.isKeyPressed('KeyM')){
@@ -188,9 +199,14 @@ class XMLscene extends CGFscene {
         }else if(this.keyMHelper == true){
             this.keyMHelper = false;
             this.graph.materialIndex++;
-            console.log("kdos");
+            //console.log("kdos");
         }
     }
+
+    /**
+     * Renders the scene to the current frame buffer for a particular camera
+     * @param {*} camera Camera to which the scene will be rendered, if undefined the camera will not change and will use the current active camera
+     */
 
     render(camera){
         if(camera != undefined){
@@ -234,7 +250,7 @@ class XMLscene extends CGFscene {
     }
 
     /**
-     * Displays the scene.
+     * Displays the scene, renders the first time to the security camera, and then only to the scene camera, and then displays each
      */
 
     display(){

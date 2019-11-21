@@ -1,11 +1,16 @@
-/**
- * MyRectangle
- * @constructor
- * @param scene - Reference to MyScene object
- * @param x - Scale of rectangle in X
- * @param y - Scale of rectangle in Y
- */
+
 class MyRectangle extends CGFobject {
+	/**
+	 * /**
+	 * MyRectangle
+	 * @constructor De
+	 * @param {*} scene - Reference to MyScene object
+	 * @param {*} id 
+	 * @param {*} x1 
+	 * @param {*} x2 
+	 * @param {*} y1 
+	 * @param {*} y2 
+	 */
 	constructor(scene, id, x1, x2, y1, y2) {
 		super(scene);
 		this.x1 = x1;
