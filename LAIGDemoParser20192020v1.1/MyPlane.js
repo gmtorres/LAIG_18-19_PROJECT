@@ -1,5 +1,12 @@
 
 class MyPlane extends CGFobject {
+    /**
+     * @constructor
+     * @param {*} scene Reference to Scene object
+     * @param {*} id Id of primitive
+     * @param {*} npartsU Number of parts in the U axis
+     * @param {*} npartsV Number of parts in the V axis
+     */
 	constructor(scene, id, npartsU, npartsV) {
         super(scene);
         this.npartsU = npartsU;
@@ -12,6 +19,9 @@ class MyPlane extends CGFobject {
 
         this.initBuffers();
     }
+    /**
+	 * Initiate Plane buffers, vertices, indeces and normals and textcoords
+	 */
     initBuffers(){
         var vertices = [
             [
@@ -28,11 +38,19 @@ class MyPlane extends CGFobject {
         var nurbsSurface = new CGFnurbsSurface(1, 1, vertices);
         this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface );
     }
+    /**
+	 * Display object in scene
+	 */
     display(){
         this.obj.display();
         this.obj.enableNormalViz();
     }
-
+    /**
+     * @method updateTexCoords
+     * Updates the list of texture coordinates of the rectangle
+     * Does not work in nurbs surface
+     * @param {Array} coords - Array of texture coordinates
+     */
     changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)
             return;

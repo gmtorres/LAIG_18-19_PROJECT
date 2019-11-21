@@ -22,43 +22,10 @@ class MySphere extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+	 * Initiate Sphere buffers, vertices, indeces and normals and textcoords
+	 */
     initBuffers() {
-        /*this.vertices = [
-            0, 0,this.r ,//0
-            0, 0,-this.r
-		];
-
-		//Counter-clockwise reference of vertices
-		this.indices = [];
-
-		//Facing Z positive
-        this.normals = [0,0,1,
-                        0,0,-1];
-    
-        for (var phi = 0, slice = 0; phi < 2 * Math.PI; phi += this.dp , slice+=1) {
-            //for (var thetha = Math.PI/2 - this.dt, stack = 0; thetha > -Math.PI/2; thetha -= this.dt , stack+=1) {
-            for(var stack = 0 , thetha = Math.PI/2 - this.dt ; stack < 2*this.st-1; thetha -= this.dt , stack+=1){
-                var ct = Math.cos(thetha);
-                var cp = Math.cos(phi);
-                var st = Math.sin(thetha);
-                var sp = Math.sin(phi);
-
-                var nx = ct * cp;
-                var ny = ct * sp;
-                var nz = st;
-                this.vertices.push(this.r * nx, this.r * ny, this.r * nz);
-                this.normals.push(nx, ny, nz);
-            }
-            this.indices.push(0, slice*(2*this.st-1) + 2 , (((slice+1)%this.sl) * (2*this.st-1)) +2);
-            this.indices.push( slice*(2*this.st-1) + (this.st-1) * 2 + 2 , 1, (((slice+1)%this.sl) * (2*this.st-1)) + (this.st-1) * 2 +2);
-        }
-
-        for(var a = 0; a < this.sl ; a++){
-            for(var b = 0; b < (2*this.st-1)-1; b++){
-                this.indices.push(a * (2*this.st-1) + b + 2, a * (2*this.st-1) + b + 3,(((a+1)%this.sl) * (2*this.st-1)) + b + 2 );
-                this.indices.push( (((a+1)%this.sl) * (2*this.st-1)) + b + 2, a * (2*this.st-1) + b + 3, (((a+1)%this.sl) * (2*this.st-1)) + b + 3 );
-            }
-        }*/
 
         this.vertices = [];
 
@@ -87,8 +54,6 @@ class MySphere extends CGFobject {
                 this.texCoords.push(slice/(this.sl + 1) , stack / (2*this.st+1));
 
             }
-            //this.indices.push(0, slice*(2*this.st)  , (((slice+1)%this.sl) * (2*this.st)) );
-            //this.indices.push( slice*(2*this.st) + (this.st) * 2  , 1, (((slice)%this.sl) * (2*this.st)) + (this.st) * 2 );
         }
 
         for(var a = 0; a < this.sl ; a++){
@@ -111,7 +76,11 @@ class MySphere extends CGFobject {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
     }
-
+    /**
+	 * Changes the object texCoords
+	 * @param {*} u Lenght in u axis
+	 * @param {*} v Length in v axis
+	 */
     changeTexCoords(u,v){
         if(u == this.u_length && v == this.v_length)
             return;
@@ -123,7 +92,9 @@ class MySphere extends CGFobject {
 		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
 	}
-
+    /**
+	 * Display object in scene
+	 */
     display(){
         //this.enableNormalViz();
         super.display();

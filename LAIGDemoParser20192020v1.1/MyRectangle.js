@@ -3,13 +3,13 @@ class MyRectangle extends CGFobject {
 	/**
 	 * /**
 	 * MyRectangle
-	 * @constructor De
+	 * @constructor 
 	 * @param {*} scene - Reference to MyScene object
-	 * @param {*} id 
-	 * @param {*} x1 
-	 * @param {*} x2 
-	 * @param {*} y1 
-	 * @param {*} y2 
+	 * @param {*} id id of primitive
+	 * @param {*} x1 Coord x of first edge
+	 * @param {*} x2 Coord x of second edge 
+	 * @param {*} y1 Coord y of first edge
+	 * @param {*} y2 Coord y on second edge
 	 */
 	constructor(scene, id, x1, x2, y1, y2) {
 		super(scene);
@@ -24,6 +24,9 @@ class MyRectangle extends CGFobject {
 		this.initBuffers();
 	}
 	
+	/**
+	 * Initiate Rectangle buffers, vertices, indeces and normals and textcoords
+	 */
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	//0
@@ -75,7 +78,11 @@ class MyRectangle extends CGFobject {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
 	}
-
+	/**
+     * @method updateTexCoords
+     * Updates the list of texture coordinates of the rectangle
+     * @param {Array} coords - Array of texture coordinates
+     */
 	changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)
             return;
@@ -87,7 +94,9 @@ class MyRectangle extends CGFobject {
 		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
 	}
-
+	    /**
+	 * Display object in scene
+	 */
 	display(){
         //this.enableNormalViz();
         super.display();

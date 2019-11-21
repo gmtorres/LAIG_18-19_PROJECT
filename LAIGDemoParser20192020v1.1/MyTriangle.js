@@ -1,22 +1,28 @@
-/**
- * MyRectangle
- * @constructor
- * @param scene - Reference to MyScene object
- * @param x - Scale of rectangle in X
- * @param y - Scale of rectangle in Y
- */
+
 class MyTriangle extends CGFobject {
-	constructor(scene, id, x1,y1,z1,x2,y2,z2,x3,y3,z3) {
+	/**
+	 * 
+	 * @param {*} scene Reference to MyScene object
+	 * @param {*} id  Id of primitive
+	 * @param {*} p1  Coords of point 1 of triangle
+	 * @param {*} p2  Coords of point 2 of triangle
+	 * @param {*} p3  Coords of point 3 of triangle
+	 */
+	constructor(scene, id, p1,p2,p3) {
 		super(scene);
-		this.p1 = [x1,y1,z1];
-		this.p2 = [x2,y2,z2];
-		this.p3 = [x3,y3,z3];
+		this.p1 = p1;
+		this.p2 = p2;
+		this.p3 = p3;
 
 		this.initBuffers();
 
 		this.u_length = 1;
 		this.v_length = 1;
 	}
+
+	/**
+	 * Initiate Triangle buffers, vertices, indeces and normals and textcoords
+	 */
 	
 	initBuffers() {
 		this.vertices = this.p1.concat(this.p2.concat(this.p3));
@@ -82,6 +88,11 @@ class MyTriangle extends CGFobject {
 		this.texCoords = [...coords];
 		this.updateTexCoordsGLBuffers();
 	}
+	/**
+	 * Changes the object texCoords
+	 * @param {*} u Lenght in u axis
+	 * @param {*} v Length in v axis
+	 */
 	changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)
             return;
@@ -93,6 +104,9 @@ class MyTriangle extends CGFobject {
 		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
 	}
+	/**
+	 * Display object in scene
+	 */
 	display(){
         //this.enableNormalViz();
         super.display();

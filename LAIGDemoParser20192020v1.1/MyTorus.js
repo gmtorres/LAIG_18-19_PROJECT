@@ -24,6 +24,9 @@ class MyTorus extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+	 * Initiate Torus buffers, vertices, indeces and normals and textcoords
+	 */
     initBuffers() {
         this.vertices = [];
 
@@ -71,7 +74,11 @@ class MyTorus extends CGFobject {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
     }
-
+    /**
+	 * Changes the object texCoords
+	 * @param {*} u Lenght in u axis
+	 * @param {*} v Length in v axis
+	 */
     changeTexCoords(u,v){
         if(u == this.u_length && v == this.v_length)
             return;
@@ -84,6 +91,9 @@ class MyTorus extends CGFobject {
 		this.updateTexCoordsGLBuffers();
 	}
 
+    /**
+	 * Display object in scene
+	 */
     display(){
         //this.enableNormalViz();
         super.display();
