@@ -74,6 +74,11 @@ class MyCylinder extends CGFobject {
         this.updateTexCoordsGLBuffers();
     }
 
+    /**
+     * Updates the texture coordinates of the object
+     * @param {float} u 
+     * @param {float} v 
+     */
     changeTexCoords(u,v){
 		for(var a = 0;a < this.texCoords.length/2;a++){
 			this.texCoords[2*a] = this.texCoords[2*a] * this.u_length / u ;
