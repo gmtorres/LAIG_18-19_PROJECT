@@ -283,7 +283,7 @@ class XMLscene extends CGFscene {
         }else if( a>=10 && a<12){
             return a - 12;
         }*/
-        return 0;
+        //return 0;
     }
 
     /**

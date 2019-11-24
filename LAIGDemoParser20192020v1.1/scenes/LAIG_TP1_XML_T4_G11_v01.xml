@@ -169,6 +169,12 @@
             <diffuse r="0.5" g="0.3" b="0.2" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
+        <material id="light_red" shininess="10">
+            <emission r="0" g="0" b="0.0" a="1.0" />
+            <ambient r="0.5" g="0.3" b="0.3" a="1.0" />
+            <diffuse r="0.5" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
     </materials>
 
     <transformations>
@@ -631,32 +637,60 @@
             </patch>
         </primitive>
 
-        <primitive id='drawing'>
+        <primitive id='playStruct1'>
             <patch npointsU='6' npointsV='2' npartsU='30' npartsV='30' >
-                <controlpoint x='-5.5' y='0' z='-6' />
-                <controlpoint x='-5' y='0' z='-5.5' />
+                <controlpoint x='-3' y='0' z='2' />
+                <controlpoint x='-3' y='0' z='-2' />
 
-                <controlpoint x='1' y='0' z='1.5' />
-                <controlpoint x='1.5' y='0' z='2' />
+                <controlpoint x='-2' y='-1' z='2' />
+                <controlpoint x='-2' y='-1' z='-2' />
 
-                <controlpoint x='4' y='0' z='0.5' />
-                <controlpoint x='4.5' y='0' z='1' />
+                <controlpoint x='-1' y='3' z='3' />
+                <controlpoint x='-1' y='-1' z='-3' />
 
-                <controlpoint x='2.5' y='0' z='-1.4' />
-                <controlpoint x='3' y='0' z='-0.9' />
+                <controlpoint x='1' y='-1' z='3' />
+                <controlpoint x='1' y='3' z='-3' />
 
-                <controlpoint x='1.5' y='0' z='1.2' />
-                <controlpoint x='2' y='0' z='1.7' />
+                <controlpoint x='2' y='-1' z='2' />
+                <controlpoint x='2' y='-1' z='-2' />
 
-                <controlpoint x='-10' y='0' z='-4' />
-                <controlpoint x='-9.5' y='0' z='-3.5' />
+                <controlpoint x='3' y='0' z='2' />
+                <controlpoint x='3' y='0' z='-2' />
+            </patch>
+        </primitive>
+        <primitive id='playStruct2'>
+            <patch npointsU='6' npointsV='2' npartsU='30' npartsV='30' >
+                <controlpoint x='-3' y='0' z='-2' />
+                <controlpoint x='-3' y='-1.5' z='-2' />
 
+                <controlpoint x='-2' y='-1' z='-2' />
+                <controlpoint x='-2' y='-1.5' z='-2' />
 
+                <controlpoint x='-1' y='-1' z='-3' />
+                <controlpoint x='-1' y='-1.5' z='-3' />
 
+                <controlpoint x='1' y='3' z='-3' />
+                <controlpoint x='1' y='-1.5' z='-3' />
+
+                <controlpoint x='2' y='-1' z='-2' />
+                <controlpoint x='2' y='-1.5' z='-2' />
+
+                <controlpoint x='3' y='0' z='-2' />
+                <controlpoint x='3' y='-1.5' z='-2' />
+            </patch>
+        </primitive>
+        <primitive id='playStruct4'>
+            <patch npointsU='2' npointsV='2' npartsU='30' npartsV='30' >
+                <controlpoint x='-3' y='0' z='-2' />
+                <controlpoint x='-3' y='0' z='2' />
+
+                <controlpoint x='-3' y='-1.5' z='-2' />
+                <controlpoint x='-3' y='-1.5' z='2' />
             </patch>
         </primitive>
 
     </primitives>
+
 
     <components>
 
@@ -4908,15 +4942,48 @@
             </children>
         </component>
 
-        <component id="floorDrawing">
+        <component id="playStruct3">
             <transformation>
+                <rotate axis='y' angle='180' />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
                 <texture id="inherit"  length_s="1" length_t="1"/>
             <children>
-                <primitiveref id='drawing'/> 
+                <primitiveref id='playStruct2'/>
+            </children>
+        </component>
+
+        <component id="playStruct5">
+            <transformation>
+                <rotate axis='y' angle='180' />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='playStruct4'/>
+            </children>
+        </component>
+
+        <component id="playStruct">
+            <transformation>
+                <translate x="4" y="1.5" z="5" />
+                <scale x="0.8" y="1" z="1.8" />
+                <rotate axis='y' angle='90' />
+            </transformation>
+            <materials>
+                <material id="light_red" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='playStruct1'/>
+                <primitiveref id='playStruct2'/>
+                <componentref id='playStruct3'/>
+                <primitiveref id='playStruct4'/>
+                <componentref id='playStruct5'/>
             </children>
         </component>
 
@@ -4948,6 +5015,7 @@
                 <!-- <componentref id='cerca_toda'/> -->
                 
                 <componentref id='skybox'/>
+                <componentref id='playStruct'/>
                 <componentref id='outerFloor'/>
                 <!--<componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
