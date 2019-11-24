@@ -39,15 +39,25 @@ class MyInterface extends CGFinterface {
         this.processKeyboard=function(){};
         this.activeKeys={};
     }
-
+    /**
+     * Process the press down of a key and set that key as active
+     * @param {*} event keyPressed
+     */
     processKeyDown(event) {
         this.activeKeys[event.code]=true;
     };
 
+    /**
+     * Process the release of a key and set that key as not active
+     * @param {*} event keyPressed
+     */
     processKeyUp(event) {
         this.activeKeys[event.code]=false;
     };
-
+    /**
+     * Returns if a key is pressed
+     * @param {*} keyCode key to be checked
+     */
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     }
