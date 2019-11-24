@@ -14,9 +14,20 @@ class KeyframeAnimation extends Animation{
         this.rotate = rota;
         this.scale = scl;
     }
-
+    
+    /**
+     * @override
+     * Function overrided to do anything, the calcualtion of the vectors is done in the Animation itself
+     * @param {*} time Current time
+     */
     update(time){
     }
+
+    /**
+     * @override
+     * Function overrided to do anything, the application of the transformation is done in the Animation itself
+     * @param {*} time Current time
+     */
     apply(){
     }
 

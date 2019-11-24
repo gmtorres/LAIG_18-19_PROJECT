@@ -169,6 +169,12 @@
             <diffuse r="0.5" g="0.3" b="0.2" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
+        <material id="light_red" shininess="10">
+            <emission r="0" g="0" b="0.0" a="1.0" />
+            <ambient r="0.5" g="0.3" b="0.3" a="1.0" />
+            <diffuse r="0.5" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
     </materials>
 
     <transformations>
@@ -515,6 +521,100 @@
                 <scale x='1' y='1' z='1'/>
             </keyframe>
         </animation>
+        <animation id='esmeraldAnimationMovement'>
+            <keyframe instant='2'>
+                <translate x='0' y='0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='6'>
+                <translate x='0' y='-0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='10'>
+                <translate x='0' y='0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='14'>
+                <translate x='0' y='-0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='18'>
+                <translate x='0' y='0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='22'>
+                <translate x='0' y='-0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='26'>
+                <translate x='0' y='0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='30'>
+                <translate x='0' y='-0.5' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='32'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
+        <animation id='esmeraldAnimation'>
+            <keyframe instant='2'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='90'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='6'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='270'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='10'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='450'/>
+                <scale x='0.7' y='0.7' z='0.7'/>
+            </keyframe>
+            <keyframe instant='14'>
+                <translate x='0' y='-0' z='0'/>
+                <rotate x='0' y='0' z='630'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='18'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='810'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='22'>
+                <translate x='0' y='-0' z='0'/>
+                <rotate x='0' y='0' z='990'/>
+                <scale x='0.7' y='0.7' z='0.7'/>
+            </keyframe>
+            <keyframe instant='26'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='1170'/>
+                <scale x='1.5' y='1.5' z='1.5'/>
+            </keyframe>
+            <keyframe instant='30'>
+                <translate x='0' y='-0' z='0'/>
+                <rotate x='0' y='0' z='1350'/>
+                <scale x='0.7' y='0.7' z='0.7'/>
+            </keyframe>
+            <keyframe instant='32'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='1440'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
    </animations> 
 
     <primitives>
@@ -562,6 +662,10 @@
         </primitive>
         <primitive id="playgroundFloor">
             <plane npartsU='50' npartsV='50'/>
+        </primitive>
+
+        <primitive id="esmeraldTop">
+            <cylinder top="1" base="0" height="1.5" slices="6" stacks="3" />
         </primitive>
 
         <primitive id='grassFloor1'>
@@ -631,32 +735,60 @@
             </patch>
         </primitive>
 
-        <primitive id='drawing'>
+        <primitive id='playStruct1'>
             <patch npointsU='6' npointsV='2' npartsU='30' npartsV='30' >
-                <controlpoint x='-5.5' y='0' z='-6' />
-                <controlpoint x='-5' y='0' z='-5.5' />
+                <controlpoint x='-3' y='0' z='2' />
+                <controlpoint x='-3' y='0' z='-2' />
 
-                <controlpoint x='1' y='0' z='1.5' />
-                <controlpoint x='1.5' y='0' z='2' />
+                <controlpoint x='-2' y='-1' z='2' />
+                <controlpoint x='-2' y='-1' z='-2' />
 
-                <controlpoint x='4' y='0' z='0.5' />
-                <controlpoint x='4.5' y='0' z='1' />
+                <controlpoint x='-1' y='3' z='3' />
+                <controlpoint x='-1' y='-1' z='-3' />
 
-                <controlpoint x='2.5' y='0' z='-1.4' />
-                <controlpoint x='3' y='0' z='-0.9' />
+                <controlpoint x='1' y='-1' z='3' />
+                <controlpoint x='1' y='3' z='-3' />
 
-                <controlpoint x='1.5' y='0' z='1.2' />
-                <controlpoint x='2' y='0' z='1.7' />
+                <controlpoint x='2' y='-1' z='2' />
+                <controlpoint x='2' y='-1' z='-2' />
 
-                <controlpoint x='-10' y='0' z='-4' />
-                <controlpoint x='-9.5' y='0' z='-3.5' />
+                <controlpoint x='3' y='0' z='2' />
+                <controlpoint x='3' y='0' z='-2' />
+            </patch>
+        </primitive>
+        <primitive id='playStruct2'>
+            <patch npointsU='6' npointsV='2' npartsU='30' npartsV='30' >
+                <controlpoint x='-3' y='0' z='-2' />
+                <controlpoint x='-3' y='-1.5' z='-2' />
 
+                <controlpoint x='-2' y='-1' z='-2' />
+                <controlpoint x='-2' y='-1.5' z='-2' />
 
+                <controlpoint x='-1' y='-1' z='-3' />
+                <controlpoint x='-1' y='-1.5' z='-3' />
 
+                <controlpoint x='1' y='3' z='-3' />
+                <controlpoint x='1' y='-1.5' z='-3' />
+
+                <controlpoint x='2' y='-1' z='-2' />
+                <controlpoint x='2' y='-1.5' z='-2' />
+
+                <controlpoint x='3' y='0' z='-2' />
+                <controlpoint x='3' y='-1.5' z='-2' />
+            </patch>
+        </primitive>
+        <primitive id='playStruct4'>
+            <patch npointsU='2' npointsV='2' npartsU='30' npartsV='30' >
+                <controlpoint x='-3' y='0' z='-2' />
+                <controlpoint x='-3' y='0' z='2' />
+
+                <controlpoint x='-3' y='-1.5' z='-2' />
+                <controlpoint x='-3' y='-1.5' z='2' />
             </patch>
         </primitive>
 
     </primitives>
+
 
     <components>
 
@@ -4908,15 +5040,92 @@
             </children>
         </component>
 
-        <component id="floorDrawing">
+        <component id="playStruct3">
             <transformation>
+                <rotate axis='y' angle='180' />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
                 <texture id="inherit"  length_s="1" length_t="1"/>
             <children>
-                <primitiveref id='drawing'/> 
+                <primitiveref id='playStruct2'/>
+            </children>
+        </component>
+
+        <component id="playStruct5">
+            <transformation>
+                <rotate axis='y' angle='180' />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='playStruct4'/>
+            </children>
+        </component>
+
+        <component id="playStruct">
+            <transformation>
+                <translate x="4" y="1.5" z="5" />
+                <scale x="0.8" y="1" z="1.8" />
+                <rotate axis='y' angle='90' />
+            </transformation>
+            <materials>
+                <material id="light_red" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='playStruct1'/>
+                <primitiveref id='playStruct2'/>
+                <componentref id='playStruct3'/>
+                <primitiveref id='playStruct4'/>
+                <componentref id='playStruct5'/>
+            </children>
+        </component>
+
+        <component id="esmerald">
+            <transformation>
+            </transformation>
+            <animationref id='esmeraldAnimationMovement'/>
+            <materials>
+                <material id="green" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <componentref id='esmeraldComp'/>
+            </children>
+        </component>
+
+        <component id="esmeraldComp">
+            <transformation>
+                <translate x="-2" y="8" z="-17" />
+                <rotate axis='x' angle='90'/> 
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transformation>
+            <animationref id='esmeraldAnimation'/>
+            <materials>
+                <material id="green" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='esmeraldTop'/>
+                <componentref id='esmeraldDown'/>
+            </children>
+        </component>
+
+        <component id="esmeraldDown">
+            <transformation>
+                <translate x="0" y="0" z="3" />
+                <scale x="-1" y="1" z="-1" />
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+                <texture id="inherit"  length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id='esmeraldTop'/>
             </children>
         </component>
 
@@ -4945,10 +5154,12 @@
                 <componentref id='bancos'/>
                 <componentref id='castel1'/>
                 <componentref id='tires'/>
-                <!-- <componentref id='cerca_toda'/> -->
+                <componentref id='cerca_toda'/>
                 
                 <componentref id='skybox'/>
+                <componentref id='playStruct'/>
                 <componentref id='outerFloor'/>
+                <componentref id='esmerald'/>
                 <!--<componentref id='cerca_lado_dir'/>
                 <componentref id='cerca_lado_esq'/>
                 <componentref id='cerca_tras'/>
