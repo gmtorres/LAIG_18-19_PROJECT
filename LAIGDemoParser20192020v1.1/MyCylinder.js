@@ -1,12 +1,13 @@
 /**
  * MyCylinder
  * @constructor
- * @param scene - Reference to MyScene object
- * @param r1 - Base radius
- * @param r2 - Top radius
- * @param h - Height
- * @param sl - Number of slices
- * @param st - Number of stacks
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {string} id ID of the cylinder 
+ * @param {float} r1 - Base radius
+ * @param {float} r2 - Top radius
+ * @param {float} h - Height
+ * @param {int} sl - Number of slices
+ * @param {int} st - Number of stacks
  */
 class MyCylinder extends CGFobject {
     constructor(scene, id, r1,r2,h, sl, st) {
@@ -67,7 +68,7 @@ class MyCylinder extends CGFobject {
 	/**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {vec3} coords - Array of texture coordinates
 	 */
     updateTexCoords(coords) {
         this.texCoords = [...coords];

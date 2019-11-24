@@ -4,12 +4,12 @@ class MyRectangle extends CGFobject {
 	 * /**
 	 * MyRectangle
 	 * @constructor 
-	 * @param {*} scene - Reference to MyScene object
-	 * @param {*} id id of primitive
-	 * @param {*} x1 Coord x of first edge
-	 * @param {*} x2 Coord x of second edge 
-	 * @param {*} y1 Coord y of first edge
-	 * @param {*} y2 Coord y on second edge
+	 * @param {CGFscene} scene - Reference to MyScene object
+	 * @param {string} id id of primitive
+	 * @param {float} x1 Coord x of first edge
+	 * @param {float} x2 Coord x of second edge 
+	 * @param {float} y1 Coord y of first edge
+	 * @param {float} y2 Coord y on second edge
 	 */
 	constructor(scene, id, x1, x2, y1, y2) {
 		super(scene);
@@ -72,7 +72,7 @@ class MyRectangle extends CGFobject {
 	/**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {vec3} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];

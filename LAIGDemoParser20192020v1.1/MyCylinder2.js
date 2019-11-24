@@ -1,5 +1,13 @@
+
 class MyCylinder2 extends CGFobject {
-	constructor(scene, id, npartsU, npartsV) {
+    /**
+     * 
+     * @param {CGFscene} scene Reference to MyScene 
+     * @param {string} id ID of the cylinder  
+     * @param {int} npartsU Number of parts of the U axis
+     * @param {int} npartsV  Number of parts of the V axis
+     */
+    constructor(scene, id, npartsU, npartsV) {
         super(scene);
         this.npartsU = npartsU;
         this.npartsV = npartsV;
@@ -8,6 +16,9 @@ class MyCylinder2 extends CGFobject {
 
         this.initBuffers();
     }
+    /**
+     * Initializes all the buffers, coordinates and texture
+     */
     initBuffers(){
         var vertices = [	// U = 0
             [ // V = 0..1;
@@ -56,11 +67,18 @@ class MyCylinder2 extends CGFobject {
         this.obj2 = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface );
 
     }
+    /**
+     * Displays the object
+     */
     display(){
         this.obj1.display();
         this.obj2.display();
     }
-
+    /**
+     * Usually it updates the texture coordinates, since this object uses nurbs to be defined , the texture coordinates ar automatically calcuted. Even though it's empty and not doing anything, the display in MyScene still calls for it as it is needed for other objects.  
+     * @param {*} u 
+     * @param {*} v 
+     */
     changeTexCoords(u,v){
 		
 	}

@@ -2,10 +2,10 @@
 class MyPlane extends CGFobject {
     /**
      * @constructor
-     * @param {*} scene Reference to Scene object
-     * @param {*} id Id of primitive
-     * @param {*} npartsU Number of parts in the U axis
-     * @param {*} npartsV Number of parts in the V axis
+     * @param {CGFScene} scene Reference to Scene object
+     * @param {string} id Id of primitive
+     * @param {int} npartsU Number of parts in the U axis
+     * @param {int} npartsV Number of parts in the V axis
      */
 	constructor(scene, id, npartsU, npartsV) {
         super(scene);
@@ -49,7 +49,7 @@ class MyPlane extends CGFobject {
      * @method updateTexCoords
      * Updates the list of texture coordinates of the rectangle
      * Does not work in nurbs surface
-     * @param {Array} coords - Array of texture coordinates
+     * @param {vec3} coords - Array of texture coordinates
      */
     changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)

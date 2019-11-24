@@ -18,8 +18,8 @@ var COMPONENTS_INDEX = 9;
 class MySceneGraph {
     /**
      * @constructor
-     * @param {*} filename XML file to parse and create the scene graph
-     * @param {*} scene Reference to scene
+     * @param {string} filename XML file to parse and create the scene graph
+     * @param {CGFscene} scene Reference to scene
      */
     constructor(filename, scene) {
         this.loadedOk = null;
@@ -211,7 +211,7 @@ class MySceneGraph {
 
     /**
      * Parses the <scene> block.
-     * @param {scene block element} sceneNode
+     * @param {[CGFscene,block,XMLelement]} sceneNode
      */
     parseScene(sceneNode) {
         // Get root of the scene.
@@ -235,7 +235,7 @@ class MySceneGraph {
 
     /**
      * Parses the <views> block.
-     * @param {view block element} viewsNode
+     * @param {[CGFview,block,XMLelement]} viewsNode
      */
     parseView(viewsNode) {
         // this.onXMLMinorError("To do: Parse views and create cameras.");
@@ -352,7 +352,7 @@ class MySceneGraph {
 
     /**
      * Parses the <ambient> node.
-     * @param {ambient block element} ambientsNode
+     * @param {[ambient,block,XMLelement]} ambientsNode
      */
     parseAmbient(ambientsNode) {
         var children = ambientsNode.children;
@@ -387,7 +387,7 @@ class MySceneGraph {
 
     /**
      * Parses the <light> node.
-     * @param {lights block element} lightsNode
+     * @param {[lights,block,element]} lightsNode
      */
     parseLights(lightsNode) {
         var children = lightsNode.children;
@@ -518,7 +518,7 @@ class MySceneGraph {
 
     /**
      * Parses the <textures> block.
-     * @param {textures block element} texturesNode
+     * @param {[textures,block,element]} texturesNode
      */
     parseTextures(texturesNode) {
         // For each texture in textures block, check ID and file URL
@@ -573,7 +573,7 @@ class MySceneGraph {
 
     /**
      * Parses the <materials> node.
-     * @param {materials block element} materialsNode
+     * @param {[materials,block,element]} materialsNode
      */
     parseMaterials(materialsNode) {
         var children = materialsNode.children;
@@ -664,7 +664,7 @@ class MySceneGraph {
 
     /**
      * Parses the <transformations> block.
-     * @param {transformations block element} transformationsNode
+     * @param {[transformations,block,element]} transformationsNode
      */
     parseTransformations(transformationsNode) {
         var children = transformationsNode.children;
@@ -765,7 +765,7 @@ class MySceneGraph {
 
     /**
      * Parse the Animations block
-     * @param {*} animationsNode 
+     * @param {[animation,block,element]} animationsNode 
      */
     
     parseAnimations(animationsNode){
@@ -841,7 +841,7 @@ class MySceneGraph {
 
     /**
      * Parses the <primitives> block.
-     * @param {primitives block element} primitivesNode
+     * @param {[primitives,block,element]} primitivesNode
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
@@ -1114,7 +1114,7 @@ class MySceneGraph {
 
     /**
      * Parses the <components> block.
-     * @param {components block element} componentsNode
+     * @param {[components,block,element]} componentsNode
      */
     parseComponents(componentsNode) {
         var children = componentsNode.children;
@@ -1393,8 +1393,8 @@ class MySceneGraph {
 
     /**
      * Parse the coordinates from a node with ID = id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
+     * @param {[block,element]} node
+     * @param {string} messageError
      */
     parseCoordinates3D(node, messageError) {
         var position = [];
@@ -1421,8 +1421,8 @@ class MySceneGraph {
 
     /**
      * Parse the coordinates from a node with ID = id
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
+     * @param {[block,element]} node
+     * @param {string} messageError
      */
     parseCoordinates4D(node, messageError) {
         var position = [];
@@ -1445,9 +1445,9 @@ class MySceneGraph {
 
     /**
      * Parse the color components from a node
-     * @param {block element} node
-     * @param {message to be displayed in case of error} messageError
-     */
+     * @param {[block,element]} node
+     * @param {string} messageError
+     **/
     parseColor(node, messageError) {
         var color = [];
 
@@ -1516,10 +1516,10 @@ class MySceneGraph {
     /**
      * Callback to be executed on any message.
      * @param node current node/component to display
-     * @param material current material to apply and pass to children
-     * @param texture  current texture to apply and pass to children
-     * @param s_length length_s of the current texture
-     * @param t_length length_t of the current texture
+     * @param {CGFmaterial} material current material to apply and pass to children
+     * @param {CGFtexture} texture  current texture to apply and pass to children
+     * @param {float} s_length length_s of the current texture
+     * @param {float} t_length length_t of the current texture
      */
     displayFunction(node, material , texture, s_length, t_length){
         //var currentNode = this.nodes[node];

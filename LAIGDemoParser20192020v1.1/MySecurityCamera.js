@@ -1,8 +1,8 @@
 class MySecurityCamera extends CGFobject{
     /**
      * @constructor 
-     * @param {*} scene Reference to MyScene Object
-     * @param {*} id Id of SecurtityCamera to pass to rectangle
+     * @param {CGFscene} scene Reference to MyScene Object
+     * @param {string} id Id of SecurtityCamera to pass to rectangle
      */
     constructor(scene,id){
         super(scene);

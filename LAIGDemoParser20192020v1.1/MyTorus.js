@@ -1,11 +1,11 @@
 /**
  * MyTorus
  * @constructor
- * @param scene - Reference to MyScene object
- * @param r1 - Outer radius
- * @param r2 - Inner radius
- * @param sl - Number of loops
- * @param lp - Number of slices
+ * @param {CGFscene} scene - Reference to MyScene object
+ * @param {float} r1 - Outer radius
+ * @param {float} r2 - Inner radius
+ * @param {int} sl - Number of loops
+ * @param {int} lp - Number of slices
  */
 class MyTorus extends CGFobject {
     constructor(scene, id, r1,r2, sl, lp) {
@@ -68,7 +68,7 @@ class MyTorus extends CGFobject {
 	/**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {vec3} coords - Array of texture coordinates
 	 */
     updateTexCoords(coords) {
         this.texCoords = [...coords];
@@ -76,8 +76,8 @@ class MyTorus extends CGFobject {
     }
     /**
 	 * Changes the object texCoords
-	 * @param {*} u Lenght in u axis
-	 * @param {*} v Length in v axis
+	 * @param {float} u Lenght in u axis
+	 * @param {float} v Length in v axis
 	 */
     changeTexCoords(u,v){
         if(u == this.u_length && v == this.v_length)

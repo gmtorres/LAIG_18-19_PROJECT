@@ -2,11 +2,11 @@
 class MyTriangle extends CGFobject {
 	/**
 	 * 
-	 * @param {*} scene Reference to MyScene object
-	 * @param {*} id  Id of primitive
-	 * @param {*} p1  Coords of point 1 of triangle
-	 * @param {*} p2  Coords of point 2 of triangle
-	 * @param {*} p3  Coords of point 3 of triangle
+	 * @param {CGFscene} scene Reference to MyScene object
+	 * @param {string} id  Id of primitive
+	 * @param {vec3} p1  Coords of point 1 of triangle
+	 * @param {vec3} p2  Coords of point 2 of triangle
+	 * @param {vec3} p3  Coords of point 3 of triangle
 	 */
 	constructor(scene, id, p1,p2,p3) {
 		super(scene);
@@ -82,7 +82,7 @@ class MyTriangle extends CGFobject {
 	/**
 	 * @method updateTexCoords
 	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
+	 * @param {vec3} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
 		this.texCoords = [...coords];
@@ -90,8 +90,8 @@ class MyTriangle extends CGFobject {
 	}
 	/**
 	 * Changes the object texCoords
-	 * @param {*} u Lenght in u axis
-	 * @param {*} v Length in v axis
+	 * @param {float} u Lenght in u axis
+	 * @param {float} v Length in v axis
 	 */
 	changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)

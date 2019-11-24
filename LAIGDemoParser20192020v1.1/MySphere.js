@@ -1,10 +1,10 @@
 /**
  * MySphere
  * @constructor
- * @param scene - Reference to MyScene object
- * @param r - Radius
- * @param sl - Number of slices
- * @param st - Number of stacks
+ * @param {CGFscene}scene - Reference to MyScene object
+ * @param {float} r - Radius
+ * @param {int} sl - Number of slices
+ * @param {int} st - Number of stacks
  */
 class MySphere extends CGFobject {
     constructor(scene, id, r, sl, st) {
@@ -70,7 +70,7 @@ class MySphere extends CGFobject {
     /**
      * @method updateTexCoords
      * Updates the list of texture coordinates of the rectangle
-     * @param {Array} coords - Array of texture coordinates
+     * @param {vec3} coords - Array of texture coordinates
      */
     updateTexCoords(coords) {
         this.texCoords = [...coords];
@@ -78,8 +78,8 @@ class MySphere extends CGFobject {
     }
     /**
 	 * Changes the object texCoords
-	 * @param {*} u Lenght in u axis
-	 * @param {*} v Length in v axis
+	 * @param {float} u Lenght in u axis
+	 * @param {float} v Length in v axis
 	 */
     changeTexCoords(u,v){
         if(u == this.u_length && v == this.v_length)

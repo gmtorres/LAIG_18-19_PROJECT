@@ -1,13 +1,13 @@
 class MyPatch extends CGFobject{
     /**
      * @constructor
-     * @param {*} scene Reference tp scene object
-     * @param {*} id Id of primitive
-     * @param {*} npointsU Number of control points in the u axis
-     * @param {*} npointsV Number of control points in the V axis
-     * @param {*} npartsU Number of parts in the U axis
-     * @param {*} npartsV Number of parts in the V axis
-     * @param {*} controlPoints Control Points, number equal to nPointsU * nPointsV
+     * @param {CGFscene} scene Reference tp scene object
+     * @param {string} id Id of primitive
+     * @param {int} npointsU Number of control points in the u axis
+     * @param {int} npointsV Number of control points in the V axis
+     * @param {int} npartsU Number of parts in the U axis
+     * @param {int} npartsV Number of parts in the V axis
+     * @param {int} controlPoints Control Points, number equal to nPointsU * nPointsV
      */
     constructor(scene, id,npointsU,npointsV, npartsU, npartsV,controlPoints) {
         super(scene);
@@ -42,7 +42,7 @@ class MyPatch extends CGFobject{
      * @method updateTexCoords
      * Updates the list of texture coordinates of the rectangle
      * Does not work in nurbs surface
-     * @param {Array} coords - Array of texture coordinates
+     * @param {vec3} coords - Array of texture coordinates
      */
     changeTexCoords(u,v){
 		if(u == this.u_length && v == this.v_length)

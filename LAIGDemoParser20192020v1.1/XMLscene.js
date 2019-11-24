@@ -42,21 +42,24 @@ class XMLscene extends CGFscene {
 
         this.keyMHelper = false;
 
-        this.selectView = ""; 
+        this.selectView = "";
 
-        this.securityCameraShader = new CGFshader(this.gl,"shaders/security.vert","shaders/security.frag");
-        this.securityCameraShader.setUniformsValues({securityCameraSampler : 1 ,uSampler: 0});
+        this.securityCameraShader = new CGFshader(this.gl, "shaders/security.vert", "shaders/security.frag");
+        this.securityCameraShader.setUniformsValues({
+            securityCameraSampler: 1,
+            uSampler: 0
+        });
 
-        this.securityCameraRecordingTexture = new CGFtexture(this, "scenes/images/security_camera.jpg"); 
+        this.securityCameraRecordingTexture = new CGFtexture(this, "scenes/images/security_camera.jpg");
 
-        this.securityCamera = new MySecurityCamera(this,"MySecurityCamera");
+        this.securityCamera = new MySecurityCamera(this, "MySecurityCamera");
 
         var canvas = document.body;
         this.canvasWidth = canvas.clientWidth;
         this.canvasHeight = canvas.clientHeight;
-        this.textureRTT = new CGFtextureRTT(this,this.canvasWidth,this.canvasHeight);
+        this.textureRTT = new CGFtextureRTT(this, this.canvasWidth, this.canvasHeight);
 
-        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 0, 16), vec3.fromValues(7, -3, 5));
+        this.securityCamera.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 0, 16), vec3.fromValues(7, -3, 5));
 
     }
 
@@ -78,7 +81,7 @@ class XMLscene extends CGFscene {
         // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
             if (i >= 8)
-                break;              // Only eight lights allowed by WebGL.
+                break; // Only eight lights allowed by WebGL.
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var light = this.graph.lights[key];
@@ -137,23 +140,23 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
 
         this.cameras = this.graph.cameras;
-        
+
 
         for (var key in this.cameras) {
-          if (key === 'length' || !this.cameras.hasOwnProperty(key)) continue;
+            if (key === 'length' || !this.cameras.hasOwnProperty(key)) continue;
             this.camerasIds.push(key);
         }
 
         //Interface
 
-        this.interface.gui.add(this,"selectView",this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
-        
+        this.interface.gui.add(this, "selectView", this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
+
         var lightsFolder = this.interface.gui.addFolder('Lights');
         this.lightsVar = false;
         var i = 0;
-        for(var light in this.graph.lights){
+        for (var light in this.graph.lights) {
             this.lightsVar = this.graph.lights[light][0];
-            lightsFolder.add(this,"lightsVar").name(light).onChange(this.updateLights.bind(this,i));
+            lightsFolder.add(this, "lightsVar").name(light).onChange(this.updateLights.bind(this, i));
             i++;
         }
         lightsFolder.open();
@@ -161,14 +164,14 @@ class XMLscene extends CGFscene {
 
         var SecurityCameraFolder = this.interface.gui.addFolder('Security Camera');
         var SecurityCameraFolderPosition = SecurityCameraFolder.addFolder('Position');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'0',-30,30).name('x');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'1',-30,30).name('y');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position,'2',-30,30).name('z');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '0', -30, 30).name('x');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '1', -30, 30).name('y');
+        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '2', -30, 30).name('z');
         SecurityCameraFolderPosition.open();
         var SecurityCameraFolderTarget = SecurityCameraFolder.addFolder('Target');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'0',-30,30).name('x');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'1',-30,30).name('y');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target,'2',-30,30).name('z');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '0', -30, 30).name('x');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '1', -30, 30).name('y');
+        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '2', -30, 30).name('z');
         SecurityCameraFolderTarget.open();
         SecurityCameraFolder.open();
 
@@ -178,13 +181,13 @@ class XMLscene extends CGFscene {
     }
     /**
      * Enables or disables scene lights
-     * @param {*} i index of the light to change state
-     * @param {*} value true for enable, false to disable
+     * @param {int} i index of the light to change state
+     * @param {bool} value true for enable, false to disable
      */
-    updateLights(i,value){
-        if(value)
+    updateLights(i, value) {
+        if (value)
             this.lights[i].enable();
-        else 
+        else
             this.lights[i].disable();
         this.lights[i].update();
     }
@@ -193,10 +196,10 @@ class XMLscene extends CGFscene {
      * in this case the current material for components that have more than one material
      */
 
-    update(){   
-        if(this.gui.isKeyPressed('KeyM')){
+    update() {
+        if (this.gui.isKeyPressed('KeyM')) {
             this.keyMHelper = true;
-        }else if(this.keyMHelper == true){
+        } else if (this.keyMHelper == true) {
             this.keyMHelper = false;
             this.graph.materialIndex++;
             //console.log("kdos");
@@ -205,18 +208,18 @@ class XMLscene extends CGFscene {
 
     /**
      * Renders the scene to the current frame buffer for a particular camera
-     * @param {*} camera Camera to which the scene will be rendered, if undefined the camera will not change and will use the current active camera
+     * @param {CGFcamera} camera Camera to which the scene will be rendered, if undefined the camera will not change and will use the current active camera
      */
 
-    render(camera){
-        if(camera != undefined){
+    render(camera) {
+        if (camera != undefined) {
             this.camera = camera;
             this.interface.setActiveCamera(this.camera);
         }
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
-        
+
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
@@ -239,10 +242,10 @@ class XMLscene extends CGFscene {
             //this.lights[i].enable();
             this.lights[i].update();
         }
-        
+
         this.setDefaultAppearance();
         // Displays the scene (MySceneGraph function).
-        this.time = (new Date() - this.startTime)/1000;
+        this.time = (new Date() - this.startTime) / 1000;
         this.graph.displayScene();
 
         this.popMatrix();
@@ -253,9 +256,9 @@ class XMLscene extends CGFscene {
      * Displays the scene, renders the first time to the security camera, and then only to the scene camera, and then displays each
      */
 
-    display(){
+    display() {
         if (this.sceneInited) {
-        
+
             //this.textureRTT = new CGFtextureRTpT(this,this.canvasWidth,this.canvasHeight);
             //gerar securtity camera e escrever imagem na RTT texture
             this.textureRTT.attachToFrameBuffer();
@@ -264,9 +267,9 @@ class XMLscene extends CGFscene {
 
             //render da imagem no ecra
             this.render(this.cameras[this.selectView]);
-            
+
             //display da security camera no ecra
-            
+
             this.securityCamera.display();
 
         }
