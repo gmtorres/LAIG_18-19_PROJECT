@@ -13,7 +13,7 @@ class MyPlane extends CGFobject {
         this.npartsV = npartsV;
         this.dU = 1/npartsU;
         this.dV = 1/npartsV;    
-
+        this.id = id;
         this.u_length = 1;
 		this.v_length = 1;
 

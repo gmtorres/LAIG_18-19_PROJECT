@@ -64,7 +64,25 @@ class XMLscene extends CGFscene {
         this.securityCameraMovementAux = false;
         this.securityCameraMovementVec = [0,0,0,0];
 
+        this.board = new Board(this);
+
     }
+
+    logPicking() {
+		if (this.pickMode == false) {
+			if (this.pickResults != null && this.pickResults.length > 0) {
+				for (var i = 0; i < this.pickResults.length; i++) {
+					var obj = this.pickResults[i][0];
+					if (obj) {
+						var customId = this.pickResults[i][1];
+						console.log("Picked object: " + obj + ", with pick id " + customId);						
+					}
+				}
+				this.pickResults.splice(0, this.pickResults.length);
+			}
+        }
+        
+	}
 
     /**
      * Initializes the scene cameras.
@@ -295,6 +313,10 @@ class XMLscene extends CGFscene {
      */
 
     render(camera) {
+        
+        this.logPicking();
+        this.clearPickRegistration();
+
         if (camera != undefined) {
             this.camera = camera;
             this.interface.setActiveCamera(this.camera);
@@ -330,7 +352,7 @@ class XMLscene extends CGFscene {
         // Displays the scene (MySceneGraph function).
         this.time = (new Date() - this.startTime) / 1000;
         this.graph.displayScene();
-
+        this.board.display();
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
