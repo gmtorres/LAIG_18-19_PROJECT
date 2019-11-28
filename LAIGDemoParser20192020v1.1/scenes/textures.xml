@@ -189,7 +189,7 @@
             <plane npartsU='20' npartsV='20'/>
         </primitive>
         <primitive id='demoCylinder2'>
-            <cylinder2 npartsU='2' npartsV='2'/>
+            <cylinder2 npartsU='5' npartsV='5'/>
         </primitive>
         <primitive id='demoPatch'>
             <patch npointsU='5' npointsV='5' npartsU='30' npartsV='30' >

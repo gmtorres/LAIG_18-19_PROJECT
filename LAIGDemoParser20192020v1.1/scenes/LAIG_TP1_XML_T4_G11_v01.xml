@@ -5154,7 +5154,7 @@
                 <componentref id='bancos'/>
                 <componentref id='castel1'/>
                 <componentref id='tires'/>
-                <componentref id='cerca_toda'/>
+                 <componentref id='cerca_toda'/>
                 
                 <componentref id='skybox'/>
                 <componentref id='playStruct'/>

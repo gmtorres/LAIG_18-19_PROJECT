@@ -4,7 +4,7 @@ class MyCylinder2 extends CGFobject {
      * 
      * @param {CGFscene} scene Reference to MyScene 
      * @param {string} id ID of the cylinder  
-     * @param {int} npartsU Number of parts of the U axis
+     * @param {int} npartsU Number of parts of the U axis 
      * @param {int} npartsV  Number of parts of the V axis
      */
     constructor(scene, id, npartsU, npartsV) {
@@ -41,7 +41,7 @@ class MyCylinder2 extends CGFobject {
             ],  
         ];
         var nurbsSurface = new CGFnurbsSurface(3, 1, vertices);
-        this.obj1 = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface );
+        this.obj1 = new CGFnurbsObject(this.scene, Math.round(this.npartsU/2), Math.round(this.npartsV/2), nurbsSurface );
         vertices = [	// U = 0
 
             [ // V = 0..1							 
@@ -64,7 +64,7 @@ class MyCylinder2 extends CGFobject {
             // U = 2
         ];
         var nurbsSurface = new CGFnurbsSurface(3, 1, vertices);
-        this.obj2 = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface );
+        this.obj2 = new CGFnurbsObject(this.scene, Math.round(this.npartsU/2), Math.round(this.npartsV/2), nurbsSurface );
 
     }
     /**
