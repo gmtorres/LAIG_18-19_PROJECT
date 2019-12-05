@@ -26,7 +26,14 @@ serialInclude(['../lib/CGF.js',
                'Animation.js',
                'KeyframeAnimation.js',
                'MySecurityCamera.js',
-               'board.js',
+               'MyGameBoard.js',
+               'MyTile.js',
+               'MyPiece.js',
+               'MyGameMove.js',
+               'MyGameSequence.js',
+               'MyAnimator.js',
+               'MyGameOrchestrator.js',
+
 
 main=function()
 {
@@ -48,7 +55,7 @@ main=function()
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
-    var myGraph = new MySceneGraph(filename, myScene);
+    var myGameOrchestrator = new MyGameOrchestrator(filename, myScene);
 
     app.setInterface(myInterface);
     

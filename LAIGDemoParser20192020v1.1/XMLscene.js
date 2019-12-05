@@ -37,6 +37,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(60);
+        this.setPickEnabled(true);
 
         this.camerasIds = [];
 
@@ -64,7 +65,7 @@ class XMLscene extends CGFscene {
         this.securityCameraMovementAux = false;
         this.securityCameraMovementVec = [0,0,0,0];
 
-        this.board = new Board(this);
+
 
     }
 
@@ -351,8 +352,12 @@ class XMLscene extends CGFscene {
         this.setDefaultAppearance();
         // Displays the scene (MySceneGraph function).
         this.time = (new Date() - this.startTime) / 1000;
-        this.graph.displayScene();
-        this.board.display();
+
+
+        //this.graph.displayScene();
+        this.gameOrchestrator.display();
+
+
         this.popMatrix();
         // ---- END Background, camera and axis setup
     }
