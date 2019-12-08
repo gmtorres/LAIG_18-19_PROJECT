@@ -1,21 +1,27 @@
 class Animation{
-    /**
-     * 
-     * @param {CGFscene} scene Reference to MyScene
-     */
+    constructor(scene){
+        if (this.constructor === Animation) {
+            throw new TypeError('Abstract class "Animation" cannot be instantiated directly.'); 
+        }
+        if (this.update === undefined) {
+            throw new TypeError('Classes extending the Animation abstract class should implement \'update\' function');
+        }
+        if (this.apply === undefined) {
+            throw new TypeError('Classes extending the Animation abstract class should implement \'apply\' function');
+        }
+        this.applicationMatrix = scene;
+    }
+}
+
+
+/*class Animation{
+
     constructor(scene){
         this.appMatrix = scene;
         this.helpMatrix = mat4.create();
         this.keyframes = [];
     }
 
-    /**
-     * Calculates the position which is at d% of the distance between arr1 and arr2
-     * 
-     * @param {vec3} arr1 vec3 with the coordinates of the first position
-     * @param {vec3} arr2 vec3 with the coordinates of the last position
-     * @param {float} d percentage of the distance
-     */
     diff(arr1,arr2,d){
         var temp = [];
         for(var a = 0; a < arr1.length;a++){
@@ -24,10 +30,7 @@ class Animation{
         return temp;
     }
 
-    /**
-     * Updates the animation state given the current time
-     * @param {int} time Current time relative to the begining of the start of the program
-     */
+
     update(time){
         var previous = new KeyframeAnimation(this.helpMatrix,0,[0,0,0],[0,0,0],[1,1,1]);
         var next = this.keyframes[0];
@@ -61,11 +64,9 @@ class Animation{
 
     }
 
-    /**
-     * Applies the animation transformation matrix to the matrix scene
-     */
     apply(){
         this.appMatrix.multMatrix(this.helpMatrix);
     }
 
 }
+*/

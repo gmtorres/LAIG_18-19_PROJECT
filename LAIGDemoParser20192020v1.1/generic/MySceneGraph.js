@@ -777,7 +777,7 @@ class MySceneGraph {
         
         for(var i = 0; i < children.length; i++){
 
-            var animation = new Animation(this.scene);
+            var animation = new KeyframeAnimation(this.scene);
 
             if(children[i].nodeName != 'animation') {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
@@ -828,9 +828,9 @@ class MySceneGraph {
                     'scale transformation');
                 if (!Array.isArray(scale)) return scale;
 
-                var keyframe = new KeyframeAnimation(animation.helpMatrix,instant, translation,rotation,scale);
+                var keyframe = new KeyFrame(instant, translation,rotation,scale);
 
-                animation.keyframes.push(keyframe);
+                animation.addKeyFrame(keyframe);
 
             }
             this.animations[animationId] = animation;
