@@ -314,9 +314,8 @@ class XMLscene extends CGFscene {
      */
 
     render(camera) {
-        
-        this.logPicking();
-        this.clearPickRegistration();
+        this.gameOrchestrator.orchestrate();
+
 
         if (camera != undefined) {
             this.camera = camera;

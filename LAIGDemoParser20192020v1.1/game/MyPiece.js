@@ -5,7 +5,7 @@ class MyPiece{
         this.setType(type);
         this.setTile(tile);
         this.uniqueID = uniqueID;
-        this.selectable = false;
+        this.selectable = true;
     }
 
     setType(type){

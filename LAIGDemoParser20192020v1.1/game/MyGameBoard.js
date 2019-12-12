@@ -30,7 +30,7 @@ class MyGameBoard{
 
         for(var a = 0; a < 5 ; a++){
             for(var b = 0 ; b < 5; b++){
-                this.tiles.push(new MyTile(this.orchestrator,(a*5+b), new MyPlane(this.orchestrator.getScene(),1,32,32),a,b) );
+                this.tiles.push(new MyTile(this.orchestrator,(a*5+b) + 1, new MyPlane(this.orchestrator.getScene(),1,32,32),a,b) );
             }
         }
     }
@@ -48,7 +48,7 @@ class MyGameBoard{
                 }
             }
         }
-
+        
     }
 
     setPlayerSelectable(player,mode){

@@ -8,8 +8,8 @@ class MyGameMove{
         this.gameBoardAfter = null;
     }
 
-    animate(){
-
+    animate(time){
+        //TODO
     }
 
     getReverseMove(){
