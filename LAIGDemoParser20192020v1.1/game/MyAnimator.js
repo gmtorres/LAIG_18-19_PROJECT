@@ -3,6 +3,7 @@ class MyAnimator{
         this.orchestrator = orchestrator;
         this.gameSequence = gameSequence;
         this.currentGameMovement = null;
+        this.animationStartTime = null;
     }
     
     reset(){
@@ -15,13 +16,28 @@ class MyAnimator{
 
     update(time){
         if(this.currentGameMovement != null){
-            this.currentGameMovement.update(time);
+            if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){
+                this.currentGameMovement.piece.animated = false;
+                this.currentGameMovement = null;
+            }
         }
+        if(this.currentGameMovement == null){
+            this.currentGameMovement = this.gameSequence.next();
+            if(this.currentGameMovement == null){
+                return false;
+            }else{
+                this.currentGameMovement.piece.animated = true;
+                this.animationStartTime = time;
+            }
+        }
+        return true;
     }
     display(){
+        this.orchestrator.scene.pushMatrix();
         if(this.currentGameMovement != null){
             this.currentGameMovement.display();
         }
+        this.orchestrator.scene.popMatrix();
     }
 
 }

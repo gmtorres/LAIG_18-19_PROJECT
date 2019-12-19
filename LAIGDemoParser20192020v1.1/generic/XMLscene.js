@@ -45,7 +45,7 @@ class XMLscene extends CGFscene {
 
         this.selectView = "";
 
-        this.securityCameraShader = new CGFshader(this.gl, "shaders/security.vert", "shaders/security.frag");
+        /*this.securityCameraShader = new CGFshader(this.gl, "shaders/security.vert", "shaders/security.frag");
         this.securityCameraShader.setUniformsValues({
             securityCameraSampler: 1,
             uSampler: 0
@@ -63,7 +63,7 @@ class XMLscene extends CGFscene {
         this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 0, 16), vec3.fromValues(7, -3, 5));
         this.securityCameraMovement = false;
         this.securityCameraMovementAux = false;
-        this.securityCameraMovementVec = [0,0,0,0];
+        this.securityCameraMovementVec = [0,0,0,0];*/
 
 
 
@@ -184,7 +184,7 @@ class XMLscene extends CGFscene {
         lightsFolder.open();
 
 
-        var SecurityCameraFolder = this.interface.gui.addFolder('Security Camera');
+        /*var SecurityCameraFolder = this.interface.gui.addFolder('Security Camera');
         var SecurityCameraFolderPosition = SecurityCameraFolder.addFolder('Position');
         SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '0', -30, 30).name('x');
         SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '1', -30, 30).name('y');
@@ -196,7 +196,7 @@ class XMLscene extends CGFscene {
         SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '2', -30, 30).name('z');
         SecurityCameraFolderTarget.open();
         SecurityCameraFolder.add(this,"securityCameraMovement").name('Movement');
-        SecurityCameraFolder.open();
+        SecurityCameraFolder.open();*/
 
         this.updateCamera();
 
@@ -228,85 +228,10 @@ class XMLscene extends CGFscene {
             //console.log("kdos");
         }
 
-        if(this.securityCameraMovementAux){
-            this.securityCamera.camera.target[0] -= this.securityCameraMovementVec[0];
-            this.securityCamera.camera.target[1] -= this.securityCameraMovementVec[1];
-            this.securityCamera.camera.target[2] -= this.securityCameraMovementVec[2];
-
-            if(this.securityCameraMovementVec[3] == 0) this.securityCameraMovementVec[3] = this.time;
-
-            let a = (this.time - this.securityCameraMovementVec[3]) % 12;
-            var b = this.calculateCameraRotation(a);
-
-            this.securityCameraMovementVec = [b[0],0,b[1],this.securityCameraMovementVec[3]];
-            
-            if( a>=5.8 && a<6.2 || a<0.2 || a>11.8){
-                if(this.securityCameraMovement == false)
-                    this.securityCameraMovementAux = false;
-            }
-
-            this.securityCamera.camera.target[0] += this.securityCameraMovementVec[0];
-            this.securityCamera.camera.target[1] += this.securityCameraMovementVec[1];
-            this.securityCamera.camera.target[2] += this.securityCameraMovementVec[2];
-        }else{
-            if(this.securityCameraMovement){
-                this.securityCameraMovementAux = true;
-            }
-            this.securityCamera.camera.target[0] -= this.securityCameraMovementVec[0];
-            this.securityCamera.camera.target[1] -= this.securityCameraMovementVec[1];
-            this.securityCamera.camera.target[2] -= this.securityCameraMovementVec[2];
-            this.securityCameraMovementVec = [0,0,0,0];
-        }
-            
+        
 
     }
-    /**
-     * Simple function to calculate camera delta rotation, to change the targets coord
-     * @param {double} time current time to calculate the function , from 0 to 12
-     */
-    calculateCameraRotation(time){
-        var x = this.securityCamera.camera.position[0] - this.securityCamera.camera.target[0];
-        var y = this.securityCamera.camera.position[2] - this.securityCamera.camera.target[2];
-        var r = Math.sqrt(x*x+y*y);
-        var ang = Math.acos(x/r);
-
-        if(time < 2){
-             ang += 0.2*time;
-        }else if( time>=2 && time < 4){
-            ang += 0.2*2;
-        }else if( time>=4 && time<8){
-            ang += -0.2*(time-6);
-        }else if( time>=8 && time < 10){
-            ang += 0.2*-2;
-        }else if( time>=10 && time<12){
-            ang += 0.2*(time - 12);
-        }
-        
-        var a =  0;
-        var b =  0;
-
-        
-        a =  r * Math.cos(ang) - x;
-        if(y>=0)
-            b =  r * Math.sin(ang) - y;
-        else
-            b =  r * Math.sin(ang) + y;
-
-        return [a, b];
-
-        /*if(a < 2){
-            return a;
-        }else if( a>=2 && a < 4){
-            return 2;
-        }else if( a>=4 && a<8){
-            return -(a-6);
-        }else if( a>=8 && a < 10){
-            return -2;
-        }else if( a>=10 && a<12){
-            return a - 12;
-        }*/
-        //return 0;
-    }
+    
 
     /**
      * Renders the scene to the current frame buffer for a particular camera
@@ -370,16 +295,14 @@ class XMLscene extends CGFscene {
 
             //this.textureRTT = new CGFtextureRTpT(this,this.canvasWidth,this.canvasHeight);
             //gerar securtity camera e escrever imagem na RTT texture
-            this.textureRTT.attachToFrameBuffer();
-            this.render(this.securityCamera.camera);
-            this.textureRTT.detachFromFrameBuffer();
+           
 
             //render da imagem no ecra
             this.render(this.cameras[this.selectView]);
 
             //display da security camera no ecra
 
-            this.securityCamera.display();
+           
 
         }
     }

@@ -1,8 +1,16 @@
 class LinearAnimation extends Animation{
-    constructor(scene,keyframe1,keyframe2){
+    constructor(scene,transf1,transf2){
         super(scene);
-        this.keyframe1 = keyframe1;
-        this.keyframe2 = keyframe2;
+        this.translate1 = transf1.translate;
+        this.rotate1 = transf1.rotate;
+        this.scale1 = transf1.scale;
+        this.instant1 = transf1.instant;
+        this.translate2 = transf2.translate;
+        this.rotate2 = transf2.rotate;
+        this.scale2 = transf2.scale;
+        this.instant2 = transf2.instant;
+
+        this.helpMatrix = mat4.create();
     }
 
     linear(arr1,arr2,d){
@@ -14,28 +22,31 @@ class LinearAnimation extends Animation{
     }
 
     update(time){
+        if(time > this.instant2 || time < this.instant1)
+            return false;
         this.helpMatrix = mat4.create();
-        if(this.keyframe1.instant >= this.keyframe2.instant){
-            mat4.translate(this.helpMatrix,this.helpMatrix,this.keyframe1.transate);
-            mat4.rotate(this.helpMatrix,this.helpMatrix,this.keyframe1.rotate[0],[1,0,0]);
-            mat4.rotate(this.helpMatrix,this.helpMatrix,this.keyframe1.rotate[1],[0,1,0]);
-            mat4.rotate(this.helpMatrix,this.helpMatrix,this.keyframe1.rotate[2],[0,0,1]);
-            mat4.scale(this.helpMatrix,this.helpMatrix,this.keyframe1.scale);
+        if(this.instant1 >= this.instant2){
+            mat4.translate(this.helpMatrix,this.helpMatrix,this.translate1);
+            mat4.rotate(this.helpMatrix,this.helpMatrix,this.rotate1[0],[1,0,0]);
+            mat4.rotate(this.helpMatrix,this.helpMatrix,this.rotate1[1],[0,1,0]);
+            mat4.rotate(this.helpMatrix,this.helpMatrix,this.rotate1[2],[0,0,1]);
+            mat4.scale(this.helpMatrix,this.helpMatrix,this.scale1);
         }else{
-            var delta = 1 - (this.keyframe2.instant - time) / (this.keyframe2.instant - this.keyframe1.instant);
-            var transate = this.linear(this.keyframe1.transate,this.keyframe2.transate,delta);
-            var rotate = this.linear(this.keyframe1.rotate,this.keyframe2.rotate,delta);
-            var scale = this.linear(this.keyframe1.scale,this.keyframe2.scale,delta);
-            mat4.translate(this.helpMatrix,this.helpMatrix,transate);
+            var delta = 1 - (this.instant2 - time) / (this.instant2 - this.instant1);
+            var translate = this.linear(this.translate1,this.translate2,delta);
+            var rotate = this.linear(this.rotate1,this.rotate2,delta);
+            var scale = this.linear(this.scale1,this.scale2,delta);
+            mat4.translate(this.helpMatrix,this.helpMatrix,translate);
             mat4.rotate(this.helpMatrix,this.helpMatrix,rotate[0],[1,0,0]);
             mat4.rotate(this.helpMatrix,this.helpMatrix,rotate[1],[0,1,0]);
             mat4.rotate(this.helpMatrix,this.helpMatrix,rotate[2],[0,0,1]);
             mat4.scale(this.helpMatrix,this.helpMatrix,scale);
         }
-        return this.helpMatrix;
+        return true;
+        //return this.helpMatrix;
     }
     apply(){
-
+        this.applicationMatrix.multMatrix(this.helpMatrix);
     }
     
 }

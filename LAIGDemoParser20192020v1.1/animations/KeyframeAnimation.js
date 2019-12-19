@@ -4,6 +4,7 @@ class KeyframeAnimation extends Animation{
         super(scene);
         this.keyframes = [];
         this.helpMatrix = mat4.create();
+        this.currentAnimation = null;
     }
     addKeyFrame(keyFrame){
         this.keyframes.push(keyFrame);
@@ -23,12 +24,25 @@ class KeyframeAnimation extends Animation{
     update(time){
         let sequence = {prev : null, next : null };
         this.getKeyframes(time,sequence);
-        let animation = new LinearAnimation(this.aplicationMatrix,sequence.prev,sequence.next);
-        this.helpMatrix = animation.update(time);
+        let transf1 = {
+            translate : sequence.prev.translate,
+            scale     : sequence.prev.scale,
+            rotate    : sequence.prev.rotate,
+            instant   : sequence.prev.instant 
+        };
+
+        let transf2 = {
+            translate : sequence.next.translate,
+            scale     : sequence.next.scale,
+            rotate    : sequence.next.rotate,
+            instant   : sequence.next.instant 
+        };
+        this.currentAnimation = new LinearAnimation(this.applicationMatrix,transf1,transf2);
+        this.currentAnimation.update(time);
     }
 
     apply(){
-        this.applicationMatrix.multMatrix(this.helpMatrix);
+        this.currentAnimation.apply();
     }
 
 }
@@ -36,7 +50,7 @@ class KeyframeAnimation extends Animation{
 class KeyFrame{
     constructor(inst, trans, rota , scl,type){
         this.instant = inst;
-        this.transate = trans;
+        this.translate = trans;
         this.rotate = rota;
         this.scale = scl;
     }

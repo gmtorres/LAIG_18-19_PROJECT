@@ -24,6 +24,10 @@ class MyTile{
         return this.type;
     }
 
+    getPosition(){
+        return [this.x,0,this.y];
+    }
+
     display(){
         if(this.selectable){
             this.orchestrator.getScene().registerForPick(this.uniqueID,this);

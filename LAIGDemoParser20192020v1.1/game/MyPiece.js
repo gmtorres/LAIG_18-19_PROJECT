@@ -6,6 +6,7 @@ class MyPiece{
         this.setTile(tile);
         this.uniqueID = uniqueID;
         this.selectable = true;
+        this.animated = false;
     }
 
     setType(type){
@@ -28,15 +29,17 @@ class MyPiece{
     }
 
     display(){
-        if(this.selectable){
-            this.orchestrator.getScene().registerForPick(this.uniqueID,this);
-        }
-        this.orchestrator.getScene().pushMatrix();
-        this.orchestrator.getScene().translate(this.tile.x,0,this.tile.y);
-        this.type.display();
-        this.orchestrator.getScene().popMatrix();
-        if(this.selectable){
-            this.orchestrator.getScene().clearPickRegistration();
+        if(!this.animated){
+            if(this.selectable){
+                this.orchestrator.getScene().registerForPick(this.uniqueID,this);
+            }
+            this.orchestrator.getScene().pushMatrix();
+            this.orchestrator.getScene().translate(this.tile.x,0,this.tile.y);
+            this.type.display();
+            this.orchestrator.getScene().popMatrix();
+            if(this.selectable){
+                this.orchestrator.getScene().clearPickRegistration();
+            }
         }
     }
 

@@ -5,8 +5,8 @@ class MyGameOrchestrator {
         scene.gameOrchestrator = this;
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
-        this.gameBoard = new MyGameBoard(this);
         this.theme = new MySceneGraph(filename, scene);
+        this.gameBoard = new MyGameBoard(this);
         this.prolog = null; //new MyPrologInterface(...);
         this.gameStates = {
             'Menu': 0,
@@ -25,6 +25,8 @@ class MyGameOrchestrator {
 
         this.selectedPiece = null;
         this.selectedTile = null;
+
+        this.animating = false;
 
     }
 
@@ -125,13 +127,18 @@ class MyGameOrchestrator {
                 if(this.selectedTile != null){
                     this.gameBoard.setTilesSelectable(false);
 
+                    this.gameSequence.addMove(new MyGameMove(this.gameBoard,this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile));
+
+                    this.animating = true;
                     this.state = this.gameStates['Movement Animation'];
                 }
                 break;
             case this.gameStates['Movement Animation']:
                 
-                this.state = this.gameStates['Evaluate Game End'];
-                this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
+                if(this.animator.update(this.scene.time) == false){
+                    this.state = this.gameStates['Evaluate Game End'];
+                    this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
+                }
                 break;
             case this.gameStates['Evaluate Game End']:
                 this.state = this.gameStates['Next Turn'];
