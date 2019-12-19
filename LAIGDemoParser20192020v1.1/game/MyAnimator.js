@@ -17,7 +17,6 @@ class MyAnimator{
     update(time){
         if(this.currentGameMovement != null){
             if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){
-                this.currentGameMovement.piece.animated = false;
                 this.currentGameMovement = null;
             }
         }
@@ -26,7 +25,6 @@ class MyAnimator{
             if(this.currentGameMovement == null){
                 return false;
             }else{
-                this.currentGameMovement.piece.animated = true;
                 this.animationStartTime = time;
             }
         }

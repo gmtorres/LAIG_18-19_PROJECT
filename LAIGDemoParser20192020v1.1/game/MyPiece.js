@@ -29,6 +29,7 @@ class MyPiece{
     }
 
     display(){
+        this.orchestrator.getScene().pushMatrix();
         if(!this.animated){
             if(this.selectable){
                 this.orchestrator.getScene().registerForPick(this.uniqueID,this);
@@ -41,6 +42,8 @@ class MyPiece{
                 this.orchestrator.getScene().clearPickRegistration();
             }
         }
+        this.orchestrator.getScene().popMatrix();
+
     }
 
 }

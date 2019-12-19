@@ -21,6 +21,8 @@ class MyGameSequence{
 
     undo(){
         let undo = this.sequence.pop();
-        return undo.getReverseMove();
+        this.index--;
+        return null;
+        //return new MyGameMove(this.sequence[index].gameBoardPrev,)
     }
 }

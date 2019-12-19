@@ -127,7 +127,11 @@ class MyGameOrchestrator {
                 if(this.selectedTile != null){
                     this.gameBoard.setTilesSelectable(false);
 
-                    this.gameSequence.addMove(new MyGameMove(this.gameBoard,this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile));
+                    let move = new MyGameMove(this.gameBoard,this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile);
+                    let move2 = new MyGameMove(this.gameBoard,this.gameBoard.tiles[16].getPiece(),this.gameBoard.tiles[16],this.gameBoard.tiles[0]);
+                    let comp = new MyGameMoves([move,move2]);
+
+                    this.gameSequence.addMove(comp);
 
                     this.animating = true;
                     this.state = this.gameStates['Movement Animation'];

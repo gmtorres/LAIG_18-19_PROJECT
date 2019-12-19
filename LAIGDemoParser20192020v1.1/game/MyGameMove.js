@@ -33,15 +33,17 @@ class MyGameMove{
                 rotate    : [0,0,0],
                 instant   : 0.5
             };
-            this.currentAnimation = new LinearAnimation(this.piece.orchestrator.scene,transf1,transf2);
+            this.currentAnimation = new LinearAnimation(this.piece.orchestrator.getScene(),transf1,transf2);
+            this.piece.animated = true;
         }
     }
 
     animate(time){
         //TODO
-        
+        this.buildAnimation();
         if(this.currentAnimation.update(time) == false){
             this.currentAnimation = null;
+            this.piece.animated = false;
             return false;
         }
         return true;
@@ -49,15 +51,17 @@ class MyGameMove{
 
     display(){
         //TODO
-
+    
         if(this.currentAnimation == null){
             this.piece.display();
             return;
         }
+        this.piece.orchestrator.getScene().pushMatrix();
         this.currentAnimation.apply();
         this.piece.animated = false;
         this.piece.display();
         this.piece.animated = true;
+        this.piece.orchestrator.getScene().popMatrix();
 
         
     }
