@@ -105,7 +105,7 @@ class MyGameOrchestrator {
                 }else if(this.currenPlayer == 2){
                     this.gameBoard.setPlayerSelectable(1,false);
                     this.gameBoard.setPlayerSelectable(2,true);
-                    //this.animator.reset();
+                    //this.animator.replay();
                 }
 
                 this.selectedPiece = null;
@@ -134,17 +134,17 @@ class MyGameOrchestrator {
 
                     this.gameSequence.addMove(comp);
 
-                    this.animating = true;
+                    //this.animating = true;
                     this.state = this.gameStates['Movement Animation'];
-                }else{
-                    break;
                 }
+                break;
             case this.gameStates['Movement Animation']:
                 
                 if(this.animator.update(this.scene.time) == false){
                     this.animating = false;
                     this.state = this.gameStates['Evaluate Game End'];
                     this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
+                    this.gameBoard.buildBoardFromTiles();
                 }
                 break;
             case this.gameStates['Evaluate Game End']:

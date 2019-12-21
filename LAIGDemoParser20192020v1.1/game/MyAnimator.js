@@ -9,6 +9,9 @@ class MyAnimator{
     reset(){
         this.gameSequence.reset();
     }
+    replay(){
+        this.gameSequence.replay();
+    }
 
     start(){
         this.currentGameMovement = this.gameSequence.next();
@@ -19,6 +22,7 @@ class MyAnimator{
             if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){
                 this.currentGameMovement.setPiecesAnimated(false);
                 this.currentGameMovement = null;
+                this.orchestrator.animating = false;;
             }
         }
         if(this.currentGameMovement == null){
@@ -26,8 +30,9 @@ class MyAnimator{
             if(this.currentGameMovement == null){
                 return false;
             }else{
-                this.currentGameMovement.setPiecesAnimated(true);
+                //this.currentGameMovement.setPiecesAnimated(true);
                 this.animationStartTime = time;
+                this.orchestrator.animating = true;
             }
         }
         return true;

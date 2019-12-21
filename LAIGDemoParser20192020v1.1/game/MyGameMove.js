@@ -41,7 +41,6 @@ class MyGameMove{
         this.buildAnimation();
         if(this.currentAnimation.update(time) == false){
             this.currentAnimation = null;
-            //this.piece.animated = false;
             return false;
         }
         return true;

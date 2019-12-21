@@ -5,6 +5,11 @@ class MyGameSequence{
         this.index = 0;
     }
     reset(){
+        this.sequence = [];
+        this.index = 0;
+    }
+
+    replay(){
         this.index = 0;
     }
     

@@ -4,8 +4,8 @@ class MyGameBoard{
         this.orchestrator = orchestrator;
         this.createNewBoard();
         
-        this.setTiles();
-        this.setPieces();
+        this.createTiles();
+        this.createPieces();
         
     }
 
@@ -25,7 +25,29 @@ class MyGameBoard{
         }
     }
 
-    setTiles(){
+    buildBoardFromTiles(){
+        this.board = [[0,0,0,0,0],
+                      [0,0,0,0,0],
+                      [0,0,0,0,0],
+                      [0,0,0,0,0],
+                      [0,0,0,0,0]];
+
+        for(let i = 0;i < this.tiles.length;i++){
+            if(this.tiles[i].piece != null){
+                let x = this.tiles[i].x;
+                let y = this.tiles[i].y;
+                let id = this.tiles[i].piece.getId();
+                if(id >= 100 && id < 150 ){
+                    this.board[x][y] = 1;
+                }
+                if(id >= 150 && id < 200 ){
+                    this.board[x][y] = 2;
+                }
+            }
+        }
+    }
+
+    createTiles(){
         this.tiles = [];
 
         for(var a = 0; a < 5 ; a++){
@@ -35,20 +57,20 @@ class MyGameBoard{
         }
     }
 
-    setPieces(){
+    createPieces(){
+        this.pieces = [];
         let player1 = 0;
         let player2 = 0;
         for(var a = 0; a < 5 ; a++){
             for(var b = 0 ; b < 5; b++){
                 let value = this.board[a][b];
                 if(value == 1){
-                    new MyPiece(this.orchestrator,100+(player1++) , new MyTorus(this.orchestrator.getScene(),1,0.2,0.1,20,20), this.tiles[a * 5 + b]);
+                    this.pieces.push(new MyPiece(this.orchestrator,100+(player1++) , new MyTorus(this.orchestrator.getScene(),1,0.2,0.1,20,20), this.tiles[a * 5 + b]));
                 }else if(value == 2){
-                    new MyPiece(this.orchestrator,150+(player2++) , new MyTorus(this.orchestrator.getScene(),1,0.2,0.1,20,20), this.tiles[a * 5 + b]);
+                    this.pieces.push(new MyPiece(this.orchestrator,150+(player2++) , new MyTorus(this.orchestrator.getScene(),1,0.2,0.1,20,20), this.tiles[a * 5 + b]));
                 }
             }
         }
-        
     }
 
     setPlayerSelectable(player,mode){
@@ -79,7 +101,6 @@ class MyGameBoard{
     }
 
     movePiece(piece,startTile,destTile){
-
         startTile.setPiece(null);
         piece.setTile(destTile);
     }
@@ -90,18 +111,22 @@ class MyGameBoard{
         piece.setTile(destTile);
     }
 
+    getPieceByTile(x,y){
+        return this.tiles[x][y].piece;
+    }
+
 
 
     display(){
         for(let i = 0; i < this.tiles.length;i++){
-            if(i%2 == 0)
-                this.orchestrator.getScene().graph.materials['black'].apply();
-            else
-                this.orchestrator.getScene().graph.materials['white'].apply();
+            
+            if(i%2 == 0)    this.orchestrator.getScene().graph.materials['black'].apply();
+            else    this.orchestrator.getScene().graph.materials['white'].apply();
 
             let piece = this.tiles[i].getPiece();
-
+            
             this.tiles[i].display();
+            this.orchestrator.getScene().graph.materials['white'].apply();
             if(piece != null){
                 piece.display();
             }
