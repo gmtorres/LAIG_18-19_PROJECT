@@ -15,14 +15,21 @@ class MyGameSequence{
     next(){
         if(this.index >= this.sequence.length)
             return null;
-        else
-            return this.sequence[this.index++];
+        let nextMove = this.sequence[this.index];
+        if(nextMove.undoMove == false)
+            this.index++;
+        else if(nextMove.undo == true){
+            this.sequence.pop();
+            this.index--;
+        }
+        return nextMove;
+    }
+    
+    setAfterBoardOfPreviousMove(afterBoard){
+        this.sequence[this.sequence.length-1].setAfterBoard(afterBoard);
     }
 
     undo(){
-        let undo = this.sequence.pop();
-        this.index--;
-        return null;
-        //return new MyGameMove(this.sequence[index].gameBoardPrev,)
+        
     }
 }

@@ -72,6 +72,12 @@ class MyGameBoard{
         }
     }
 
+    setPiecesAnimated(value){
+        for(let i = 0; i < this.tiles.length;i++){
+            this.tiles[i].getPiece().animated = value;
+        }
+    }
+
     movePiece(piece,startTile,destTile){
 
         startTile.setPiece(null);

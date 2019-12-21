@@ -1,13 +1,11 @@
 class MyGameMove{
 
-    constructor(gameBoardPrev , piece,origTile, destTile){
-        this.gameBoardPrev = Object.assign(new MyGameBoard(gameBoardPrev.orchestrator),gameBoardPrev);
+    constructor(piece,origTile, destTile){
         this.piece = piece;
         this.origTile = origTile; 
         this.destTile = destTile;
-        this.gameBoardAfter = null;
+        this.gameBoardAfter;
         this.currentAnimation = null;
-        this.buildAnimation();
     }
 
     diff(arr1,arr2){
@@ -34,7 +32,7 @@ class MyGameMove{
                 instant   : 0.5
             };
             this.currentAnimation = new LinearAnimation(this.piece.orchestrator.getScene(),transf1,transf2);
-            this.piece.animated = true;
+            //this.piece.animated = true;
         }
     }
 
@@ -43,7 +41,7 @@ class MyGameMove{
         this.buildAnimation();
         if(this.currentAnimation.update(time) == false){
             this.currentAnimation = null;
-            this.piece.animated = false;
+            //this.piece.animated = false;
             return false;
         }
         return true;
@@ -56,12 +54,16 @@ class MyGameMove{
             this.piece.display();
             return;
         }
-        this.piece.orchestrator.getScene().pushMatrix();
+        let scene = this.piece.orchestrator.getScene();
+        let pieceP = this.piece.getTile().getPosition();
+        let origP = this.origTile.getPosition();
+        scene.pushMatrix();
+        scene.translate(origP[0] - pieceP[0],origP[1] - pieceP[1] ,origP[2] - pieceP[2]);
         this.currentAnimation.apply();
         this.piece.animated = false;
         this.piece.display();
         this.piece.animated = true;
-        this.piece.orchestrator.getScene().popMatrix();
+        scene.popMatrix();
 
         
     }

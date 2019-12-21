@@ -17,6 +17,7 @@ class MyAnimator{
     update(time){
         if(this.currentGameMovement != null){
             if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){
+                this.currentGameMovement.setPiecesAnimated(false);
                 this.currentGameMovement = null;
             }
         }
@@ -25,17 +26,18 @@ class MyAnimator{
             if(this.currentGameMovement == null){
                 return false;
             }else{
+                this.currentGameMovement.setPiecesAnimated(true);
                 this.animationStartTime = time;
             }
         }
         return true;
     }
     display(){
-        this.orchestrator.scene.pushMatrix();
         if(this.currentGameMovement != null){
+            this.orchestrator.scene.pushMatrix();
             this.currentGameMovement.display();
+            this.orchestrator.scene.popMatrix();
         }
-        this.orchestrator.scene.popMatrix();
     }
 
 }

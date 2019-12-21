@@ -105,6 +105,7 @@ class MyGameOrchestrator {
                 }else if(this.currenPlayer == 2){
                     this.gameBoard.setPlayerSelectable(1,false);
                     this.gameBoard.setPlayerSelectable(2,true);
+                    //this.animator.reset();
                 }
 
                 this.selectedPiece = null;
@@ -127,19 +128,21 @@ class MyGameOrchestrator {
                 if(this.selectedTile != null){
                     this.gameBoard.setTilesSelectable(false);
 
-                    let move = new MyGameMove(this.gameBoard,this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile);
-                    let move2 = new MyGameMove(this.gameBoard,this.gameBoard.tiles[16].getPiece(),this.gameBoard.tiles[16],this.gameBoard.tiles[0]);
-                    let comp = new MyGameMoves([move,move2]);
+                    let move = new MyGameMove(this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile);
+                    //let move2 = new MyGameMove(this.gameBoard.tiles[16].getPiece(),this.gameBoard.tiles[16],this.gameBoard.tiles[0]);
+                    let comp = new MyGameMoves(this.gameBoard,[move]);
 
                     this.gameSequence.addMove(comp);
 
                     this.animating = true;
                     this.state = this.gameStates['Movement Animation'];
+                }else{
+                    break;
                 }
-                break;
             case this.gameStates['Movement Animation']:
                 
                 if(this.animator.update(this.scene.time) == false){
+                    this.animating = false;
                     this.state = this.gameStates['Evaluate Game End'];
                     this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
                 }
@@ -162,7 +165,8 @@ class MyGameOrchestrator {
     display() {
 
         this.theme.displayScene();
-        this.gameBoard.display();
+        if(this.animating == false)
+            this.gameBoard.display();
         this.animator.display();
 
     }
