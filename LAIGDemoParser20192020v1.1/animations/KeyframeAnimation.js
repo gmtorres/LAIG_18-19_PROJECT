@@ -1,13 +1,20 @@
 class KeyframeAnimation extends Animation{
 
-    constructor(scene){
+    constructor(scene,repeat){
         super(scene);
         this.keyframes = [];
         this.helpMatrix = mat4.create();
         this.currentAnimation = null;
+        this.maxTime = 0;
+        if(repeat == undefined)
+            this.repeat = 1;
+        else this.repeat = repeat;
     }
     addKeyFrame(keyFrame){
         this.keyframes.push(keyFrame);
+        if(keyFrame.instant > this.maxTime){
+            this.maxTime = keyFrame.instant;
+        }
     }
     getKeyframes(time,sequence){
         sequence.prev = new KeyFrame(0,[0,0,0],[0,0,0],[1,1,1]);
@@ -22,7 +29,17 @@ class KeyframeAnimation extends Animation{
     }
     
     update(time){
-        let sequence = {prev : null, next : null };
+
+        if(this.repeat > 1){
+            if(Math.floor(time / this.maxTime) == this.repeat){ 
+                this.repeat = 0;
+            }else
+                time = time % this.maxTime;
+        }else if(this.repeat == -1){
+            time = time % this.maxTime;
+        }
+
+        let sequence = {prev : null, next : null};
         this.getKeyframes(time,sequence);
         let transf1 = {
             translate : sequence.prev.translate,
@@ -37,7 +54,15 @@ class KeyframeAnimation extends Animation{
             rotate    : sequence.next.rotate,
             instant   : sequence.next.instant 
         };
-        this.currentAnimation = new LinearAnimation(this.applicationMatrix,transf1,transf2);
+        switch (sequence.next.type) {
+            case 1:
+                this.currentAnimation = new LinearAnimation(this.applicationMatrix,transf1,transf2);
+                break;
+        
+            default:
+                this.currentAnimation = new LinearAnimation(this.applicationMatrix,transf1,transf2);
+                break;
+        }
         this.currentAnimation.update(time);
     }
 
@@ -53,5 +78,8 @@ class KeyFrame{
         this.translate = trans;
         this.rotate = rota;
         this.scale = scl;
+        if(type == undefined)
+            this.type = 1;
+        else this.type = type;
     }
 }

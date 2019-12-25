@@ -777,8 +777,6 @@ class MySceneGraph {
         
         for(var i = 0; i < children.length; i++){
 
-            var animation = new KeyframeAnimation(this.scene);
-
             if(children[i].nodeName != 'animation') {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
                 continue;
@@ -791,8 +789,14 @@ class MySceneGraph {
             if (this.animations[animationId] != null)
                 return 'ID must be unique for each animation (conflict: ID = ' +
                     animationId + ')';
+            
+            var animationRepeat = this.reader.getFloat(children[i], 'repeat');
+            if (animationRepeat == null) animationRepeat = 1;
+
 
             grandChildren = children[i].children;
+
+            var animation = new KeyframeAnimation(this.scene,animationRepeat);
 
             for(var a = 0; a < grandChildren.length ; a++){
 

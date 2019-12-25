@@ -22,8 +22,6 @@ class LinearAnimation extends Animation{
     }
 
     update(time){
-        if(time > this.instant2 || time < this.instant1)
-            return false;
         this.helpMatrix = mat4.create();
         if(this.instant1 >= this.instant2){
             mat4.translate(this.helpMatrix,this.helpMatrix,this.translate1);
@@ -42,6 +40,8 @@ class LinearAnimation extends Animation{
             mat4.rotate(this.helpMatrix,this.helpMatrix,rotate[2],[0,0,1]);
             mat4.scale(this.helpMatrix,this.helpMatrix,scale);
         }
+        if(time > this.instant2 || time < this.instant1)
+            return false;
         return true;
         //return this.helpMatrix;
     }

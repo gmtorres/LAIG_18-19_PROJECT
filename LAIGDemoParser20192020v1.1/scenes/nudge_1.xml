@@ -145,7 +145,7 @@
             </keyframe> 
         </animation>
 
-        <animation id='demoAnimation2'>
+        <animation id='demoAnimation2' repeat='1'>
              <keyframe instant='2'>
                 <translate x='0' y='0' z='0'/>
                 <rotate x='0' y='0' z='0'/>
@@ -153,8 +153,8 @@
             </keyframe>
             <keyframe instant='4'>
                 <translate x='0' y='0' z='0'/>
-                <rotate x='0' y='0' z='0'/>
-                <scale x='4' y='4' z='4'/>
+                <rotate x='0' y='180' z='0'/>
+                <scale x='2' y='1' z='1'/>
             </keyframe>
         </animation>
    </animations> 
@@ -205,7 +205,7 @@
                 <translate x="0" y="0" z="-7" />
                 <rotate axis='x' angle='-90'/>
             </transformation>
-            
+            <animationref id='demoAnimation2'/>
             <materials>
                 <material id="inherit" />
                 <material id="green" />
