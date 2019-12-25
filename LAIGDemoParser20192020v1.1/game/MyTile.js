@@ -48,6 +48,12 @@ class MyTile{
         return this.piece;
     }
 
-
+    clone() {
+        let copy = new this.constructor();
+        for (let attr in this) {
+            if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
+        }
+        return copy;
+    }
 
 }

@@ -32,7 +32,7 @@ class MyGameMove{
                 instant   : 0.5
             };
             this.currentAnimation = new LinearAnimation(this.piece.orchestrator.getScene(),transf1,transf2);
-            //this.piece.animated = true;
+            
         }
     }
 
@@ -48,7 +48,7 @@ class MyGameMove{
 
     display(){
         //TODO
-    
+        this.buildAnimation();
         if(this.currentAnimation == null){
             this.piece.display();
             return;
@@ -59,9 +59,9 @@ class MyGameMove{
         scene.pushMatrix();
         scene.translate(origP[0] - pieceP[0],origP[1] - pieceP[1] ,origP[2] - pieceP[2]);
         this.currentAnimation.apply();
-        this.piece.animated = false;
-        this.piece.display();
-        this.piece.animated = true;
+        //this.piece.animated = false;
+        this.piece.display(true);
+        //this.piece.animated = true;
         scene.popMatrix();
 
         

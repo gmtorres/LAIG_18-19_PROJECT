@@ -93,7 +93,6 @@ class MyGameOrchestrator {
                 if(this.currentTurn == 2){
                     this.currenPlayer = (this.currenPlayer)%2 + 1;
                     this.currentTurn = 1;
-
                 }else{
                     this.currentTurn++;
                 }
@@ -105,7 +104,6 @@ class MyGameOrchestrator {
                 }else if(this.currenPlayer == 2){
                     this.gameBoard.setPlayerSelectable(1,false);
                     this.gameBoard.setPlayerSelectable(2,true);
-                    //this.animator.replay();
                 }
 
                 this.selectedPiece = null;
@@ -165,8 +163,10 @@ class MyGameOrchestrator {
     display() {
 
         this.theme.displayScene();
-        if(this.animating == false)
+        if(this.animating == false){
             this.gameBoard.display();
+            console.log('a');
+        }
         this.animator.display();
 
     }

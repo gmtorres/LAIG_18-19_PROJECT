@@ -32,8 +32,8 @@ class MyPiece{
         return this.uniqueID;
     }
 
-    display(){
-        if(!this.animated){
+    display(forceDisplay){
+        if(!this.animated || (forceDisplay != undefined && forceDisplay == true)){
             if(this.selectable){
                 this.orchestrator.getScene().registerForPick(this.uniqueID,this);
             }
@@ -46,5 +46,14 @@ class MyPiece{
             }
         }
     }
+
+    clone() {
+        let copy = new this.constructor();
+        for (let attr in this) {
+            if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
+        }
+        return copy;
+    }
+
 
 }

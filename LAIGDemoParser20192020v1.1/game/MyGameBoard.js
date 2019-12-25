@@ -1,8 +1,10 @@
 class MyGameBoard{
 
-    constructor(orchestrator){
+    constructor(orchestrator,board){
         this.orchestrator = orchestrator;
-        this.createNewBoard();
+        if(board == undefined)
+            this.createNewBoard();
+        else this.board = board;
         
         this.createTiles();
         this.createPieces();
@@ -88,6 +90,16 @@ class MyGameBoard{
             }
         }
     }
+
+    resetPieces(){
+        this.pieces.forEach(element => {
+            element.setTile(null);
+        });
+    }
+    redefinePieces(){
+
+    }
+
     setTilesSelectable(mode){
         for(let i = 0; i < this.tiles.length;i++){
             this.tiles[i].selectable = mode;
@@ -111,8 +123,12 @@ class MyGameBoard{
         piece.setTile(destTile);
     }
 
+    getTile(x,y){
+        return this.tiles[x * 5 + y];
+    }
+
     getPieceByTile(x,y){
-        return this.tiles[x][y].piece;
+        return this.tiles[x * 5 + y].getPiece();
     }
 
 
