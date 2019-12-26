@@ -21,6 +21,7 @@ class MyGameOrchestrator {
 
             'Undo Animation' : 8,
             'Replay Animation' : 9,
+            'Change Camera Position' : 10
         }
         this.state = 2;
 
@@ -32,6 +33,11 @@ class MyGameOrchestrator {
 
         this.animating = false;
         
+        this.player1Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2.5, 0, 2.5));
+        this.player2Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-10, 8, 8), vec3.fromValues(2.5, 0, 2.5));
+
+        this.scene.camera = this.player2Camera;
+        this.scene.interface.setActiveCamera(this.scene.camera);
 
     }
 
@@ -111,6 +117,8 @@ class MyGameOrchestrator {
         this.selectedTile = null;
     }
 
+    
+
     orchestrate() {
         //manage picks
         this.managePick(false,this.scene.pickResults);
@@ -121,12 +129,10 @@ class MyGameOrchestrator {
             case this.gameStates['Next Turn']:
 
                 this.updateNextPlayer();
-
                 this.setSelectable();
-
                 this.resetSelection();
 
-                this.state = this.gameStates['Destination Piece Selection'];
+                this.state = this.gameStates['Change Camera Position'];
                 
                 break;
             case this.gameStates['Destination Piece Selection']:
@@ -182,7 +188,12 @@ class MyGameOrchestrator {
                         this.resetSelection();
                         this.state = this.gameStates['Destination Piece Selection'];
                     }
-                    break;        
+                    break;
+            
+            case this.gameStates['Change Camera Position']:
+                    this.state = this.gameStates['Destination Piece Selection'];
+                    break;
+                    
             default:
                 break;
         }
@@ -191,9 +202,11 @@ class MyGameOrchestrator {
 
 
 
+
     update(time) {
         this.animator.update(time);
     }
+
     display() {
 
         this.theme.displayScene();
