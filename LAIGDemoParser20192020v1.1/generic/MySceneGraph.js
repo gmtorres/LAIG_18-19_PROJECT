@@ -1121,43 +1121,58 @@ class MySceneGraph {
     parseGameboard(node) {
         let children = node.children;
 
+        //Array with all possible themes for pieces and tiles
         this.pieces1 = [];
         this.pieces2 = [];
         this.tiles1 = [];
         this.tiles2 = [];
+        
+        //Selected piece or tile theme
+        this.piece1 = [];
+        this.piece2 = [];
+        this.tile1  = [];
+        this.tile2  = [];
 
         let nodeNames = [];
 
         for (let i = 0; i < children.length; i++) {
             let arr;
             let ref;
+            let defarr;
 
             if (children[i].nodeName == 'pieces1') {
                 arr = this.pieces1;
                 ref = "pieceref";
+                defarr = this.piece1;
             } else if (children[i].nodeName == 'pieces2') {
                 arr = this.pieces2;
                 ref = "pieceref";
+                defarr = this.piece2;
             } else if (children[i].nodeName == 'tiles1') {
                 arr = this.tiles1;
                 ref = "tileref";
+                defarr = this.tile1;
             } else if (children[i].nodeName == 'tiles2') {
                 arr = this.tiles2;
                 ref = "tileref";
+                defarr = this.tile2;
             } else {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
                 continue;
             }
 
             
+            
             if (nodeNames.indexOf(children[i].nodeName) != -1) {
                 this.onXMLMinorError('Repeated <' + children[i].nodeName + "> tag");
             }
             
             nodeNames.push(children[i].nodeName);
+            console.log(nodeNames);
             let grandChildren = children[i].children;
 
             for (let j = 0; j < grandChildren.length; j++) {
+
                 if (grandChildren[j].nodeName != ref) {
                     this.onXMLMinorError('unknown tag <' + grandChildren[j].nodeName + '>');
                     continue;
@@ -1176,9 +1191,20 @@ class MySceneGraph {
 
                 arr[id] = componentref;
             }
+
+            let def = null;
+
+            if (this.reader.hasAttribute(children[i], 'default')) {
+                def = this.reader.getString(children[i], 'default');
+                if (!(def in arr)) {
+                    def = null;
+                } 
+
+            }
+            
+            arr["default"] = def;
+            defarr[0] = (def == null) ? Object.keys(arr)[0] : def;  
         }
-
-
 
 
     }
@@ -1471,15 +1497,21 @@ class MySceneGraph {
         for (let j = 0; j < arr.length; j++) {
             const elem = arr[j];
             for (var i in elem) {
+                if (i == 'default') {
+                    continue;
+                }
                 let element = elem[i];
                 let comp = this.nodes[element];
                 if (comp == null) {
                     this.onXMLError("Component " + element + " does not exist.");
                     continue;
                 }
-                this.component = comp;
+                arr[j][i] = comp;
             }
+            console.log(j,arr[j]);
         }
+
+
 
     }
 

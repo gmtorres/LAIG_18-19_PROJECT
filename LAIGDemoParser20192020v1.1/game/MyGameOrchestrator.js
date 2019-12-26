@@ -6,7 +6,6 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme = new MySceneGraph(filename, scene);
-        this.gameBoard = new MyGameBoard(this);
         this.manager = new MyGameOrchestratorManager(this,[0.5,0,-1]);
         this.prolog = null; //new MyPrologInterface(...);
         this.gameStates = {
@@ -36,6 +35,10 @@ class MyGameOrchestrator {
         this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
         this.scene.interface.setActiveCamera(this.scene.camera);
 
+    }
+
+    onLoaded() {
+        this.gameBoard = new MyGameBoard(this);
     }
 
 
@@ -253,7 +256,7 @@ class MyGameOrchestrator {
 
     display() {
 
-        this.theme.displayScene();
+        // this.theme.displayScene();
         if(this.animating == false){
             this.gameBoard.display();
             //console.log('a');

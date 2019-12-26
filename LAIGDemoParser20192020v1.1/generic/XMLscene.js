@@ -45,6 +45,7 @@ class XMLscene extends CGFscene {
 
         this.selectView = "";
 
+
         /*this.securityCameraShader = new CGFshader(this.gl, "shaders/security.vert", "shaders/security.frag");
         this.securityCameraShader.setUniformsValues({
             securityCameraSampler: 1,
@@ -152,6 +153,8 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
         this.axis = new CGFaxis(this, this.graph.referenceLength);
+
+        this.gameOrchestrator.onLoaded();
 
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
@@ -278,12 +281,13 @@ class XMLscene extends CGFscene {
         this.time = (new Date() - this.startTime) / 1000;
 
 
-        //this.graph.displayScene();
+        // this.graph.displayScene();
         this.gameOrchestrator.display();
-
-
+        
+        
         this.popMatrix();
         // ---- END Background, camera and axis setup
+        
     }
 
     /**

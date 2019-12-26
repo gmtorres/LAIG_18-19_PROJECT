@@ -161,13 +161,13 @@
 
     <primitives>
         <primitive id="demoRectangle">
-            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+            <rectangle x1="0" y1="0" x2="1" y2="1" />
         </primitive>
         <primitive id="demoSphere">
             <sphere radius="1" slices="50" stacks="50" />
         </primitive>
         <primitive id="demoTorus">
-            <torus outer="2" inner="1" slices="80" loops="4" />
+            <torus outer="0.1" inner="0.05" slices="80" loops="100" />
         </primitive>
         <primitive id="ring">
             <torus outer="1" inner="0.05" slices="80" loops="30" />
@@ -216,46 +216,47 @@
             </children>
         </component>
 
-        <component id="triangle">
+        <component id="rectangle">
             <transformation>
-                <translate x="-4" y="0" z="0" />
-                <scale x="2" y="2" z="2" />
+                <translate x="0" y="0" z="1" />
+                <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
             <texture id="rope" length_s='1' length_t='1'/>
             <children>
-                <primitiveref id='demoTriangle'/>
+                <primitiveref id='demoRectangle'/>
             </children>
         </component>
 
         <component id="torus">
             <transformation>
-                <translate x="-2" y="0" z="-4" />
+                <translate x="0.5" y="0.15" z="0.5" />
+                <rotate axis='x' angle='-90'/>
+                <scale x="3" y="3" z="3" />
             </transformation>
-            <animationref id='demoAnimation2'/>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id='none'/>
             <children>
                 <primitiveref id='demoTorus'/>
             </children>
         </component>
-
+    
         <gameboard id='aa' x='a' y='aa' z='a' >
-            <pieces1>
-                <pieceref id='default' componentref='torus'/>
+            <pieces1 default='theme2' >
+                <pieceref id='theme1' componentref='torus'/>
             </pieces1>
             <pieces2>
-                <pieceref id='default' componentref='torus' />
+                <pieceref id='theme1' componentref='torus' />
             </pieces2>
             <tiles1>
-                <tileref id='default' componentref='triangle' />
+                <tileref id='theme1' componentref='rectangle' />
             </tiles1>
             <tiles2>
-                <tileref id='default' componentref='triangle' />
+                <tileref id='theme1' componentref='rectangle' />
             </tiles2>
         </gameboard>
 
@@ -271,7 +272,8 @@
             </materials>
             <texture id="grass" length_s='1' length_t='1'/>
             <children>
-                <componentref id='cylinder'/>
+                <componentref id='torus'/>
+                <componentref id='rectangle'/>
             </children>
         </component>
 

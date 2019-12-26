@@ -28,13 +28,23 @@ class MyTile{
         return [this.x,0,this.y];
     }
 
-    display(){
+    display() {
+        let tempTex = [];
+        tempTex.tex = 'none';
+        let tempApp = new CGFappearance(this.orchestrator.getScene());
+
         if(this.selectable){
             this.orchestrator.getScene().registerForPick(this.uniqueID,this);
         }
         this.orchestrator.getScene().pushMatrix();
         this.orchestrator.getScene().translate(this.x,0,this.y);
-        this.type.display();
+        this.orchestrator.theme.displayFunction(
+            this.type,
+            tempApp,
+            tempTex,
+            1,
+            1
+        );
         this.orchestrator.getScene().popMatrix();
         if(this.selectable){
             this.orchestrator.getScene().clearPickRegistration();
