@@ -36,7 +36,7 @@ class MyGameOrchestrator {
         this.player1Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2.5, 0, 2.5));
         this.player2Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-10, 8, 8), vec3.fromValues(2.5, 0, 2.5));
 
-        this.scene.camera = this.player2Camera;
+        this.scene.camera = this.player1Camera;
         this.scene.interface.setActiveCamera(this.scene.camera);
 
     }
@@ -91,6 +91,7 @@ class MyGameOrchestrator {
         }else{
             this.currentTurn++;
         }
+        this.changeCamera();
     }
     updatePreviousPlayer(){
         if(this.currentTurn == 1){
@@ -99,6 +100,7 @@ class MyGameOrchestrator {
         }else{  
             this.currentTurn--;
         }
+        this.changeCamera();
     }
 
     setSelectable(){
@@ -117,7 +119,16 @@ class MyGameOrchestrator {
         this.selectedTile = null;
     }
 
-    
+    changeCamera(){
+        if(this.currenPlayer == 1){
+            this.scene.camera = this.player1Camera;
+            this.scene.interface.setActiveCamera(this.scene.camera);
+        }else if(this.currenPlayer == 2){
+            this.scene.camera = this.player2Camera;
+            this.scene.interface.setActiveCamera(this.scene.camera);
+        }
+        return false;
+    }
 
     orchestrate() {
         //manage picks
