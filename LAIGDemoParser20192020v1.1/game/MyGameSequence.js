@@ -12,20 +12,28 @@ class MyGameSequence{
     replay(){
         this.index = 0;
     }
+
+    end(){
+        this.index = this.sequence.length;
+    }
     
     addMove(move){
         this.sequence.push(move);
     }
 
     next(){
-        if(this.index >= this.sequence.length)
+        if(this.index >= this.sequence.length){
             return null;
+        }else if(this.index < 0){
+            this.index = 0;
+            return null;
+        }
         let nextMove = this.sequence[this.index];
         if(nextMove.undoMove == false)
             this.index++;
-        else if(nextMove.undo == true){
+        else if(nextMove.undoMove == true){
             this.sequence.pop();
-            this.index--;
+            //this.index--;
         }
         return nextMove;
     }
@@ -35,6 +43,13 @@ class MyGameSequence{
     }
 
     undo(){
-        
+        if(this.sequence.length == 0)
+            return false;
+        let move = this.sequence.pop();
+        if(this.index >= this.sequence.length)
+            this.index = this.sequence.length;
+        let reverseMove = move.getReverseMove();
+        this.addMove(reverseMove);
+        return move.gameBoardPrev;
     }
 }

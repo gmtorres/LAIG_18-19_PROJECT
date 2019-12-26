@@ -17,6 +17,10 @@ class MyAnimator{
         this.currentGameMovement = this.gameSequence.next();
     }
 
+    end(){
+        this.gameSequence.end();    
+    }
+
     update(time){
         if(this.currentGameMovement != null){
             if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){

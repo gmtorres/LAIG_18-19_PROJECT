@@ -23,6 +23,7 @@ serialInclude(['../lib/CGF.js',
                'primitives/MyPlane.js',
                'primitives/MyCylinder2.js',
                'primitives/MyPatch.js',
+               'primitives/MyCircle.js',
                'animations/Animation.js',
                'animations/KeyframeAnimation.js',
                'animations/LinearAnimation.js',
@@ -35,6 +36,7 @@ serialInclude(['../lib/CGF.js',
                'game/MyGameSequence.js',
                'game/MyAnimator.js',
                'game/MyGameOrchestrator.js',
+               'game/MyGameOrchestratorManager.js',
 
 
 main=function()

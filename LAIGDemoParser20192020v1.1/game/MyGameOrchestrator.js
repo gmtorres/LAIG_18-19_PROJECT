@@ -7,6 +7,7 @@ class MyGameOrchestrator {
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme = new MySceneGraph(filename, scene);
         this.gameBoard = new MyGameBoard(this);
+        this.manager = new MyGameOrchestratorManager(this,[0.5,0,-1]);
         this.prolog = null; //new MyPrologInterface(...);
         this.gameStates = {
             'Menu': 0,
@@ -17,6 +18,9 @@ class MyGameOrchestrator {
             'Movement Animation': 5,
             'Evaluate Game End': 6,
             'End Game': 7,
+
+            'Undo Animation' : 8,
+            'Replay Animation' : 9,
         }
         this.state = 2;
 
@@ -27,6 +31,7 @@ class MyGameOrchestrator {
         this.selectedTile = null;
 
         this.animating = false;
+        
 
     }
 
@@ -52,33 +57,58 @@ class MyGameOrchestrator {
 
     OnObjectSelected(obj, id) {
         if (obj instanceof MyPiece) {
-            // do something with id knowing it is a piece
-            if(this.state == this.gameStates['Destination Piece Selection']){
-                
+            if(this.state == this.gameStates['Destination Piece Selection']){     
                 this.selectedPiece = obj;
-
             }
-
-
-
         } else if (obj instanceof MyTile) {
-            // do something with id knowing it is a tile
-
-            if(this.state == this.gameStates['Destination Tile Selection']){
-                
+            if(this.state == this.gameStates['Destination Tile Selection']){  
                 this.selectedTile = obj;
-
             }
-
-
         } else {
             // error ?
-            console.log("error");
-            this.selectedPiece = null;
-            this.selectedTile = null;
 
-            this.state = this.gameStates['Destination Piece Selection'];
+            if(!this.manager.parseSelected(id)){
+                console.log("error");
+                this.selectedPiece = null;
+                this.selectedTile = null;
+
+                this.state = this.gameStates['Destination Piece Selection'];
+            }
+
         }
+    }
+
+    updateNextPlayer(){
+        if(this.currentTurn == 2){
+            this.currenPlayer = (this.currenPlayer)%2 + 1;
+            this.currentTurn = 1;
+        }else{
+            this.currentTurn++;
+        }
+    }
+    updatePreviousPlayer(){
+        if(this.currentTurn == 1){
+            this.currenPlayer = (this.currenPlayer)%2 + 1;
+            this.currentTurn = 2;
+        }else{  
+            this.currentTurn--;
+        }
+    }
+
+    setSelectable(){
+        //impedir que o jogador escolhaa s peças do adversario
+        if(this.currenPlayer == 1){
+            this.gameBoard.setPlayerSelectable(1,true);
+            this.gameBoard.setPlayerSelectable(2,false);
+        }else if(this.currenPlayer == 2){
+            this.gameBoard.setPlayerSelectable(1,false);
+            this.gameBoard.setPlayerSelectable(2,true);
+        }
+    }
+
+    resetSelection(){
+        this.selectedPiece = null;
+        this.selectedTile = null;
     }
 
     orchestrate() {
@@ -90,24 +120,11 @@ class MyGameOrchestrator {
         switch (this.state) {
             case this.gameStates['Next Turn']:
 
-                if(this.currentTurn == 2){
-                    this.currenPlayer = (this.currenPlayer)%2 + 1;
-                    this.currentTurn = 1;
-                }else{
-                    this.currentTurn++;
-                }
+                this.updateNextPlayer();
 
-                //impedir que o jogador escolhaa s peças do adversario
-                if(this.currenPlayer == 1){
-                    this.gameBoard.setPlayerSelectable(1,true);
-                    this.gameBoard.setPlayerSelectable(2,false);
-                }else if(this.currenPlayer == 2){
-                    this.gameBoard.setPlayerSelectable(1,false);
-                    this.gameBoard.setPlayerSelectable(2,true);
-                }
+                this.setSelectable();
 
-                this.selectedPiece = null;
-                this.selectedTile = null;
+                this.resetSelection();
 
                 this.state = this.gameStates['Destination Piece Selection'];
                 
@@ -148,7 +165,24 @@ class MyGameOrchestrator {
             case this.gameStates['Evaluate Game End']:
                 this.state = this.gameStates['Next Turn'];
                 break;
-
+            
+            case this.gameStates['Undo Animation']:
+                    if(this.animator.update(this.scene.time) == false){
+                        this.animating = false;
+                        this.resetSelection();
+                        this.state = this.gameStates['Destination Piece Selection'];
+                        this.updatePreviousPlayer();
+                        this.setSelectable();
+                        //this.gameBoard.buildBoardFromTiles();
+                    }
+                    break;
+            case this.gameStates['Replay Animation']:
+                    if(this.animator.update(this.scene.time) == false){
+                        this.animating = false;
+                        this.resetSelection();
+                        this.state = this.gameStates['Destination Piece Selection'];
+                    }
+                    break;        
             default:
                 break;
         }
@@ -165,9 +199,10 @@ class MyGameOrchestrator {
         this.theme.displayScene();
         if(this.animating == false){
             this.gameBoard.display();
-            console.log('a');
-        }
-        this.animator.display();
+            //console.log('a');
+        }else
+            this.animator.display();
+        this.manager.display();
 
     }
 

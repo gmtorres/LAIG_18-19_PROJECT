@@ -145,7 +145,7 @@
             </keyframe> 
         </animation>
 
-        <animation id='demoAnimation2' repeat='1'>
+        <animation id='demoAnimation2' repeat='2'>
              <keyframe instant='2'>
                 <translate x='0' y='0' z='0'/>
                 <rotate x='0' y='0' z='0'/>

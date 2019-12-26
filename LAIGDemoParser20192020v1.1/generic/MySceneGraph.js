@@ -781,7 +781,7 @@ class MySceneGraph {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
                 continue;
             }
-
+            
             var animationId = this.reader.getString(children[i], 'id');
             if (animationId == null) return 'no ID defined for animation';
 
@@ -790,8 +790,10 @@ class MySceneGraph {
                 return 'ID must be unique for each animation (conflict: ID = ' +
                     animationId + ')';
             
-            var animationRepeat = this.reader.getFloat(children[i], 'repeat');
-            if (animationRepeat == null) animationRepeat = 1;
+            var animationRepeat = 1;    
+            if(children[i].attributes['repeat'] != null)
+                animationRepeat = this.reader.getFloat(children[i], 'repeat');
+            if (animationId == null) animationRepeat = 1;  
 
 
             grandChildren = children[i].children;
