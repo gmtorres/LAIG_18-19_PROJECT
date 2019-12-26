@@ -138,8 +138,8 @@ class XMLscene extends CGFscene {
      * Updates scene camera and set that to the active camera, depending on the camera choosen in the interface
      */
     updateCamera() {
-        //this.camera = this.cameras[this.selectView];
-        //this.interface.setActiveCamera(this.camera);
+        this.camera = this.cameras[this.selectView];
+        this.interface.setActiveCamera(this.camera);
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);

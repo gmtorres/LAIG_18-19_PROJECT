@@ -134,6 +134,8 @@ class MyGameBoard{
 
 
     display(){
+        this.orchestrator.getScene().pushMatrix();
+        //this.orchestrator.getScene().translate-2.5,0,-2.5);
         for(let i = 0; i < this.tiles.length;i++){
             
             if(i%2 == 0)    this.orchestrator.getScene().graph.materials['black'].apply();
@@ -147,6 +149,7 @@ class MyGameBoard{
                 piece.display();
             }
         }
+        this.orchestrator.getScene().popMatrix();
     }
 
 

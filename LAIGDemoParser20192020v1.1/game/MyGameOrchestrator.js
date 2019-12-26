@@ -32,11 +32,8 @@ class MyGameOrchestrator {
         this.selectedTile = null;
 
         this.animating = false;
-        
-        this.player1Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2.5, 0, 2.5));
-        this.player2Camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-10, 8, 8), vec3.fromValues(2.5, 0, 2.5));
 
-        this.scene.camera = this.player1Camera;
+        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
         this.scene.interface.setActiveCamera(this.scene.camera);
 
     }
@@ -88,10 +85,11 @@ class MyGameOrchestrator {
         if(this.currentTurn == 2){
             this.currenPlayer = (this.currenPlayer)%2 + 1;
             this.currentTurn = 1;
+            return true;
         }else{
             this.currentTurn++;
+            return false;
         }
-        this.changeCamera();
     }
     updatePreviousPlayer(){
         if(this.currentTurn == 1){
@@ -100,7 +98,6 @@ class MyGameOrchestrator {
         }else{  
             this.currentTurn--;
         }
-        this.changeCamera();
     }
 
     setSelectable(){
@@ -120,14 +117,46 @@ class MyGameOrchestrator {
     }
 
     changeCamera(){
+        let currentCamera = this.scene.camera;
+        let targetCamera = null;
+
         if(this.currenPlayer == 1){
-            this.scene.camera = this.player1Camera;
-            this.scene.interface.setActiveCamera(this.scene.camera);
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
         }else if(this.currenPlayer == 2){
-            this.scene.camera = this.player2Camera;
-            this.scene.interface.setActiveCamera(this.scene.camera);
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-12.5, 8, 8), vec3.fromValues(2, 0, 2));
         }
-        return false;
+
+        if(currentCamera.position[0] === targetCamera.position[0] && currentCamera.position[1] == targetCamera.position[1] && currentCamera.position[2] == targetCamera.position[2]){
+            return false;
+        }
+        
+        if(currentCamera.position[0] - targetCamera.position[0] > 0){
+            if(currentCamera.position[0] - 0.3 < targetCamera.position[0]){
+                currentCamera.position[0] = targetCamera.position[0];
+            }else currentCamera.position[0] -= 0.3;
+        }else if(currentCamera.position[0] - targetCamera.position[0] < 0){
+            if(currentCamera.position[0] + 0.3 > targetCamera.position[0]){
+                currentCamera.position[0] = targetCamera.position[0];
+            }else currentCamera.position[0] += 0.3;
+        }
+        if(currentCamera.position[1] - targetCamera.position[1] > 0){
+            if(currentCamera.position[1] - 0.3 < targetCamera.position[1]){
+                currentCamera.position[1] = targetCamera.position[1];
+            }else currentCamera.position[1] -= 0.3;
+        }else if(currentCamera.position[1] - targetCamera.position[1] < 0){
+            if(currentCamera.position[1] + 0.3 > targetCamera.position[1]){
+                currentCamera.position[1] = targetCamera.position[1];
+            }else currentCamera.position[1] += 0.3;
+        }
+        if(currentCamera.position[2] - targetCamera.position[2] > 0){
+            if(currentCamera.position[2] - 0.3 < targetCamera.position[2]){
+                currentCamera.position[2] = targetCamera.position[2];
+            }else currentCamera.position[2] -= 0.3;
+        }else if(currentCamera.position[2] - targetCamera.position[2] < 0){
+            if(currentCamera.position[2] + 0.3 > targetCamera.position[2]){
+                currentCamera.position[2] = targetCamera.position[2];
+            }else currentCamera.position[2] += 0.3;
+        }
     }
 
     orchestrate() {
@@ -139,11 +168,13 @@ class MyGameOrchestrator {
         switch (this.state) {
             case this.gameStates['Next Turn']:
 
-                this.updateNextPlayer();
+                if(this.updateNextPlayer())
+                    this.state = this.gameStates['Change Camera Position'];
+                else 
+                    this.state = this.gameStates['Destination Piece Selection'];
                 this.setSelectable();
                 this.resetSelection();
 
-                this.state = this.gameStates['Change Camera Position'];
                 
                 break;
             case this.gameStates['Destination Piece Selection']:
@@ -187,7 +218,7 @@ class MyGameOrchestrator {
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;
                         this.resetSelection();
-                        this.state = this.gameStates['Destination Piece Selection'];
+                        this.state = this.gameStates['Change Camera Position'];
                         this.updatePreviousPlayer();
                         this.setSelectable();
                         //this.gameBoard.buildBoardFromTiles();
@@ -202,8 +233,10 @@ class MyGameOrchestrator {
                     break;
             
             case this.gameStates['Change Camera Position']:
+                if(this.changeCamera() == false){
                     this.state = this.gameStates['Destination Piece Selection'];
-                    break;
+                }
+                break;
                     
             default:
                 break;
