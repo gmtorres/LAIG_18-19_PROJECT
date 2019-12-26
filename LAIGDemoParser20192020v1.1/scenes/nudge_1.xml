@@ -244,6 +244,22 @@
             </children>
         </component>
 
+        <gameboard id='aa' x='a' y='aa' z='a' >
+            <pieces1>
+                <pieceref id='default' componentref='torus'/>
+            </pieces1>
+            <pieces2>
+                <pieceref id='default' componentref='torus' />
+            </pieces2>
+            <tiles1>
+                <tileref id='default' componentref='triangle' />
+            </tiles1>
+            <tiles2>
+                <tileref id='default' componentref='triangle' />
+            </tiles2>
+        </gameboard>
+
+
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="0" z="0" />
