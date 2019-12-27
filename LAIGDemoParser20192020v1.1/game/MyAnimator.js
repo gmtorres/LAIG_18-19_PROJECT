@@ -35,6 +35,7 @@ class MyAnimator{
                 return false;
             }else{
                 //this.currentGameMovement.setPiecesAnimated(true);
+                this.currentGameMovement.setBoard();
                 this.animationStartTime = time;
                 this.orchestrator.animating = true;
             }

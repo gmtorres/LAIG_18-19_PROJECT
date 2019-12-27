@@ -36,6 +36,7 @@ class MyPiece{
         let tempTex = [];
         tempTex.tex = 'none';
         let tempApp = new CGFappearance(this.orchestrator.getScene());
+        
         if(!this.animated || (forceDisplay != undefined && forceDisplay == true)){
             if(this.selectable){
                 this.orchestrator.getScene().registerForPick(this.uniqueID,this);

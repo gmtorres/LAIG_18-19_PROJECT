@@ -26,6 +26,8 @@ class MySceneGraph {
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
+        this.scene.filename = filename;
+        this.scene.startTime = new Date();
         scene.graph = this;
 
         this.nodes = [];
@@ -1122,16 +1124,16 @@ class MySceneGraph {
         let children = node.children;
 
         //Array with all possible themes for pieces and tiles
-        this.pieces1 = [];
-        this.pieces2 = [];
-        this.tiles1 = [];
-        this.tiles2 = [];
+        this.piecesRef1 = [];
+        this.piecesRef2 = [];
+        this.tilesRef1 = [];
+        this.tilesRef2 = [];
         
         //Selected piece or tile theme
-        this.piece1 = [];
-        this.piece2 = [];
-        this.tile1  = [];
-        this.tile2  = [];
+        this.piecesName1 = [];
+        this.piecesName2 = [];
+        this.tilesName1  = [];
+        this.tilesName2  = [];
 
         let nodeNames = [];
 
@@ -1141,21 +1143,21 @@ class MySceneGraph {
             let defarr;
 
             if (children[i].nodeName == 'pieces1') {
-                arr = this.pieces1;
+                arr = this.piecesRef1;
                 ref = "pieceref";
-                defarr = this.piece1;
+                defarr = this.piecesName1;
             } else if (children[i].nodeName == 'pieces2') {
-                arr = this.pieces2;
+                arr = this.piecesRef2;
                 ref = "pieceref";
-                defarr = this.piece2;
+                defarr = this.piecesName2;
             } else if (children[i].nodeName == 'tiles1') {
-                arr = this.tiles1;
+                arr = this.tilesRef1;
                 ref = "tileref";
-                defarr = this.tile1;
+                defarr = this.tilesName1;
             } else if (children[i].nodeName == 'tiles2') {
-                arr = this.tiles2;
+                arr = this.tilesRef2;
                 ref = "tileref";
-                defarr = this.tile2;
+                defarr = this.tilesName2;
             } else {
                 this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
                 continue;
@@ -1168,7 +1170,7 @@ class MySceneGraph {
             }
             
             nodeNames.push(children[i].nodeName);
-            console.log(nodeNames);
+            //console.log(nodeNames);
             let grandChildren = children[i].children;
 
             for (let j = 0; j < grandChildren.length; j++) {
@@ -1189,10 +1191,12 @@ class MySceneGraph {
                     continue;
                 }
 
+                defarr.push(id);
+
                 arr[id] = componentref;
             }
 
-            let def = null;
+            /*let def = null;
 
             if (this.reader.hasAttribute(children[i], 'default')) {
                 def = this.reader.getString(children[i], 'default');
@@ -1203,7 +1207,7 @@ class MySceneGraph {
             }
             
             arr["default"] = def;
-            defarr[0] = (def == null) ? Object.keys(arr)[0] : def;  
+            defarr[0] = (def == null) ? Object.keys(arr)[0] : def;  */
         }
 
 
@@ -1492,7 +1496,7 @@ class MySceneGraph {
             }
         }
 
-        let arr = [this.pieces1, this.pieces2, this.tiles1, this.tiles2];
+        let arr = [this.piecesRef1, this.piecesRef2, this.tilesRef1, this.tilesRef2];
 
         for (let j = 0; j < arr.length; j++) {
             const elem = arr[j];
@@ -1508,7 +1512,7 @@ class MySceneGraph {
                 }
                 arr[j][i] = comp;
             }
-            console.log(j,arr[j]);
+            //console.log(j,arr[j]);
         }
 
 

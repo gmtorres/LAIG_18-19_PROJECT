@@ -216,7 +216,7 @@
             </children>
         </component>
 
-        <component id="board_rectangle1">
+        <component id="board_rectangle">
             <transformation>
                 <translate x="0" y="0" z="1" />
                 <rotate axis='x' angle='-90'/>
@@ -225,19 +225,6 @@
                 <material id="inherit" />
             </materials>
             <texture id="rope" length_s='1' length_t='1'/>
-            <children>
-                <primitiveref id='demoRectangle'/>
-            </children>
-        </component>
-        <component id="board_rectangle2">
-            <transformation>
-                <translate x="0" y="0" z="1" />
-                <rotate axis='x' angle='-90'/>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="grass" length_s='1' length_t='1'/>
             <children>
                 <primitiveref id='demoRectangle'/>
             </children>
@@ -262,7 +249,7 @@
             <transformation>
                 <translate x="0.5" y="0.15" z="0.5" />
                 <rotate axis='x' angle='-90'/>
-                <scale x="2" y="2" z="3" />
+                <scale x="3" y="3" z="3" />
             </transformation>
             <materials>
                 <material id="red" />
@@ -275,17 +262,17 @@
     
         <gameboard id='aa' x='a' y='aa' z='a' >
             <pieces1>
-                <pieceref id='Player1 Red' componentref='torus2'/>
+                <pieceref id='theme1' componentref='torus1'/>
+                <pieceref id='Player2 Red' componentref='torus2' />
             </pieces1>
             <pieces2>
-                <pieceref id='Player2 Blue' componentref='torus1' />
-                <pieceref id='Player2 Red' componentref='torus2' />
+                <pieceref id='theme1' componentref='torus2' />
             </pieces2>
             <tiles1>
-                <tileref id='theme1' componentref='board_rectangle1' />
+                <tileref id='theme1' componentref='board_rectangle' />
             </tiles1>
             <tiles2>
-                <tileref id='theme1' componentref='board_rectangle2' />
+                <tileref id='theme1' componentref='board_rectangle' />
             </tiles2>
         </gameboard>
 
