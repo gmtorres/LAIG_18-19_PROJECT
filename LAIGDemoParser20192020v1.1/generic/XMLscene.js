@@ -139,11 +139,17 @@ class XMLscene extends CGFscene {
         if(this.interfaceInitiated == true){
 
             this.interface.gui.removeFolder(this.interface.gui.__folders['Select Pieces']);
-            
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Select Tiles']);
+
             let piecesFolder = this.interface.gui.addFolder('Select Pieces');
                 piecesFolder.add(this.gameOrchestrator,'player1Piece',this.graph.piecesName1).name('Piece 1').onChange(this.changeThemePiece.bind(this));
                 piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
             piecesFolder.open();
+
+            let tilesFolder = this.interface.gui.addFolder('Select Tiles');
+                tilesFolder.add(this.gameOrchestrator,'tile1',this.graph.tilesName1).name('Tiles 1').onChange(this.changeThemeTiles.bind(this));
+                tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
+            tilesFolder.open();
 
             return;
         }   
@@ -193,6 +199,11 @@ class XMLscene extends CGFscene {
             piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
         piecesFolder.open();
 
+        let tilesFolder = this.interface.gui.addFolder('Select Tiles');
+            tilesFolder.add(this.gameOrchestrator,'tile1',this.graph.tilesName1).name('Tiles 1').onChange(this.changeThemeTiles.bind(this));
+            tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
+        tilesFolder.open();
+
     }
 
     changeTheme(obj){
@@ -200,6 +211,9 @@ class XMLscene extends CGFscene {
     }
 
     changeThemePiece(){
+        this.gameOrchestrator.updateBoardTheme();
+    }
+    changeThemeTiles(){
         this.gameOrchestrator.updateBoardTheme();
     }
 

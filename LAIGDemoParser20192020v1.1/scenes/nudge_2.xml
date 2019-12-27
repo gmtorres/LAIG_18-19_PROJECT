@@ -260,7 +260,7 @@
             </children>
         </component>
     
-        <gameboard id='aa' x='a' y='aa' z='a' >
+        <gameboard id='aa' x='0' y='0' z='0' >
             <pieces1>
                 <pieceref id='theme1' componentref='torus1'/>
                 <pieceref id='Player2 Red' componentref='torus2' />

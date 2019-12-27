@@ -1123,6 +1123,12 @@ class MySceneGraph {
     parseGameboard(node) {
         let children = node.children;
 
+        let x = this.reader.getFloat(node, 'x');
+        let y = this.reader.getFloat(node, 'y');
+        let z = this.reader.getFloat(node, 'z');
+        
+        this.scene.gameOrchestrator.boardCoords = [x,y,z];
+
         //Array with all possible themes for pieces and tiles
         this.piecesRef1 = [];
         this.piecesRef2 = [];

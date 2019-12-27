@@ -187,7 +187,8 @@ class MyGameBoard {
     display() {
 
     this.orchestrator.getScene().pushMatrix();
-    // this.orchestrator.getScene().translate(- 2.5, 0, -2.5);
+    let delta = this.orchestrator.boardCoords;
+    this.orchestrator.getScene().translate(delta[0], delta[1], delta[2]);
     for (let i = 0; i < this.tiles.length; i++) {
 
         let piece = this.tiles[i].getPiece();

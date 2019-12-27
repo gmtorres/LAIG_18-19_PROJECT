@@ -54,10 +54,11 @@ class MyGameMove{
             return;
         }
         let scene = this.piece.orchestrator.getScene();
+        let boardTranslation = this.piece.orchestrator.boardCoords;
         let pieceP = this.piece.getTile().getPosition();
         let origP = this.origTile.getPosition();
         scene.pushMatrix();
-        scene.translate(origP[0] - pieceP[0],origP[1] - pieceP[1] ,origP[2] - pieceP[2]);
+        scene.translate(origP[0] - pieceP[0] + boardTranslation[0],origP[1] - pieceP[1] + boardTranslation[1],origP[2] - pieceP[2] + boardTranslation[2]);
         this.currentAnimation.apply();
         //this.piece.animated = false;
         this.piece.display(true);
