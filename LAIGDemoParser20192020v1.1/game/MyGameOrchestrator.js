@@ -38,7 +38,7 @@ class MyGameOrchestrator {
 
         this.animating = false;
 
-        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
+        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 12, 8), vec3.fromValues(2, 0, 2));
         this.scene.interface.setActiveCamera(this.scene.camera);
 
         this.player1Piece = null;
@@ -49,6 +49,9 @@ class MyGameOrchestrator {
     }
 
     onLoaded() {
+        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 12, 8), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        this.scene.interface.setActiveCamera(this.scene.camera);
+
         this.player1Piece = this.theme.piecesName1[0];
         this.player2Piece = this.theme.piecesName2[0];
 
@@ -177,9 +180,9 @@ class MyGameOrchestrator {
         let targetCamera = null;
         this.scene.interface.setActiveCamera(null);
         if(this.currenPlayer == 1){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 12, 8), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
         }else if(this.currenPlayer == 2){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-12.5, 8, 8), vec3.fromValues(2, 0, 2));
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-12.5, 12, 8), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
         }
 
         if(currentCamera.position[0] === targetCamera.position[0] && currentCamera.position[1] == targetCamera.position[1] && currentCamera.position[2] == targetCamera.position[2]){
