@@ -221,6 +221,31 @@
     </primitives>
 
     <components>
+
+        <component id="dualCylinder">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='cylinder'/>
+                <componentref id='dualCylinder_1'/>
+            </children>
+        </component>
+        <component id="dualCylinder_1">
+            <transformation>
+                <scale x="-1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id='cylinder'/>
+            </children>
+        </component>
         
         <component id="cylinder">
             <transformation>
@@ -962,21 +987,146 @@
             </children>
         </component>
 
+        <component id="drinks">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='drink1'/>
+                <componentref id='drink2'/>
+                <componentref id='drink3'/>
+            </children>
+        </component>
+
+        <component id="drink1">
+            <transformation>
+                <translate x="-6.3" y="0" z="-4.5" />
+                <rotate axis='y' angle='40'/>
+            </transformation>
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='drink'/>
+            </children>
+        </component>
+
+        <component id="drink2">
+            <transformation>
+                <translate x="2" y="0" z="-5.5" />
+                <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='drink'/>
+            </children>
+        </component>
+
+        <component id="drink3">
+            <transformation>
+                <translate x="5.5" y="0" z="-5" />
+                <rotate axis='y' angle='-40'/>
+            </transformation>
+            <materials>
+                <material id="blue" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='drink'/>
+            </children>
+        </component>
+
+        <component id="drink">
+            <transformation>
+                <translate x="0" y="0.01" z="0" />
+                <scale x="0.1" y="0.1" z="0.1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='cup'/>
+                <componentref id='straw'/>
+            </children>
+        </component>
+
+        <component id="straw">
+            <transformation>
+                <rotate axis='x' angle='-103'/>
+                <scale x="0.1" y="0.1" z="1.4" />
+            </transformation>
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='dualCylinder'/>
+            </children>
+        </component>
+
+        <component id="cup">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='cup_body'/>
+                <componentref id='cup_bottom'/>
+            </children>
+        </component>
+
+        <component id="cup_body">
+            <transformation>
+                <rotate axis='x' angle='-90'/>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='dualCylinder'/>
+            </children>
+        </component>
+
+        <component id="cup_bottom">
+            <transformation>
+                <scale x="1" y="0" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+
         <component id="demoRoot">
             <transformation>
                 <translate x="0" y="0" z="0" />
                 <scale x="1" y="1" z="1" />
             </transformation>
-            
             <materials>
                 <material id="white" />
             </materials>
-            <texture id="grass" length_s='1' length_t='1'/>
+            <texture id="none" length_s='1' length_t='1'/>
             <children>
                 <componentref id='sand_floor'/>
                 <componentref id='sea'/>
                 <componentref id='towels'/>
                 <componentref id='sun_umbrellas'/>
+                <componentref id='drinks'/>
             </children>
         </component>
 
