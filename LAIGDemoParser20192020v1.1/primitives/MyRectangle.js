@@ -21,6 +21,8 @@ class MyRectangle extends CGFobject {
 		this.u_length = 1;
 		this.v_length = 1;
 
+		this.uniqueID = id;
+
 		this.initBuffers();
 	}
 	
@@ -100,6 +102,12 @@ class MyRectangle extends CGFobject {
 	display(){
         //this.enableNormalViz();
         super.display();
+	}
+	enablePickable(){
+        this.scene.registerForPick(this.uniqueID,this);
+    }
+    disablePickable(){
+        this.scene.clearPickRegistration();
     }
 }
 

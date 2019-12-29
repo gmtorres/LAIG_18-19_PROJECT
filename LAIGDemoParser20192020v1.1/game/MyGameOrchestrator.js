@@ -12,7 +12,7 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme = new MySceneGraph(filenames[0], this.scene);
-        this.manager = new MyGameOrchestratorManager(this,[0.5,0,-1]);
+        this.manager = new MyGameOrchestratorManager(this,[1,0,-1]);
         this.prolog = null; //new MyPrologInterface(...);
         this.gameStates = {
             'Menu': 0,
@@ -45,6 +45,12 @@ class MyGameOrchestrator {
         this.player2Piece = null;
         this.tile1 = null;
         this.tile2 = null;
+
+        this.player1Score = 0;
+        this.player2Score = 0;
+
+        this.moveTime = 13;
+
 
     }
 
