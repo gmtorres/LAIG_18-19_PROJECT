@@ -1,11 +1,17 @@
 class MyGameOrchestrator {
 
-    constructor(filename, scene) {
+    constructor(filenames, scene) {
+        if(filenames.length == 0){
+            throw new TypeError('filemanes must bu greater than 0'); 
+        }
         this.scene = scene;
-        scene.gameOrchestrator = this;
+        this.scene.gameOrchestrator = this;
+        this.scene.filenames = filenames;
+
+        this.gameBoard = new MyGameBoard(this);
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
-        this.theme = new MySceneGraph(filename, scene);
+        this.theme = new MySceneGraph(filenames[0], this.scene);
         this.manager = new MyGameOrchestratorManager(this,[0.5,0,-1]);
         this.prolog = null; //new MyPrologInterface(...);
         this.gameStates = {
@@ -31,14 +37,50 @@ class MyGameOrchestrator {
         this.selectedTile = null;
 
         this.animating = false;
-
-        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
+        
+        this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 12, 8), vec3.fromValues(2, 0, 2));
         this.scene.interface.setActiveCamera(this.scene.camera);
+
+        this.player1Piece = null;
+        this.player2Piece = null;
+        this.tile1 = null;
+        this.tile2 = null;
 
     }
 
     onLoaded() {
-        this.gameBoard = new MyGameBoard(this);
+        if(this.currenPlayer == 1){
+            this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        }else if(this.currenPlayer == 2){
+            this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        }
+        this.scene.interface.setActiveCamera(this.scene.camera);
+
+        this.player1Piece = this.theme.piecesName1[0];
+        this.player2Piece = this.theme.piecesName2[0];
+
+        this.tile1 = this.theme.tilesName1[0];
+        this.tile2 = this.theme.tilesName2[0];
+
+        this.gameBoard.setPieceType();
+        this.gameBoard.setTilesType();
+    }
+
+    changePiece(player,id){
+        if(player == 1)
+            this.player1Piece = id;
+        if(player == 2)
+            this.player2Piece = id;
+    }
+
+    updateBoardTheme(){
+        this.gameBoard.setPieceType();
+        this.gameBoard.setTilesType();
+    }
+
+    changeTheme(value){
+        console.log(value);
+        this.theme = new MySceneGraph(value, this.scene);
     }
 
 
@@ -119,47 +161,46 @@ class MyGameOrchestrator {
         this.selectedTile = null;
     }
 
+    linearAproximation(origValue , targetValue , delta){
+        if(origValue - targetValue > 0){
+            if(origValue - delta < targetValue){
+                origValue = targetValue;
+            }else origValue -= delta;
+        }else if(origValue - targetValue < 0){
+            if(origValue + delta > targetValue){
+                origValue = targetValue;
+            }else origValue += delta;
+        }
+        return origValue;
+    }
+    arrayLinearAproximation(origArray,targetArray,delta){
+        for(let i = 0; i < origArray.length;i++){
+            origArray[i] = this.linearAproximation(origArray[i],targetArray[i],delta);
+        }
+    }
+
     changeCamera(){
         let currentCamera = this.scene.camera;
         let targetCamera = null;
-
+        this.scene.interface.setActiveCamera(null);
         if(this.currenPlayer == 1){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(15, 8, 8), vec3.fromValues(2, 0, 2));
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
         }else if(this.currenPlayer == 2){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-12.5, 8, 8), vec3.fromValues(2, 0, 2));
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
         }
 
         if(currentCamera.position[0] === targetCamera.position[0] && currentCamera.position[1] == targetCamera.position[1] && currentCamera.position[2] == targetCamera.position[2]){
+            this.scene.interface.setActiveCamera(this.scene.camera);
             return false;
         }
         
-        if(currentCamera.position[0] - targetCamera.position[0] > 0){
-            if(currentCamera.position[0] - 0.3 < targetCamera.position[0]){
-                currentCamera.position[0] = targetCamera.position[0];
-            }else currentCamera.position[0] -= 0.3;
-        }else if(currentCamera.position[0] - targetCamera.position[0] < 0){
-            if(currentCamera.position[0] + 0.3 > targetCamera.position[0]){
-                currentCamera.position[0] = targetCamera.position[0];
-            }else currentCamera.position[0] += 0.3;
-        }
-        if(currentCamera.position[1] - targetCamera.position[1] > 0){
-            if(currentCamera.position[1] - 0.3 < targetCamera.position[1]){
-                currentCamera.position[1] = targetCamera.position[1];
-            }else currentCamera.position[1] -= 0.3;
-        }else if(currentCamera.position[1] - targetCamera.position[1] < 0){
-            if(currentCamera.position[1] + 0.3 > targetCamera.position[1]){
-                currentCamera.position[1] = targetCamera.position[1];
-            }else currentCamera.position[1] += 0.3;
-        }
-        if(currentCamera.position[2] - targetCamera.position[2] > 0){
-            if(currentCamera.position[2] - 0.3 < targetCamera.position[2]){
-                currentCamera.position[2] = targetCamera.position[2];
-            }else currentCamera.position[2] -= 0.3;
-        }else if(currentCamera.position[2] - targetCamera.position[2] < 0){
-            if(currentCamera.position[2] + 0.3 > targetCamera.position[2]){
-                currentCamera.position[2] = targetCamera.position[2];
-            }else currentCamera.position[2] += 0.3;
-        }
+        this.arrayLinearAproximation(currentCamera.position,targetCamera.position,0.3);
+        this.arrayLinearAproximation(currentCamera.target,targetCamera.target,0.3);
+        this.arrayLinearAproximation(currentCamera.direction,targetCamera.direction,0.2);
+        this.arrayLinearAproximation(currentCamera._viewMatrix,targetCamera._viewMatrix,0.3);
+        this.arrayLinearAproximation(currentCamera._projectionMatrix,targetCamera._projectionMatrix,0.2);
+        this.arrayLinearAproximation(currentCamera._up,targetCamera._up,0.3);
+        return true;
     }
 
     orchestrate() {
@@ -256,7 +297,7 @@ class MyGameOrchestrator {
 
     display() {
 
-        // this.theme.displayScene();
+        this.theme.displayScene();
         if(this.animating == false){
             this.gameBoard.display();
             //console.log('a');

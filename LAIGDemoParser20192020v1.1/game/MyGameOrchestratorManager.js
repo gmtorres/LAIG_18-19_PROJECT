@@ -54,6 +54,8 @@ class MyGameOrchestratorManager{
 
     display(){
         this.orchestrator.getScene().pushMatrix();
+        let board = this.orchestrator.boardCoords;
+        this.orchestrator.getScene().translate(board[0],board[1],board[2]);
         this.orchestrator.getScene().translate(this.position[0],this.position[1],this.position[2]);
         this.orchestrator.getScene().rotate(-.4,1,0,0);
         this.plane.display();

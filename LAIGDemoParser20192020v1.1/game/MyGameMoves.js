@@ -20,6 +20,11 @@ class MyGameMoves{
         this.gameBoardAfter = boardAfter;
     }
 
+    setBoard(){
+        this.gameBoardPrev.setPieceType();
+        this.gameBoardPrev.setTilesType();
+    }
+
     animate(time){
         let ret = false;
         this.moves.forEach(element => {

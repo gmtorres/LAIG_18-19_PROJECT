@@ -98,7 +98,7 @@ class MyRectangle extends CGFobject {
 	 * Display object in scene
 	 */
 	display(){
-        this.enableNormalViz();
+        //this.enableNormalViz();
         super.display();
     }
 }

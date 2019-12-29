@@ -43,7 +43,7 @@ class MyPlane extends CGFobject {
 	 */
     display(){
         this.obj.display();
-        this.obj.enableNormalViz();
+        //this.obj.enableNormalViz();
     }
     /**
      * @method updateTexCoords

@@ -19,7 +19,7 @@ class XMLscene extends CGFscene {
      * @param {CGFApplication} application
      */
     init(application) {
-        this.startTime = new Date();
+        
         super.init(application);
 
         this.sceneInited = false;
@@ -45,26 +45,7 @@ class XMLscene extends CGFscene {
 
         this.selectView = "";
 
-
-        /*this.securityCameraShader = new CGFshader(this.gl, "shaders/security.vert", "shaders/security.frag");
-        this.securityCameraShader.setUniformsValues({
-            securityCameraSampler: 1,
-            uSampler: 0
-        });
-
-        this.securityCameraRecordingTexture = new CGFtexture(this, "scenes/images/security_camera.jpg");
-
-        this.securityCamera = new MySecurityCamera(this, "MySecurityCamera");
-
-        var canvas = document.body;
-        this.canvasWidth = canvas.clientWidth;
-        this.canvasHeight = canvas.clientHeight;
-        this.textureRTT = new CGFtextureRTT(this, this.canvasWidth, this.canvasHeight);
-
-        this.securityCamera.camera =  new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 0, 16), vec3.fromValues(7, -3, 5));
-        this.securityCameraMovement = false;
-        this.securityCameraMovementAux = false;
-        this.securityCameraMovementVec = [0,0,0,0];*/
+        this.interfaceInitiated = false;
 
 
 
@@ -152,9 +133,29 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gameOrchestrator.onLoaded();
+
+        if(this.interfaceInitiated == true){
+
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Select Pieces']);
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Select Tiles']);
+
+            let piecesFolder = this.interface.gui.addFolder('Select Pieces');
+                piecesFolder.add(this.gameOrchestrator,'player1Piece',this.graph.piecesName1).name('Piece 1').onChange(this.changeThemePiece.bind(this));
+                piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
+            piecesFolder.open();
+
+            let tilesFolder = this.interface.gui.addFolder('Select Tiles');
+                tilesFolder.add(this.gameOrchestrator,'tile1',this.graph.tilesName1).name('Tiles 1').onChange(this.changeThemeTiles.bind(this));
+                tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
+            tilesFolder.open();
+
+            return;
+        }   
+        this.interfaceInitiated = true;
+        this.axis = new CGFaxis(this, this.graph.referenceLength);
+
 
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
@@ -173,10 +174,13 @@ class XMLscene extends CGFscene {
         }
 
         //Interface
+        //this.interface.gui.remove("Select View");
+        //this.interface.gui.removeFolder("Lights");
+        //this.interface.gui.remove("Select Theme");
 
         this.interface.gui.add(this, "selectView", this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
 
-        var lightsFolder = this.interface.gui.addFolder('Lights');
+        let lightsFolder = this.interface.gui.addFolder('Lights');
         this.lightsVar = false;
         var i = 0;
         for (var light in this.graph.lights) {
@@ -186,25 +190,33 @@ class XMLscene extends CGFscene {
         }
         lightsFolder.open();
 
+        let themeFolder = this.interface.gui.addFolder('Select Theme');
+        themeFolder.add(this,"filename",this.filenames).name('Select Theme').onChange(this.changeTheme.bind(this));
+        themeFolder.open();
 
-        /*var SecurityCameraFolder = this.interface.gui.addFolder('Security Camera');
-        var SecurityCameraFolderPosition = SecurityCameraFolder.addFolder('Position');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '0', -30, 30).name('x');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '1', -30, 30).name('y');
-        SecurityCameraFolderPosition.add(this.securityCamera.camera.position, '2', -30, 30).name('z');
-        SecurityCameraFolderPosition.open();
-        var SecurityCameraFolderTarget = SecurityCameraFolder.addFolder('Target');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '0', -30, 30).name('x');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '1', -30, 30).name('y');
-        SecurityCameraFolderTarget.add(this.securityCamera.camera.target, '2', -30, 30).name('z');
-        SecurityCameraFolderTarget.open();
-        SecurityCameraFolder.add(this,"securityCameraMovement").name('Movement');
-        SecurityCameraFolder.open();*/
+        let piecesFolder = this.interface.gui.addFolder('Select Pieces');
+            piecesFolder.add(this.gameOrchestrator,'player1Piece',this.graph.piecesName1).name('Piece 1').onChange(this.changeThemePiece.bind(this));
+            piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
+        piecesFolder.open();
 
-        //this.updateCamera();
+        let tilesFolder = this.interface.gui.addFolder('Select Tiles');
+            tilesFolder.add(this.gameOrchestrator,'tile1',this.graph.tilesName1).name('Tiles 1').onChange(this.changeThemeTiles.bind(this));
+            tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
+        tilesFolder.open();
 
-        //this.interface.gui.add(this, 0, this.camerasIds);
     }
+
+    changeTheme(obj){
+        this.gameOrchestrator.changeTheme(obj);
+    }
+
+    changeThemePiece(){
+        this.gameOrchestrator.updateBoardTheme();
+    }
+    changeThemeTiles(){
+        this.gameOrchestrator.updateBoardTheme();
+    }
+
     /**
      * Enables or disables scene lights
      * @param {int} i index of the light to change state

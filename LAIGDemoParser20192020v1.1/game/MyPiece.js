@@ -36,12 +36,18 @@ class MyPiece{
         let tempTex = [];
         tempTex.tex = 'none';
         let tempApp = new CGFappearance(this.orchestrator.getScene());
+        
         if(!this.animated || (forceDisplay != undefined && forceDisplay == true)){
             if(this.selectable){
                 this.orchestrator.getScene().registerForPick(this.uniqueID,this);
             }
             this.orchestrator.getScene().pushMatrix();
             this.orchestrator.getScene().translate(this.tile.x,0,this.tile.y);
+            this.orchestrator.getScene().translate(0.5,0,0.5);
+            if(this.uniqueID >= 150 && this.uniqueID < 200){
+                this.orchestrator.getScene().rotate(Math.PI,0,1,0);
+            }
+            this.orchestrator.getScene().translate(-0.5,0,-0.5);
             this.orchestrator.theme.displayFunction(
                 this.type,
                 tempApp,
