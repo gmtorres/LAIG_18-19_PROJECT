@@ -5,6 +5,7 @@ class MyPiece{
         this.setType(type);
         this.setTile(tile);
         this.uniqueID = uniqueID;
+        this.selected = false;
         this.selectable = true;
         this.animated = false;
     }
@@ -48,6 +49,9 @@ class MyPiece{
                 this.orchestrator.getScene().rotate(Math.PI,0,1,0);
             }
             this.orchestrator.getScene().translate(-0.5,0,-0.5);
+            if(this.selected == true){
+                this.orchestrator.getScene().translate(0,0.5,0);
+            }
             this.orchestrator.theme.displayFunction(
                 this.type,
                 tempApp,

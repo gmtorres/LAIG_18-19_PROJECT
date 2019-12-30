@@ -15,7 +15,7 @@
 
     <lights>
         <omni id="demoLight" enabled="1">
-            <location x="0" y="25" z="0" w="1.0" />
+            <location x="0" y="50" z="0" w="1.0" />
             <ambient r="0" g="0" b="0" a="0.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -113,6 +113,14 @@
             <diffuse r="0.2" g="0.5" b="0.8" a="0.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
+
+        <material id="pink" shininess="10">
+            <emission r="0" g="0" b="0.0" a="0.0" />
+            <ambient r="1" g="0.6" b="0.65" a="1.0" />
+            <diffuse r="1" g="0.6" b="0.65" a="0.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
     </materials>
 
     <transformations>
@@ -268,6 +276,30 @@
             </patch>
         </primitive>
 
+        <primitive id='petala1'>
+            <patch npointsU='2' npointsV='3' npartsU='30' npartsV='30' >
+                <controlpoint x='0' y='0' z='0' />
+                <controlpoint x='-0.3' y='0' z='0.5' />
+                <controlpoint x='-1' y='0' z='0' />
+
+                <controlpoint x='0' y='0' z='0' />
+                <controlpoint x='-0.3' y='0' z='-.5' />
+                <controlpoint x='-1' y='0' z='0' />
+            </patch>
+        </primitive>
+        
+        <primitive id='petala2'>
+            <patch npointsU='2' npointsV='3' npartsU='30' npartsV='30' >
+                <controlpoint x='-1' y='0' z='0' />
+                <controlpoint x='-0.3' y='0' z='0.5' />
+                <controlpoint x='0' y='0' z='0' />
+
+                <controlpoint x='-1' y='0' z='0' />
+                <controlpoint x='-0.3' y='0' z='-.5' />
+                <controlpoint x='0' y='0' z='0' />
+            </patch>
+        </primitive>
+
     </primitives>
 
     <components>
@@ -297,15 +329,29 @@
             </children>
         </component>
 
-        <component id="board_rectangle">
+        <component id="board_rectangle1">
             <transformation>
                 <translate x="0" y="0" z="1" />
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="white" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id="none"/>
+            <children>
+                <primitiveref id='rectangle'/>
+            </children>
+        </component>
+
+        <component id="board_rectangle2">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+                <rotate axis='x' angle='-90'/>
+            </transformation>
+            <materials>
+                <material id="black" />
+            </materials>
+            <texture id="none"/>
             <children>
                 <primitiveref id='rectangle'/>
             </children>
@@ -350,10 +396,10 @@
                 <pieceref id='theme1' componentref='torus2' />
             </pieces2>
             <tiles1>
-                <tileref id='theme1' componentref='board_rectangle' />
+                <tileref id='theme1' componentref='board_rectangle1' />
             </tiles1>
             <tiles2>
-                <tileref id='theme1' componentref='board_rectangle' />
+                <tileref id='theme1' componentref='board_rectangle2' />
             </tiles2>
         </gameboard>
 
@@ -513,6 +559,7 @@
             <texture id='none'/>
             <children>
                 <componentref id='water_lily'/>
+                <componentref id='flower'/>
             </children>
         </component>
 
@@ -541,6 +588,7 @@
             <texture id='none'/>
             <children>
                 <componentref id='water_lily'/>
+                <componentref id='flower'/>
             </children>
         </component>
 
@@ -583,6 +631,7 @@
             <texture id='none'/>
             <children>
                 <componentref id='water_lily'/>
+                <componentref id='flower'/>
             </children>
         </component>
 
@@ -639,6 +688,7 @@
             <texture id='none'/>
             <children>
                 <componentref id='water_lily'/>
+                <componentref id='flower'/>
             </children>
         </component>
 
@@ -653,6 +703,7 @@
             <texture id='none'/>
             <children>
                 <componentref id='water_lily'/>
+                <componentref id='flower'/>
             </children>
         </component>
 
@@ -1701,6 +1752,219 @@
             </children>
         </component>
 
+        <component id="flower">
+            <transformation>
+                <scale x="0.4" y="0.4" z="0.4" />
+            </transformation>
+            <materials>
+                <material id="pink" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala01'/> 
+               <componentref id='petala02'/> 
+               <componentref id='petala03'/> 
+               <componentref id='petala04'/> 
+               <componentref id='petala05'/> 
+               <componentref id='petala06'/> 
+               <componentref id='petala11'/> 
+               <componentref id='petala12'/> 
+               <componentref id='petala13'/> 
+               <componentref id='petala14'/> 
+               <componentref id='petala15'/> 
+               <componentref id='petala16'/> 
+               <componentref id='flower_middle'/> 
+            </children>
+        </component>
+        
+        <component id="flower_middle">
+            <transformation>
+                <translate x="0" y="0.05" z="0" />
+                <scale x="0.15" y="0.15" z="0.15" />
+            </transformation>
+            <materials>
+                <material id="yellow" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <primitiveref id='sphere'/>
+            </children>
+        </component>
+
+        <component id="petala01">
+            <transformation>
+                <rotate axis='y' angle='0'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+        <component id="petala02">
+            <transformation>
+                <rotate axis='y' angle='60'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+        <component id="petala03">
+            <transformation>
+                <rotate axis='y' angle='120'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+        <component id="petala04">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+        <component id="petala05">
+            <transformation>
+                <rotate axis='y' angle='240'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+        <component id="petala06">
+            <transformation>
+                <rotate axis='y' angle='300'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala'/> 
+            </children>
+        </component>
+
+        <component id="petala11">
+            <transformation>
+                <rotate axis='y' angle='30'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+        <component id="petala12">
+            <transformation>
+                <rotate axis='y' angle='90'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+        <component id="petala13">
+            <transformation>
+                <rotate axis='y' angle='150'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+        <component id="petala14">
+            <transformation>
+                <rotate axis='y' angle='210'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+        <component id="petala15">
+            <transformation>
+                <rotate axis='y' angle='270'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+        <component id="petala16">
+            <transformation>
+                <rotate axis='y' angle='330'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+               <componentref id='petala2'/> 
+            </children>
+        </component>
+
+        <component id="petala">
+            <transformation>
+                <rotate axis='z' angle='-30'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='petala1'/>
+                <primitiveref id='petala2'/>
+            </children>
+        </component>
+
+        <component id="petala2">
+            <transformation>
+                <rotate axis='z' angle='-20'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='petala1'/>
+                <primitiveref id='petala2'/>
+            </children>
+        </component>
+
 
         <component id="demoRoot">
             <transformation>
@@ -1722,8 +1986,6 @@
                 <componentref id='fishing_rods'/>
                 <componentref id='splashs'/>
                 <componentref id='bushs'/>
-                
-                
 
             </children>
         </component>

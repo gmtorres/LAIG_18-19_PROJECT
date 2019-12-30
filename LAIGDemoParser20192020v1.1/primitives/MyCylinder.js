@@ -94,5 +94,12 @@ class MyCylinder extends CGFobject {
         //this.enableNormalViz();
         super.display();
     }
+
+    enablePickable(){
+        this.scene.registerForPick(this.uniqueID,this);
+    }
+    disablePickable(){
+        this.scene.clearPickRegistration();
+    }
 }
 

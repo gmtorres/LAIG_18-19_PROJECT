@@ -21,8 +21,16 @@ class MyAnimator{
         this.gameSequence.end();    
     }
 
+    setMove(move,time){
+        this.currentGameMovement = move;
+        this.currentGameMovement.setBoard();
+        this.animationStartTime = time;
+        this.orchestrator.animating = true;
+    }
+
     update(time){
         if(this.currentGameMovement != null){
+            this.orchestrator.animating = true;
             if(this.currentGameMovement.animate(time - this.animationStartTime ) == false){
                 this.currentGameMovement.setPiecesAnimated(false);
                 this.currentGameMovement = null;

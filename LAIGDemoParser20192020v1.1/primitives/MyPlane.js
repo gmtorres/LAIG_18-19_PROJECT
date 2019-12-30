@@ -61,6 +61,12 @@ class MyPlane extends CGFobject {
 		this.u_length = u;
 		this.v_length = v;
 		this.updateTexCoordsGLBuffers();
-	}
+    }
+    enablePickable(){
+        this.scene.registerForPick(this.uniqueID,this);
+    }
+    disablePickable(){
+        this.scene.clearPickRegistration();
+    }
 
 }

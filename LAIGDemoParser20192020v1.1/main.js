@@ -55,7 +55,7 @@ main=function()
 
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
-    var filename=getUrlVars()['file'] || ["nudge_2.xml" , "nudge_1.xml"];
+    var filename=getUrlVars()['file'] || ["nudge_1.xml" , "nudge_2.xml"];
     //var filename=getUrlVars()['file'] || "textures.xml";
 
 	// create and load graph, and associate it to scene. 
