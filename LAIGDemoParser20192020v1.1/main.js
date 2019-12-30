@@ -37,6 +37,7 @@ serialInclude(['../lib/CGF.js',
                'game/MyAnimator.js',
                'game/MyGameOrchestrator.js',
                'game/MyGameOrchestratorManager.js',
+               'generic/MyPrologInterface.js',
 
 
 main=function()

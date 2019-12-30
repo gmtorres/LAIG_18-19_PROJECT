@@ -3,23 +3,65 @@ const REQUEST_ADDRESS = "http://localhost:" + PROLOG_SERVER_PORT + "/";
 
 class MyPrologInterface{
    
+  constructor() {
+    
+  }
+
+
+  /**
+   * Tries to connect to PROLOG server
+   */
+  async _handshake() {
+    while (true) {
+      let response = this._sendRequest("handshake", []);
+      
+      if (response == "handshake") {
+        console.log("Connection to PROLOG server in port " + PROLOG_SERVER_PORT + " established.");
+        break;
+      }
+
+      console.warn("Retrying handshake to " + REQUEST_ADDRESS);
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
+
+  /**
+   * Sends a request to the PROLOG server to execute the predicate pred(args)
+   * @param {string} pred Predicate to execute
+   * @param {Array} args Array of arguments to execute
+   */
   _sendRequest(pred, args) {
-    if (!args.isArray() || typeof (pred) != 'string') {
+    if (!Array.isArray(args) || typeof (pred) != 'string') {
       return;
     }
+
     let request = new XMLHttpRequest();
-    let url = REQUEST_ADDRESS + pred + "(" + args.join(',') + ")";
+    let argss = (args.length) ? "(" + args.join(',') + ")" : "";
+    let url = REQUEST_ADDRESS + pred + argss;
 
     request.open("GET", url, false);
-    request.send(); 
 
-    if (request.readyState == 4 && request.status == 200) {
+    try {
+      request.send(); 
+    } catch (error) {
+      return false;
+    }
+
+    if (request.status == 200) {
       return request.responseText;
+    }
+
+    if (request.status == 404) {
+      return false;
     }
 
     return null;
   }
 
+  /**
+   * Checks if the Game has ended
+   * @param {Array of Arrays} board Nudge Board in Prolog sintax
+   */
   checkGameOver(board) {
     let player1Win = this._sendRequest("check_gameOver", [board, 1]);
     let player2Win = this._sendRequest("check_gameOver", [board, 2]);

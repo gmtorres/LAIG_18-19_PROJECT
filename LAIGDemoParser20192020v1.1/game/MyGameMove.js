@@ -73,4 +73,6 @@ class MyGameMove{
         return new MyGameMove(this.gameBoardAfter,this.piece,this.destTile,this.origTile);
     }
 
+
+
 }
