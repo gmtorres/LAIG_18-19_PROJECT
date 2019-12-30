@@ -33,32 +33,36 @@ class MyPiece{
         return this.uniqueID;
     }
 
-    display(forceDisplay) {
+    applyTransformations(){
+            this.orchestrator.getScene().translate(this.tile.x,0,this.tile.y);
+            if(this.selected == true){
+                this.orchestrator.getScene().translate(0,0.5,0);
+            }
+    }
+
+    displayPiece(){
         let tempTex = [];
         tempTex.tex = 'none';
         let tempApp = new CGFappearance(this.orchestrator.getScene());
+
+        this.orchestrator.getScene().translate(0.5,0,0.5);
+        if(this.uniqueID >= 150 && this.uniqueID < 200){
+            this.orchestrator.getScene().rotate(Math.PI,0,1,0);
+        }
+        this.orchestrator.getScene().translate(-0.5,0,-0.5);
+
+        this.orchestrator.theme.displayFunction(this.type,tempApp,tempTex,1,1);
+    }
+
+    display(forceDisplay) {
         
         if(!this.animated || (forceDisplay != undefined && forceDisplay == true)){
             if(this.selectable){
                 this.orchestrator.getScene().registerForPick(this.uniqueID,this);
             }
             this.orchestrator.getScene().pushMatrix();
-            this.orchestrator.getScene().translate(this.tile.x,0,this.tile.y);
-            this.orchestrator.getScene().translate(0.5,0,0.5);
-            if(this.uniqueID >= 150 && this.uniqueID < 200){
-                this.orchestrator.getScene().rotate(Math.PI,0,1,0);
-            }
-            this.orchestrator.getScene().translate(-0.5,0,-0.5);
-            if(this.selected == true){
-                this.orchestrator.getScene().translate(0,0.5,0);
-            }
-            this.orchestrator.theme.displayFunction(
-                this.type,
-                tempApp,
-                tempTex,
-                1,
-                1
-            );
+            this.applyTransformations();
+            this.displayPiece();
             this.orchestrator.getScene().popMatrix();
             if(this.selectable){
                 this.orchestrator.getScene().clearPickRegistration();

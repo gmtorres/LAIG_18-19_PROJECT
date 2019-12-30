@@ -54,6 +54,7 @@ class MyGameOrchestrator {
 
         this.moveTime = 13;
 
+        this.cameraAnimationTime = null;
 
     }
 
@@ -175,25 +176,56 @@ class MyGameOrchestrator {
     }
 
     linearAproximation(origValue , targetValue , delta){
-        if(origValue - targetValue > 0){
-            if(origValue - delta < targetValue){
-                origValue = targetValue;
-            }else origValue -= delta;
-        }else if(origValue - targetValue < 0){
-            if(origValue + delta > targetValue){
-                origValue = targetValue;
-            }else origValue += delta;
-        }
-        return origValue;
+        return origValue + (targetValue - origValue) * delta;
     }
     arrayLinearAproximation(origArray,targetArray,delta){
+        let arr = [];
         for(let i = 0; i < origArray.length;i++){
-            origArray[i] = this.linearAproximation(origArray[i],targetArray[i],delta);
+            arr.push(this.linearAproximation(origArray[i],targetArray[i],delta));
         }
+        return arr;
     }
 
     changeCamera(){
+        let time = this.scene.time;
+        let animationTime = 2;
+        if(this.cameraAnimationTime == null){
+            this.startCamera = [];
+            this.startCamera[0] = [...this.scene.camera.position];
+            this.startCamera[1] = [...this.scene.camera.target];
+            this.startCamera[2] = [...this.scene.camera.direction];
+            this.startCamera[3] = [...this.scene.camera._viewMatrix];
+            this.startCamera[4] = [...this.scene.camera._projectionMatrix];
+            this.startCamera[5] = [...this.scene.camera._up];
+            this.cameraAnimationTime = time;
+        }
+
+        if(time - this.cameraAnimationTime > animationTime){
+            this.scene.interface.setActiveCamera(this.scene.camera);
+            this.cameraAnimationTime = null;
+            return false;
+        }
         let currentCamera = this.scene.camera;
+        let targetCamera = null;
+        this.scene.interface.setActiveCamera(null);
+        if(this.currentPlayer == 1){
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        }else if(this.currentPlayer == 2){
+            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        }
+
+        let fraction = (time - this.cameraAnimationTime)/animationTime;
+
+        currentCamera.position = this.arrayLinearAproximation(this.startCamera[0],targetCamera.position,fraction);
+        currentCamera.target = this.arrayLinearAproximation(this.startCamera[1],targetCamera.target,fraction);
+        currentCamera.direction = this.arrayLinearAproximation(this.startCamera[2],targetCamera.direction,fraction);
+        currentCamera._viewMatrix = this.arrayLinearAproximation(this.startCamera[3],targetCamera._viewMatrix,fraction);
+        currentCamera._projectionMatrix = this.arrayLinearAproximation(this.startCamera[4],targetCamera._projectionMatrix,fraction);
+        currentCamera._up = this.arrayLinearAproximation(this.startCamera[5],targetCamera._up,fraction);
+
+
+        return true;
+        /*let currentCamera = this.scene.camera;
         let targetCamera = null;
         this.scene.interface.setActiveCamera(null);
         if(this.currentPlayer == 1){
@@ -213,7 +245,7 @@ class MyGameOrchestrator {
         this.arrayLinearAproximation(currentCamera._viewMatrix,targetCamera._viewMatrix,0.3);
         this.arrayLinearAproximation(currentCamera._projectionMatrix,targetCamera._projectionMatrix,0.2);
         this.arrayLinearAproximation(currentCamera._up,targetCamera._up,0.3);
-        return true;
+        return true;*/
     }
 
     getDirection(tile1,tile2){
@@ -292,13 +324,10 @@ class MyGameOrchestrator {
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;
                         this.state = this.gameStates['Movement Animation'];
-
-                        let move = new MyGameMove(this.selectedPiece,this.selectedPiece.getTile(),this.selectedTile);
-                        //let move2 = new MyGameMove(this.gameBoard.tiles[16].getPiece(),this.gameBoard.tiles[16],this.gameBoard.tiles[0]);
-                        let comp = new MyGameMoves(this.gameBoard,[move]);
-
-                        this.gameSequence.addMove(comp);
-
+                        
+                        this.moves = this.gameBoard.getMoves(this.selectedPiece,this.getDirection(this.selectedPiece.getTile(),this.selectedTile));
+                        this.gameSequence.addMove(this.moves);
+                        
                     }
                 break;
             case this.gameStates['Movement Animation']:
@@ -306,7 +335,8 @@ class MyGameOrchestrator {
                 if(this.animator.update(this.scene.time) == false){
                     this.animating = false;
                     this.state = this.gameStates['Evaluate Game End'];
-                    this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
+                    //this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
+                    this.gameBoard.movePieces(this.moves);
                     this.gameBoard.buildBoardFromTiles();
                 }
                 break;
