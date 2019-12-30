@@ -52,4 +52,17 @@ class MyGameSequence{
         this.addMove(reverseMove);
         return move.gameBoardPrev;
     }
+
+    getBfrBoard(){
+        if(this.sequence.length <= 1)
+            return [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0]
+            ];
+        else return this.sequence[this.sequence.length-2].gameBoardPrev;
+    }
+
 }

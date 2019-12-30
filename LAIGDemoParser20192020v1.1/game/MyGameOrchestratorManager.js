@@ -16,6 +16,8 @@ class MyGameOrchestratorManager{
         this.upButton = new MyRectangle(this.orchestrator.getScene(),54,0,0.2,0,0.2);
         this.downButton = new MyRectangle(this.orchestrator.getScene(),55,0,0.2,0,0.2);
 
+        this.playerTurn = new MyRectangle(this.orchestrator.getScene(),55,0,0.2,0,0.2);
+
 
         this.materialWhite = new CGFappearance(this.orchestrator.scene);
         this.materialWhite.setAmbient(0.1, 0.1, 0.1, 1);
@@ -197,6 +199,20 @@ class MyGameOrchestratorManager{
         this.materialWhite.setTexture(this.upLabel);
         this.materialWhite.apply();
         this.displayPickableObject(this.upButton);
+        this.materialWhite.setTexture(null);
+        this.orchestrator.getScene().popMatrix();
+
+        //player label
+        this.orchestrator.getScene().pushMatrix();
+        this.orchestrator.getScene().scale(1,1,.1);
+        this.orchestrator.getScene().translate(2.35,0.15,0.011);
+        this.materialWhite.setTexture(this.numbers[this.orchestrator.currentPlayer]);
+        this.materialWhite.apply();
+        this.playerTurn.display();
+        this.orchestrator.getScene().translate(0.25,0,0);
+        this.materialWhite.setTexture(this.numbers[this.orchestrator.currentTurn]);
+        this.materialWhite.apply();
+        this.playerTurn.display();
         this.materialWhite.setTexture(null);
         this.orchestrator.getScene().popMatrix();
 

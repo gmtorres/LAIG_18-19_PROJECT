@@ -1,12 +1,16 @@
 class MyTile{
 
-    constructor(orchestrator,uniqueID,type,x,y){
+    constructor(orchestrator,uniqueID,type,x,y,z){
         this.orchestrator = orchestrator;
         this.setType(type);
         this.setPosition(x,y);
         this.uniqueID = uniqueID;
         this.piece = null;
         this.selectable = false;
+        
+        if(z != undefined){
+            this.z = z;
+        }else this.z = 0;
     }
     setPosition(x,y){
         this.x = x;
@@ -25,7 +29,7 @@ class MyTile{
     }
 
     getPosition(){
-        return [this.x,0,this.y];
+        return [this.x,this.z,this.y];
     }
 
     display() {
@@ -37,7 +41,7 @@ class MyTile{
             this.orchestrator.getScene().registerForPick(this.uniqueID,this);
         }
         this.orchestrator.getScene().pushMatrix();
-        this.orchestrator.getScene().translate(this.x,0,this.y);
+        this.orchestrator.getScene().translate(this.x,this.z,this.y);
         this.orchestrator.theme.displayFunction(
             this.type,
             tempApp,
