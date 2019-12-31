@@ -108,12 +108,12 @@ parse_input(handshake, handshake).
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(check_gameOver(Board,Player), Res) :- check_gameOver(Board,Player,Res).
 parse_input(check_move(Board,Player,Number,Letter,Direction,BoardbfrPlay,Turn), Res) :- check_move(Board,Player,Number,Letter,Direction,BoardbfrPlay,Turn,Res).
+parse_input(get_AIMove(Board,Player,Turn,Mode), Move) :- get_AIMove(Board,Player,Turn,Move,Mode).
+
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-
-
 
 
 check_gameOver(Board,Player,Res) :- gameOver(Board,Player), Res is 1.
@@ -133,4 +133,14 @@ check_move(Board,Player,Number,Letter,Direction,BoardbfrPlay,2,Res):-
 	Res is 1.
 
 check_move(_Board,_Player,_Number,_Letter,_Direction,_BoardbfrPlay,2,0).
+
+get_AIMove(Board,Player,Turn,Move,1):-
+	choose_move(Board,Player,Turn,Move,1).
+get_AIMove(Board,Player,Turn,Move,2,Res):-
+	choose_move(Board,Player,Turn,Move,2).
+get_AIMove(Board,Player,Turn,Move,3,Res):-
+	choose_move(Board,Player,Turn,Move,3).
+get_AIMove(Board,Player,Turn,Move,_,Res):-
+	Move is 0.
+
 

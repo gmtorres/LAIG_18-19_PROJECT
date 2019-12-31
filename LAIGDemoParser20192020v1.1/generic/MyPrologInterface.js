@@ -3,8 +3,8 @@ const REQUEST_ADDRESS = "http://localhost:" + PROLOG_SERVER_PORT + "/";
 
 class MyPrologInterface{
    
-  constructor() {
-    
+  constructor(orchestrator) {
+    this.orchestrator = orchestrator;
   }
 
 
@@ -74,7 +74,17 @@ class MyPrologInterface{
   }
 
   checkMove() {
-    
+    let json = this.orchestrator.getJSONgameMove();
+    let args = [
+      json.gameBoard,
+      json.player,
+      json.number,
+      json.letter,
+      json.direction,
+      json.boardbfrPlay,
+      json.turn];
+
+    return this._sendRequest("check_move", args); 
   }
 
 
