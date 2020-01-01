@@ -163,6 +163,18 @@ class MyGameBoard {
         }
     }
 
+    getTile(x, y) {
+        let i = x * 5 + y;
+        if(i < 0 || i >= this.tiles.length) return null;
+        return this.tiles[i];
+    }
+
+    getPieceByTile(x, y) {
+        let i = x * 5 + y;
+        if(i < 0 || i >= this.tiles.length) return null;
+        return this.tiles[i].getPiece();
+    }
+
     movePiece(piece, startTile, destTile) {
         startTile.setPiece(null);
         piece.setTile(destTile);
@@ -174,14 +186,41 @@ class MyGameBoard {
         piece.setTile(destTile);
     }
 
-    getTile(x, y) {
-        return this.tiles[x * 5 + y];
+    movePieces(gameMoves){
+        let moves = gameMoves.moves;
+        for(let i = moves.length-1; i >=0;i--){
+            this.movePiece(moves[i].piece,moves[i].origTile,moves[i].destTile);
+        }
     }
 
-    getPieceByTile(x, y) {
-        return this.tiles[x * 5 + y].getPiece();
-    }
+    getMoves(piece,direction){
+        let dx = 0;
+        let dy = 0;
+        if(direction == 'a') dy = 1;
+        else if(direction == 'd') dy = -1;
+        else if(direction == 's') dx = 1;
+        else if(direction == 'w') dx = -1;
+        else return new MyGameMoves(this,[],false);;
+        
+        let pieceT = piece;
+        let moves = [];
+        let destTile;
+        while(pieceT != null){
+            let tile = pieceT.getTile();
+            let destX = tile.x + dx;
+            let destY = tile.y + dy;
+            if(destX >=0 && destX <=4 && destY >=0 && destY <=4){
+                destTile = this.getTile(destX , destY);
+                moves.push(new MyGameMove(pieceT, tile, destTile));
+            }else{
+                moves.push(new MyGameMove(pieceT, tile, new MyTile(this.orchestrator,-1,null,destX,destY),true));
+                break;
+            }
+            pieceT = destTile.getPiece();
+        }
+        return new MyGameMoves(this,moves,false);
 
+    }
 
 
     display() {

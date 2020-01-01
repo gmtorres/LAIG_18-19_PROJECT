@@ -1,11 +1,14 @@
 class MyGameMove{
 
-    constructor(piece,origTile, destTile){
+    constructor(piece,origTile, destTile,removePiece){
         this.piece = piece;
         this.origTile = origTile; 
         this.destTile = destTile;
         this.gameBoardAfter;
         this.currentAnimation = null;
+        if(removePiece == undefined)
+            this.removePiece = false;
+        else this.removePiece = removePiece;
     }
 
     diff(arr1,arr2){
@@ -27,7 +30,7 @@ class MyGameMove{
 
             let transf2 = {
                 translate : this.diff(this.origTile.getPosition(),this.destTile.getPosition()),
-                scale     : [1,1,1],
+                scale     : this.removePiece ? [0,0,0] : [1,1,1],
                 rotate    : [0,0,0],
                 instant   : 0.5
             };
@@ -59,9 +62,9 @@ class MyGameMove{
         let origP = this.origTile.getPosition();
         scene.pushMatrix();
         scene.translate(origP[0] - pieceP[0] + boardTranslation[0],origP[1] - pieceP[1] + boardTranslation[1],origP[2] - pieceP[2] + boardTranslation[2]);
+        this.piece.applyTransformations();
         this.currentAnimation.apply();
-        //this.piece.animated = false;
-        this.piece.display(true);
+        this.piece.displayPiece();
         //this.piece.animated = true;
         scene.popMatrix();
 

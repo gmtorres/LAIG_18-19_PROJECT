@@ -62,7 +62,7 @@ class MyGameSequence{
                 [0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0]
             ];
-        else return this.sequence[this.sequence.length-2].gameBoardPrev;
+        else return this.sequence[this.sequence.length-2].gameBoardPrev.board;
     }
 
 }
