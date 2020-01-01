@@ -64,6 +64,8 @@ class MyGameOrchestrator {
 
         this.cameraAnimationTime = null;
 
+        this.gameStarted = false;
+
     }
 
     onLoaded() {
@@ -97,7 +99,8 @@ class MyGameOrchestrator {
     }
 
     changeBoard() {
-        this.gameBoard.setToDefault(this.defBoard);
+        if(this.gameStarted == false)
+            this.gameBoard.setToDefault(this.defBoard);
     }
 
     changeTheme(value){
@@ -237,27 +240,6 @@ class MyGameOrchestrator {
 
 
         return true;
-        /*let currentCamera = this.scene.camera;
-        let targetCamera = null;
-        this.scene.interface.setActiveCamera(null);
-        if(this.currentPlayer == 1){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }else if(this.currentPlayer == 2){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }
-
-        if(currentCamera.position[0] === targetCamera.position[0] && currentCamera.position[1] == targetCamera.position[1] && currentCamera.position[2] == targetCamera.position[2]){
-            this.scene.interface.setActiveCamera(this.scene.camera);
-            return false;
-        }
-        
-        this.arrayLinearAproximation(currentCamera.position,targetCamera.position,0.3);
-        this.arrayLinearAproximation(currentCamera.target,targetCamera.target,0.3);
-        this.arrayLinearAproximation(currentCamera.direction,targetCamera.direction,0.2);
-        this.arrayLinearAproximation(currentCamera._viewMatrix,targetCamera._viewMatrix,0.3);
-        this.arrayLinearAproximation(currentCamera._projectionMatrix,targetCamera._projectionMatrix,0.2);
-        this.arrayLinearAproximation(currentCamera._up,targetCamera._up,0.3);
-        return true;*/
     }
 
     getDirection(tile1,tile2){
@@ -268,16 +250,16 @@ class MyGameOrchestrator {
 
         if(dx<0) return 'w';
         if(dx>0) return 's';
-        if(dy<0) return 'd';
-        if(dy>0) return 'a';
+        if(dy<0) return 'a';
+        if(dy>0) return 'd';
     }
 
     getJSONgameMove(){
         return {
             gameBoard : this.gameBoard.board,
             player : this.currentPlayer,
-            number : this.selectedPiece.getTile().x,
-            letter : this.selectedPiece.getTile().y,
+            number : this.selectedPiece.getTile().y,
+            letter : this.selectedPiece.getTile().x,
             direction : this.getDirection(this.selectedPiece.getTile(),this.selectedTile),
             boardbfrPlay : this.gameSequence.getBfrBoard(),
             turn : this.currentTurn
@@ -342,9 +324,16 @@ class MyGameOrchestrator {
                         this.animating = false;
                         this.state = this.gameStates['Movement Animation'];
                         
-                        this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
-                        this.gameSequence.addMove(this.moves);
-                        
+                        if(this.prolog.checkMove() == 0){
+                            this.animating = false;
+                            this.setSelectable();
+                            this.resetSelection();
+                            this.state = this.gameStates['Destination Piece Selection'];
+                        }else{
+                            this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
+                            this.gameSequence.addMove(this.moves);
+                        }
+
                     }
                 break;
             case this.gameStates['Movement Animation']:
@@ -361,6 +350,8 @@ class MyGameOrchestrator {
                 this.state = this.gameStates['Next Turn'];
                 break;
             
+
+
             case this.gameStates['Undo Animation']:
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;
@@ -392,8 +383,11 @@ class MyGameOrchestrator {
     }
 
     startGame() {
-        this.prolog._handshake();
-        this.state = 0;
+        if(this.prolog.connected == false){
+            this.prolog._handshake();
+            this.state = 0;
+        }
+        this.gameStarted = true;
     }
 
 

@@ -1,5 +1,4 @@
 :-use_module(library(sockets)).
-:-use_module(library(lists)).
 :-use_module(library(codesio)).
 :-include('inicial.pl').
 

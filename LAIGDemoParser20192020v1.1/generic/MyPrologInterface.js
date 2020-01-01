@@ -57,6 +57,7 @@ class MyPrologInterface{
     }
 
     if (request.status == 404) {
+      this.connected == false;
       return false;
     }
 

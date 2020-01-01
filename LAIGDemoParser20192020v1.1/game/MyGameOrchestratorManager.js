@@ -80,11 +80,15 @@ class MyGameOrchestratorManager{
             }
             return true;
         }else if(id == this.upButton.uniqueID){
+            if(this.orchestrator.gameStarted == true)
+                return true;
             this.orchestrator.moveTime++;
             if(this.orchestrator.moveTime >= 100)
                 this.orchestrator.moveTime = 99;
             return true;
         }else if(id == this.downButton.uniqueID){
+            if(this.orchestrator.gameStarted == true)
+                return true;
             this.orchestrator.moveTime--;
             if(this.orchestrator.moveTime < 0)
                 this.orchestrator.moveTime = 0;

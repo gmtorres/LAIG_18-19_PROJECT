@@ -261,8 +261,8 @@ class MyGameBoard {
     getMoves(piece,direction){
         let dx = 0;
         let dy = 0;
-        if(direction == 'a') dy = 1;
-        else if(direction == 'd') dy = -1;
+        if(direction == 'a') dy = -1;
+        else if(direction == 'd') dy = +1;
         else if(direction == 's') dx = 1;
         else if(direction == 'w') dx = -1;
         else return new MyGameMoves(this,[],false);;
