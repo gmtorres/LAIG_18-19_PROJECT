@@ -13,7 +13,7 @@ class MyGameOrchestrator {
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme = new MySceneGraph(filenames[0], this.scene);
         this.manager = new MyGameOrchestratorManager(this,[1,0,-1]);
-        this.prolog = null; //new MyPrologInterface(...);
+        this.prolog = new MyPrologInterface(this);
         this.gameStates = {
             'Menu': 0,
             'Load Scene': 1,
@@ -31,7 +31,7 @@ class MyGameOrchestrator {
             'Destination Piece Selected': 11,
             'Destination Tile Selected': 12,
         }
-        this.state = 2;
+        this.state = 0;
 
         this.currentPlayer = 1;
         this.currentTurn = 0;
@@ -51,6 +51,14 @@ class MyGameOrchestrator {
 
         this.player1Score = 0;
         this.player2Score = 0;
+
+        this.player1Type = 'Human'
+        this.player2Type = 'Human'
+
+        this.ptypes = ['Human', 'AI lvl 1', 'AI lvl 2', 'AI lvl 3']
+        this.defBoards = [0, 1, 2, 3];
+
+        this.defBoard = 0;
 
         this.moveTime = 13;
 
@@ -86,6 +94,10 @@ class MyGameOrchestrator {
     updateBoardTheme(){
         this.gameBoard.setPieceType();
         this.gameBoard.setTilesType();
+    }
+
+    changeBoard() {
+        this.gameBoard.setToDefault(this.defBoard);
     }
 
     changeTheme(value){
@@ -279,6 +291,9 @@ class MyGameOrchestrator {
         this.scene.clearPickRegistration();
 
         switch (this.state) {
+            case this.gameStates['Menu']:
+                this.state = (this.prolog.connected) ? 2 : this.state;
+                break;
             case this.gameStates['Next Turn']:
 
                 if(this.updateNextPlayer())
@@ -325,7 +340,7 @@ class MyGameOrchestrator {
                         this.animating = false;
                         this.state = this.gameStates['Movement Animation'];
                         
-                        this.moves = this.gameBoard.getMoves(this.selectedPiece,this.getDirection(this.selectedPiece.getTile(),this.selectedTile));
+                        this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
                         this.gameSequence.addMove(this.moves);
                         
                     }
@@ -374,7 +389,10 @@ class MyGameOrchestrator {
 
     }
 
-
+    startGame() {
+        this.prolog._handshake();
+        this.state = 0;
+    }
 
 
     update(time) {

@@ -136,10 +136,9 @@ class XMLscene extends CGFscene {
         this.gameOrchestrator.onLoaded();
 
         if(this.interfaceInitiated == true){
-
             this.interface.gui.removeFolder(this.interface.gui.__folders['Select Pieces']);
             this.interface.gui.removeFolder(this.interface.gui.__folders['Select Tiles']);
-
+            
             let piecesFolder = this.interface.gui.addFolder('Select Pieces');
                 piecesFolder.add(this.gameOrchestrator,'player1Piece',this.graph.piecesName1).name('Piece 1').onChange(this.changeThemePiece.bind(this));
                 piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
@@ -203,6 +202,19 @@ class XMLscene extends CGFscene {
             tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
         tilesFolder.open();
 
+        let gameOptions = this.interface.gui.addFolder('Game Settings');
+        gameOptions.add(this.gameOrchestrator, 'defBoard', this.gameOrchestrator.defBoards).name("Board").onChange(this.updateBoard.bind(this));
+        gameOptions.add(this.gameOrchestrator, 'player1Type', this.gameOrchestrator.ptypes).name('Player 1');
+        gameOptions.add(this.gameOrchestrator, 'player2Type', this.gameOrchestrator.ptypes).name('Player 2');
+        gameOptions.add(this.gameOrchestrator, 'startGame').name('Start Game');
+        gameOptions.open();
+
+
+        
+        
+    }
+    updateBoard() {
+        this.gameOrchestrator.changeBoard();
     }
 
     changeTheme(obj){

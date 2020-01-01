@@ -5,6 +5,7 @@ class MyPrologInterface{
    
   constructor(orchestrator) {
     this.orchestrator = orchestrator;
+    this.connected = false;
   }
 
 
@@ -12,11 +13,13 @@ class MyPrologInterface{
    * Tries to connect to PROLOG server
    */
   async _handshake() {
+    this.connected = false;
     while (true) {
       let response = this._sendRequest("handshake", []);
       
       if (response == "handshake") {
         console.log("Connection to PROLOG server in port " + PROLOG_SERVER_PORT + " established.");
+        this.connected = true;
         break;
       }
 
@@ -79,7 +82,7 @@ class MyPrologInterface{
       json.gameBoard,
       json.player,
       json.number,
-      json.letter,
+      "'"  + json.letter + "'",
       json.direction,
       json.boardbfrPlay,
       json.turn];

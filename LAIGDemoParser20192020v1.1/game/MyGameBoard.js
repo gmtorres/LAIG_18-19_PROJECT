@@ -32,6 +32,41 @@ class MyGameBoard {
         }
     }
 
+    setToDefault(i) {
+        let board = [];
+        board[0] = [
+            [0, 0, 0, 0, 0],
+            [0, 2, 2, 2, 0],
+            [0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0]
+        ];
+        board[1] = [
+            [0, 2, 0, 2, 0],
+            [0, 0, 2, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 1, 0, 1, 0]
+        ];
+        board[2] = [
+            [2, 0, 2, 0, 2],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1]
+        ];
+        board[3] = [
+            [0, 0, 2, 0, 0],
+            [0, 2, 0, 2, 0],
+            [0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 1, 0, 0]
+        ];
+        this.board = board[i];
+        this.redefinePieces();
+    }
+
+
     buildBoardFromTiles() {
         this.board = [
             [0, 0, 0, 0, 0],
@@ -147,8 +182,39 @@ class MyGameBoard {
             element.setTile(null);
         });
     }
-    redefinePieces() {
 
+    redefinePieces() {
+        let pieces1 = [];
+        let pieces2 = [];
+        this.resetPieces();
+        this.pieces.forEach(piece => {
+            let id = piece.getId();
+            if (id >= 100 && id < 150) {
+                pieces1.push(piece);
+            }
+            if (id >= 150 && id < 200) {
+                pieces2.push(piece);
+            }
+        });
+        let player1 = 0;
+        let player2 = 0;
+        for (let i = 0; i < this.board.length; i++) {
+            for (let j = 0; j < this.board[i].length; j++) {
+                let char = this.board[i][j];
+                let tile = this.getTile(i, j);
+                if (char == 1) {
+                    pieces1[player1].setTile(tile);
+                    player1 += 1;
+                }
+                if (char == 2) {
+                    // tile.setPiece(pieces2[player2]);
+                    pieces2[player2].setTile(tile);
+                    player2 += 1;
+                }
+                
+            }
+            
+        }
     }
 
     setTilesSelectable(mode) {
