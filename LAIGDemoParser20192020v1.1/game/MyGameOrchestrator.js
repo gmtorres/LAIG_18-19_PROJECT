@@ -336,6 +336,8 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Destination Tile Selected']:
+                console.error(this.prolog.checkMove());
+                
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;
                         this.state = this.gameStates['Movement Animation'];

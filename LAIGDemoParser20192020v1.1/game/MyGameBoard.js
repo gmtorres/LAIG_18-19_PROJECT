@@ -207,7 +207,6 @@ class MyGameBoard {
                     player1 += 1;
                 }
                 if (char == 2) {
-                    // tile.setPiece(pieces2[player2]);
                     pieces2[player2].setTile(tile);
                     player2 += 1;
                 }

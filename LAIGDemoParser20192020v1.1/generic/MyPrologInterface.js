@@ -39,10 +39,12 @@ class MyPrologInterface{
     }
 
     let request = new XMLHttpRequest();
+    // args.forEach(e => e = JSON.stringify(e));
     let argss = (args.length) ? "(" + args.join(',') + ")" : "";
     let url = REQUEST_ADDRESS + pred + argss;
 
     request.open("GET", url, false);
+    console.warn(url);
 
     try {
       request.send(); 
@@ -79,13 +81,14 @@ class MyPrologInterface{
   checkMove() {
     let json = this.orchestrator.getJSONgameMove();
     let args = [
-      json.gameBoard,
+      JSON.stringify(json.gameBoard),
       json.player,
-      json.number,
-      "'"  + json.letter + "'",
-      json.direction,
-      json.boardbfrPlay,
+      json.number + 1,
+      json.letter + 1,
+      "'" + json.direction + "'",
+      JSON.stringify(json.boardbfrPlay),
       json.turn];
+    
 
     return this._sendRequest("check_move", args); 
   }
