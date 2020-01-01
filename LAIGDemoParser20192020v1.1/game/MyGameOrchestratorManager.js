@@ -169,14 +169,17 @@ class MyGameOrchestratorManager{
         this.orchestrator.getScene().popMatrix();
 
         //max time
+        let time = this.orchestrator.gameStarted ? this.orchestrator.moveTime - this.orchestrator.scene.time + this.orchestrator.currentMoveTime : this.orchestrator.moveTime;
+        if(time < 0) time = 0;
+
         this.orchestrator.getScene().pushMatrix();
         this.orchestrator.getScene().scale(1,1,.1);
         this.orchestrator.getScene().translate(1.3,0.3,0.01);
-        this.materialWhite.setTexture(this.numbers[Math.floor(this.orchestrator.moveTime/10)]);
+        this.materialWhite.setTexture(this.numbers[Math.floor(time/10)]);
         this.materialWhite.apply();
         this.playerScore.display();
         this.orchestrator.getScene().translate(0.39,0,0.0);
-        this.materialWhite.setTexture(this.numbers[this.orchestrator.moveTime%10]);
+        this.materialWhite.setTexture(this.numbers[Math.floor(time%10)]);
         this.materialWhite.apply();
         this.playerScore.display();
         this.orchestrator.getScene().translate(-0.2,-0.2,0);

@@ -60,7 +60,8 @@ class MyGameOrchestrator {
 
         this.defBoard = 0;
 
-        this.moveTime = 13;
+        this.moveTime = 0;
+        this.currentMoveTime = 0;
 
         this.cameraAnimationTime = null;
 
@@ -272,6 +273,10 @@ class MyGameOrchestrator {
         //clear ids from objs
         this.scene.clearPickRegistration();
 
+        if(this.gameStarted && this.moveTime != 0 && this.moveTime - this.scene.time + this.currentMoveTime < 0){
+            this.state = this.gameStates['Next Turn'];
+        }
+
         switch (this.state) {
             case this.gameStates['Menu']:
                 this.state = (this.prolog.connected) ? 2 : this.state;
@@ -284,6 +289,8 @@ class MyGameOrchestrator {
                     this.state = this.gameStates['Destination Piece Selection'];
                 this.setSelectable();
                 this.resetSelection();
+
+                this.currentMoveTime = this.scene.time;
 
                 
                 break;
@@ -360,6 +367,7 @@ class MyGameOrchestrator {
                         this.updatePreviousPlayer();
                         this.setSelectable();
                         //this.gameBoard.buildBoardFromTiles();
+                        this.currentMoveTime = this.scene.time;
                     }
                     break;
             case this.gameStates['Replay Animation']:
@@ -371,6 +379,7 @@ class MyGameOrchestrator {
                     break;
             
             case this.gameStates['Change Camera Position']:
+                this.currentMoveTime = this.scene.time;
                 if(this.changeCamera() == false){
                     this.state = this.gameStates['Destination Piece Selection'];
                 }
@@ -393,6 +402,9 @@ class MyGameOrchestrator {
 
     update(time) {
         this.animator.update(time);
+
+
+
     }
 
     display() {
