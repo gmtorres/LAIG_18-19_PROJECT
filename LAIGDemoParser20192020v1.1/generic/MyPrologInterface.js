@@ -44,7 +44,7 @@ class MyPrologInterface{
     let url = REQUEST_ADDRESS + pred + argss;
 
     request.open("GET", url, false);
-    console.warn(url);
+    //console.warn(url);
 
     try {
       request.send(); 
@@ -69,8 +69,8 @@ class MyPrologInterface{
    * @param {Array of Arrays} board Nudge Board in Prolog sintax
    */
   checkGameOver(board) {
-    let player1Win = this._sendRequest("check_gameOver", [board, 1]);
-    let player2Win = this._sendRequest("check_gameOver", [board, 2]);
+    let player1Win = this._sendRequest("check_gameOver", [JSON.stringify(board), 1]) == "1";
+    let player2Win = this._sendRequest("check_gameOver", [JSON.stringify(board), 2]) == "1";
 
     return {
       player1Win: player1Win,

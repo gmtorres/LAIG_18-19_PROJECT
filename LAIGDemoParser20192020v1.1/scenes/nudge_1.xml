@@ -37,6 +37,7 @@
         <texture id="rope" file="scenes/images/rope.jpg"/>
         <texture id="roof" file="scenes/images/roof.png"/>
         <texture id="sea" file="scenes/images/sea.jpg"/>
+        <texture id="metal" file="scenes/images/metal.jpg"/>
         <texture id="towel1" file="scenes/images/beach_towel1.jpg"/>
         <texture id="towel2" file="scenes/images/beach_towel2.jpg"/>
         <texture id="sun_umbrella" file="scenes/images/sun_umbrella.jpg"/>
@@ -269,9 +270,9 @@
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="white" />
             </materials>
-            <texture id="rope" length_s='1' length_t='1'/>
+            <texture id="metal" length_s='1' length_t='1'/>
             <children>
                 <primitiveref id='rectangle'/>
             </children>
@@ -282,9 +283,9 @@
                 <rotate axis='x' angle='-90'/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="white" />
             </materials>
-            <texture id="grass" length_s='1' length_t='1'/>
+            <texture id="sea" length_s='1' length_t='1'/>
             <children>
                 <primitiveref id='rectangle'/>
             </children>

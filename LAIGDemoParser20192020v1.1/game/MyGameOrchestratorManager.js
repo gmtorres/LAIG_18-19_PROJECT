@@ -82,16 +82,16 @@ class MyGameOrchestratorManager{
         }else if(id == this.upButton.uniqueID){
             if(this.orchestrator.gameStarted == true)
                 return true;
-            this.orchestrator.moveTime++;
-            if(this.orchestrator.moveTime >= 100)
-                this.orchestrator.moveTime = 99;
+            this.orchestrator.maxMoveTime++;
+            if(this.orchestrator.maxMoveTime >= 100)
+                this.orchestrator.maxMoveTime = 99;
             return true;
         }else if(id == this.downButton.uniqueID){
             if(this.orchestrator.gameStarted == true)
                 return true;
-            this.orchestrator.moveTime--;
-            if(this.orchestrator.moveTime < 0)
-                this.orchestrator.moveTime = 0;
+            this.orchestrator.maxMoveTime--;
+            if(this.orchestrator.maxMoveTime < 0)
+                this.orchestrator.maxMoveTime = 0;
             return true;
         }
 
@@ -169,7 +169,7 @@ class MyGameOrchestratorManager{
         this.orchestrator.getScene().popMatrix();
 
         //max time
-        let time = this.orchestrator.gameStarted ? this.orchestrator.moveTime - this.orchestrator.scene.time + this.orchestrator.currentMoveTime : this.orchestrator.moveTime;
+        let time = this.orchestrator.gameStarted ? this.orchestrator.currentMoveTime : this.orchestrator.maxMoveTime;
         if(time < 0) time = 0;
 
         this.orchestrator.getScene().pushMatrix();
