@@ -14,6 +14,9 @@ class MyGameMoves{
         for (let i = 0; i < myGameMoves.length; i++) {
             this.moves.push(myGameMoves[i]);
         }
+
+        this.setBoard();
+
     }
 
     setAfterBoard(boardAfter){

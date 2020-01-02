@@ -80,14 +80,18 @@ class MyGameOrchestratorManager{
             }
             return true;
         }else if(id == this.upButton.uniqueID){
-            this.orchestrator.moveTime++;
-            if(this.orchestrator.moveTime >= 100)
-                this.orchestrator.moveTime = 99;
+            if(this.orchestrator.gameStarted == true)
+                return true;
+            this.orchestrator.maxMoveTime++;
+            if(this.orchestrator.maxMoveTime >= 100)
+                this.orchestrator.maxMoveTime = 99;
             return true;
         }else if(id == this.downButton.uniqueID){
-            this.orchestrator.moveTime--;
-            if(this.orchestrator.moveTime < 0)
-                this.orchestrator.moveTime = 0;
+            if(this.orchestrator.gameStarted == true)
+                return true;
+            this.orchestrator.maxMoveTime--;
+            if(this.orchestrator.maxMoveTime < 0)
+                this.orchestrator.maxMoveTime = 0;
             return true;
         }
 
@@ -165,14 +169,17 @@ class MyGameOrchestratorManager{
         this.orchestrator.getScene().popMatrix();
 
         //max time
+        let time = this.orchestrator.gameStarted ? this.orchestrator.currentMoveTime : this.orchestrator.maxMoveTime;
+        if(time < 0) time = 0;
+
         this.orchestrator.getScene().pushMatrix();
         this.orchestrator.getScene().scale(1,1,.1);
         this.orchestrator.getScene().translate(1.3,0.3,0.01);
-        this.materialWhite.setTexture(this.numbers[Math.floor(this.orchestrator.moveTime/10)]);
+        this.materialWhite.setTexture(this.numbers[Math.floor(time/10)]);
         this.materialWhite.apply();
         this.playerScore.display();
         this.orchestrator.getScene().translate(0.39,0,0.0);
-        this.materialWhite.setTexture(this.numbers[this.orchestrator.moveTime%10]);
+        this.materialWhite.setTexture(this.numbers[Math.floor(time%10)]);
         this.materialWhite.apply();
         this.playerScore.display();
         this.orchestrator.getScene().translate(-0.2,-0.2,0);

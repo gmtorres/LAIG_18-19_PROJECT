@@ -60,9 +60,13 @@ class MyGameOrchestrator {
 
         this.defBoard = 0;
 
-        this.moveTime = 13;
+        this.maxMoveTime = 0;
+        this.currentMoveStartTime = 0;
+        this.currentMoveTime = 0;
 
         this.cameraAnimationTime = null;
+
+        this.gameStarted = false;
 
     }
 
@@ -97,7 +101,8 @@ class MyGameOrchestrator {
     }
 
     changeBoard() {
-        this.gameBoard.setToDefault(this.defBoard);
+        if(this.gameStarted == false)
+            this.gameBoard.setToDefault(this.defBoard);
     }
 
     changeTheme(value){
@@ -237,27 +242,6 @@ class MyGameOrchestrator {
 
 
         return true;
-        /*let currentCamera = this.scene.camera;
-        let targetCamera = null;
-        this.scene.interface.setActiveCamera(null);
-        if(this.currentPlayer == 1){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }else if(this.currentPlayer == 2){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }
-
-        if(currentCamera.position[0] === targetCamera.position[0] && currentCamera.position[1] == targetCamera.position[1] && currentCamera.position[2] == targetCamera.position[2]){
-            this.scene.interface.setActiveCamera(this.scene.camera);
-            return false;
-        }
-        
-        this.arrayLinearAproximation(currentCamera.position,targetCamera.position,0.3);
-        this.arrayLinearAproximation(currentCamera.target,targetCamera.target,0.3);
-        this.arrayLinearAproximation(currentCamera.direction,targetCamera.direction,0.2);
-        this.arrayLinearAproximation(currentCamera._viewMatrix,targetCamera._viewMatrix,0.3);
-        this.arrayLinearAproximation(currentCamera._projectionMatrix,targetCamera._projectionMatrix,0.2);
-        this.arrayLinearAproximation(currentCamera._up,targetCamera._up,0.3);
-        return true;*/
     }
 
     getDirection(tile1,tile2){
@@ -268,16 +252,16 @@ class MyGameOrchestrator {
 
         if(dx<0) return 'w';
         if(dx>0) return 's';
-        if(dy<0) return 'd';
-        if(dy>0) return 'a';
+        if(dy<0) return 'a';
+        if(dy>0) return 'd';
     }
 
     getJSONgameMove(){
         return {
             gameBoard : this.gameBoard.board,
             player : this.currentPlayer,
-            number : this.selectedPiece.getTile().x,
-            letter : this.selectedPiece.getTile().y,
+            number : this.selectedPiece.getTile().y,
+            letter : this.selectedPiece.getTile().x,
             direction : this.getDirection(this.selectedPiece.getTile(),this.selectedTile),
             boardbfrPlay : this.gameSequence.getBfrBoard(),
             turn : this.currentTurn
@@ -296,12 +280,29 @@ class MyGameOrchestrator {
             return f(this.player2Type)
         }
     }
+    
+    setCurrentMoveStartTime(){
+        this.currentMoveStartTime = this.scene.time;
+    }
 
     orchestrate() {
         //manage picks
         this.managePick(false,this.scene.pickResults);
         //clear ids from objs
         this.scene.clearPickRegistration();
+
+        if(this.gameStarted && this.maxMoveTime != 0){
+            if(this.state != this.gameStates['Destination Piece Selected'] && this.state != this.gameStates['Destination Tile Selected'])
+                this.currentMoveTime = this.maxMoveTime - this.scene.time  + this.currentMoveStartTime;
+            else
+                this.currentMoveStartTime = this.currentMoveStartTime + (this.currentMoveTime - (this.maxMoveTime - this.scene.time  + this.currentMoveStartTime));
+            
+            if(this.currentMoveTime < 0){
+                this.state = this.gameStates['Next Turn'];
+                this.gameSequence.addMove(new MyGameMoves(this.gameBoard,[],false));
+                this.gameBoard.buildBoardFromTiles();
+            }
+        }
 
         switch (this.state) {
             case this.gameStates['Menu']:
@@ -315,6 +316,8 @@ class MyGameOrchestrator {
                     this.state = this.gameStates['Destination Piece Selection'];
                 this.setSelectable();
                 this.resetSelection();
+
+                this.currentMoveStartTime = this.scene.time;
 
                 
                 break;
@@ -358,14 +361,21 @@ class MyGameOrchestrator {
             case this.gameStates['Destination Tile Selected']:
                     console.error(this.prolog.checkMove());
                 
-                    if(this.animator.update(this.scene.time) == false){
+                if(this.animator.update(this.scene.time) == false){
+                    this.animating = false;
+                    this.state = this.gameStates['Movement Animation'];
+                    
+                    if(this.prolog.checkMove() == 0){
                         this.animating = false;
-                        this.state = this.gameStates['Movement Animation'];
-                        
+                        this.setSelectable();
+                        this.resetSelection();
+                        this.state = this.gameStates['Destination Piece Selection'];
+                    }else{
                         this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
                         this.gameSequence.addMove(this.moves);
-                        
                     }
+
+                }
                 break;
             case this.gameStates['Movement Animation']:
                 
@@ -378,9 +388,26 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Evaluate Game End']:
+                let gameOver = this.prolog.checkGameOver(this.gameBoard.board);
+                console.log(gameOver);
+                if(gameOver.continue == false){
+                    if(gameOver.player1Win){
+                        this.player1Score += 1;
+                        this.player1Score %=10;
+                    }else if(gameOver.player2Win){
+                        this.player2Score += 1;
+                        this.player2Score %=10;
+                    }
+                    this.gameStarted = false;
+                    this.currentPlayer = 1;
+                    this.currentTurn = 0;
+                    this.changeBoard(this.defBoard);
+                }
                 this.state = this.gameStates['Next Turn'];
                 break;
             
+
+
             case this.gameStates['Undo Animation']:
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;
@@ -389,6 +416,7 @@ class MyGameOrchestrator {
                         this.updatePreviousPlayer();
                         this.setSelectable();
                         //this.gameBoard.buildBoardFromTiles();
+                        //this.currentMoveTime = this.scene.time;
                     }
                     break;
             case this.gameStates['Replay Animation']:
@@ -400,6 +428,7 @@ class MyGameOrchestrator {
                     break;
             
             case this.gameStates['Change Camera Position']:
+                this.currentMoveStartTime = this.scene.time;
                 if(this.changeCamera() == false){
                     this.state = this.gameStates['Destination Piece Selection'];
                 }
@@ -412,13 +441,19 @@ class MyGameOrchestrator {
     }
 
     startGame() {
-        this.prolog._handshake();
-        this.state = 0;
+        if(this.prolog.connected == false){
+            this.prolog._handshake();
+            this.state = 0;
+        }
+        this.gameStarted = true;
     }
 
 
     update(time) {
         this.animator.update(time);
+
+
+
     }
 
     display() {
