@@ -284,6 +284,19 @@ class MyGameOrchestrator {
         };
     }
 
+    getPlayerMode() {
+        let p = this.currentPlayer;
+        let f = function (i) {
+            return i[i.length - 1];
+        }
+        if (p == 1) {
+            return f(this.player1Type)
+        }
+        if (p == 2) {
+            return f(this.player2Type)
+        }
+    }
+
     orchestrate() {
         //manage picks
         this.managePick(false,this.scene.pickResults);
@@ -306,6 +319,13 @@ class MyGameOrchestrator {
                 
                 break;
             case this.gameStates['Destination Piece Selection']:
+                if (this.currentPlayer == 1 && this.player1Type != "Human") {
+                    
+                }
+                if (this.currentPlayer == 2 && this.player1Type != "Human") {
+
+                }
+                
                 if(this.selectedPiece != null){
                     //deixar de selecionar peças
                     this.gameBoard.setPlayerSelectable(1,false);
@@ -336,7 +356,7 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Destination Tile Selected']:
-                console.error(this.prolog.checkMove());
+                    console.error(this.prolog.checkMove());
                 
                     if(this.animator.update(this.scene.time) == false){
                         this.animating = false;

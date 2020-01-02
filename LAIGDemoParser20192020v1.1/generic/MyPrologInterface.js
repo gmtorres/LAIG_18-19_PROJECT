@@ -83,14 +83,25 @@ class MyPrologInterface{
     let args = [
       JSON.stringify(json.gameBoard),
       json.player,
-      json.number + 1,
-      json.letter + 1,
+      json.number +1,
+      json.letter +1 ,
       "'" + json.direction + "'",
       JSON.stringify(json.boardbfrPlay),
       json.turn];
     
 
     return this._sendRequest("check_move", args); 
+  }
+
+  getMove(turn,player,mode) {
+    let args = [
+      JSON.stringify(this.orchestrator.gameBoard.board),
+      player,
+      turn,
+      mode
+    ]
+
+    return this._sendRequest("get_AIMove", args);
   }
 
 

@@ -136,11 +136,14 @@ check_move(_Board,_Player,_Number,_Letter,_Direction,_BoardbfrPlay,2,0).
 
 get_AIMove(Board,Player,Turn,Move,1):-
 	choose_move(Board,Player,Turn,Move,1).
-get_AIMove(Board,Player,Turn,Move,2,Res):-
+
+get_AIMove(Board,Player,Turn,Move,2):-
 	choose_move(Board,Player,Turn,Move,2).
-get_AIMove(Board,Player,Turn,Move,3,Res):-
+
+get_AIMove(Board,Player,Turn,Move,3):-
 	choose_move(Board,Player,Turn,Move,3).
-get_AIMove(Board,Player,Turn,Move,_,Res):-
+
+get_AIMove(Board,Player,Turn,Move,_):-
 	Move is 0.
 
 
