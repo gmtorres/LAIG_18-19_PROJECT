@@ -34,7 +34,7 @@ class MyGameOrchestrator {
         this.state = 0;
 
         this.currentPlayer = 1;
-        this.currentTurn = 1;
+        this.currentTurn = 0;
 
         this.selectedPiece = null;
         this.selectedTile = null;
@@ -294,12 +294,12 @@ class MyGameOrchestrator {
         else if (direction == 'd') dy = +1;
         else if (direction == 's') dx = 1;
         else if (direction == 'w') dx = -1;
-        let x = Number(arr[0]) - 1;
-        let y = Number(arr[1]);
+        let x = Number(arr[1]) - 1;
+        let y = Number(arr[0]) - 1;
         let tile = this.gameBoard.getTile(x, y);
         let destTile = this.gameBoard.getTile(x + dx, y + dy);
         let piece = tile.getPiece();
-
+        return piece;
         return new MyGameMoves(this.gameBoard,[new MyGameMove(piece, tile, destTile)]);
     }
 
@@ -349,8 +349,11 @@ class MyGameOrchestrator {
                         break;
                     }
                     if (this.moveReceived) {
-                        this.animator.setMove(this.makeGameMoveFromArray(this.AIMove), this.scene.time);
-                        this.state = this.gameStates['Destination Tile Selected'];
+                        let move = this.makeGameMoveFromArray(this.AIMove);
+                        //this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
+                        this.moves = this.gameBoard.getMoves(move, this.AIMove[2]);
+                        this.gameSequence.addMove(this.moves);
+                        this.state = this.gameStates['Movement Animation'];
                         this.AIMove = null;
                         this.moveReceived = false;
                         this.moveRequest = false;
@@ -358,7 +361,22 @@ class MyGameOrchestrator {
                     }
                 }
                 if (this.currentPlayer == 2 && this.player2Type != "Human") {
-
+                    if (!this.moveRequest) {
+                        this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode());
+                        this.moveRequest = true;
+                        break;
+                    }
+                    if (this.moveReceived) {
+                        let move = this.makeGameMoveFromArray(this.AIMove);
+                        //this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
+                        this.moves = this.gameBoard.getMoves(move, this.AIMove[2]);
+                        this.gameSequence.addMove(this.moves);
+                        this.state = this.gameStates['Movement Animation'];
+                        this.AIMove = null;
+                        this.moveReceived = false;
+                        this.moveRequest = false;
+                        break;
+                    }
                 }
                 
                 if(this.selectedPiece != null){
@@ -391,15 +409,16 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Destination Tile Selected']:
-                    // console.error(this.prolog.checkMove());
+                console.error(this.prolog.checkMove());
                 
                 if(this.animator.update(this.scene.time) == false){
                     this.animating = false;
                     this.state = this.gameStates['Movement Animation'];
 
-                    let bool = (this.currentPlayer == 1 && this.player1Type == "Human") || (this.currentPlayer = 2 && this.player2Type == "Human");
+                    //let bool = (this.currentPlayer == 1 && this.player1Type == "Human") || (this.currentPlayer = 2 && this.player2Type == "Human");
                     
-                    if(this.prolog.checkMove() == 0){
+                    let validMove = this.prolog.checkMove();
+                    if(validMove == false){
                         this.animating = false;
                         this.setSelectable();
                         this.resetSelection();

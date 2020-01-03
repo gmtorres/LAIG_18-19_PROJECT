@@ -123,9 +123,9 @@
 
         <material id="brown_sienna" shininess="10">
             <emission r="0" g="0" b="0.0" a="1.0" />
-            <ambient r="0.2" g="0.15" b="0.125" a="1.0" />
-            <diffuse r="0.45" g="0.30" b="0.25" a="1.0" />
-            <specular r="0.45" g="0.30" b="0.25" a="1.0" />
+            <ambient r="0.45" g="0.3" b="0.25" a="1.0" />
+            <diffuse r="0.225" g="0.15" b="0.125" a="1.0" />
+            <specular r="0.225" g="0.15" b="0.125" a="1.0" />
         </material>
 
     </materials>
@@ -1590,6 +1590,21 @@
             </children>
         </component>
 
+        <component id="cocconut">
+            <transformation>
+                <translate x='9' y='0.3' z='-6'/>
+                <rotate axis='x' angle='-90'/>
+                <scale x="0.3" y="0.3" z="0.3" />
+            </transformation>
+            <materials>
+                <material id="brown_sienna" />
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+
 
 
         <component id="palmtree_trunk">
@@ -1623,6 +1638,7 @@
                 <componentref id='sun_umbrellas'/>
                 <componentref id='drinks'/>
                 <componentref id='palmtrees'/>
+                <componentref id='cocconut'/>
             </children>
         </component>
 

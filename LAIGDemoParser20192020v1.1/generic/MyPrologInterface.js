@@ -90,7 +90,7 @@ class MyPrologInterface{
       json.turn];
     
 
-    return this._sendRequest("check_move", args); 
+    return this._sendRequest("check_move", args) == "1"; 
   }
 
   getMove(turn,player,mode) {
