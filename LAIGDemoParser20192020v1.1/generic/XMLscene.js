@@ -203,10 +203,11 @@ class XMLscene extends CGFscene {
         tilesFolder.open();
 
         let gameOptions = this.interface.gui.addFolder('Game Settings');
-        gameOptions.add(this.gameOrchestrator, 'defBoard', this.gameOrchestrator.defBoards).name("Board").onChange(this.updateBoard.bind(this));
-        gameOptions.add(this.gameOrchestrator, 'player1Type', this.gameOrchestrator.ptypes).name('Player 1');
-        gameOptions.add(this.gameOrchestrator, 'player2Type', this.gameOrchestrator.ptypes).name('Player 2');
-        gameOptions.add(this.gameOrchestrator, 'startGame').name('Start Game');
+            gameOptions.add(this.gameOrchestrator, 'defBoard', this.gameOrchestrator.defBoards).name("Board").onChange(this.updateBoard.bind(this));
+            gameOptions.add(this.gameOrchestrator, 'player1Type', this.gameOrchestrator.ptypes).name('Player 1');
+            gameOptions.add(this.gameOrchestrator, 'player2Type', this.gameOrchestrator.ptypes).name('Player 2');
+            gameOptions.add(this.gameOrchestrator, 'restartGame').name('Restart Game');
+            gameOptions.add(this.gameOrchestrator, 'startGame').name('Start Game');
         gameOptions.open();
 
 

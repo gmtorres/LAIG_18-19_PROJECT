@@ -1,8 +1,8 @@
 class MyGameOrchestrator {
 
     constructor(filenames, scene) {
-        if(filenames.length == 0){
-            throw new TypeError('filemanes must bu greater than 0'); 
+        if (filenames.length == 0) {
+            throw new TypeError('filemanes must bu greater than 0');
         }
         this.scene = scene;
         this.scene.gameOrchestrator = this;
@@ -12,7 +12,7 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence();
         this.animator = new MyAnimator(this, this.gameSequence);
         this.theme = new MySceneGraph(filenames[0], this.scene);
-        this.manager = new MyGameOrchestratorManager(this,[1,0,-1]);
+        this.manager = new MyGameOrchestratorManager(this, [1, 0, -1]);
         this.prolog = new MyPrologInterface(this);
         this.gameStates = {
             'Menu': 0,
@@ -24,9 +24,9 @@ class MyGameOrchestrator {
             'Evaluate Game End': 6,
             'End Game': 7,
 
-            'Undo Animation' : 8,
-            'Replay Animation' : 9,
-            'Change Camera Position' : 10,
+            'Undo Animation': 8,
+            'Replay Animation': 9,
+            'Change Camera Position': 10,
 
             'Destination Piece Selected': 11,
             'Destination Tile Selected': 12,
@@ -40,7 +40,7 @@ class MyGameOrchestrator {
         this.selectedTile = null;
 
         this.animating = false;
-        
+
         this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 12, 8), vec3.fromValues(2, 0, 2));
         this.scene.interface.setActiveCamera(this.scene.camera);
 
@@ -71,10 +71,10 @@ class MyGameOrchestrator {
     }
 
     onLoaded() {
-        if(this.currentPlayer == 1){
-            this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }else if(this.currentPlayer == 2){
-            this.scene.camera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        if (this.currentPlayer == 1) {
+            this.scene.camera = new CGFcamera(45, 0.1, 300, vec3.fromValues(5,6, 0), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+        } else if (this.currentPlayer == 2) {
+            this.scene.camera = new CGFcamera(45, 0.1, 300, vec3.fromValues(-5, 6, 0), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
         }
         this.scene.interface.setActiveCamera(this.scene.camera);
 
@@ -88,24 +88,24 @@ class MyGameOrchestrator {
         this.gameBoard.setTilesType();
     }
 
-    changePiece(player,id){
-        if(player == 1)
+    changePiece(player, id) {
+        if (player == 1)
             this.player1Piece = id;
-        if(player == 2)
+        if (player == 2)
             this.player2Piece = id;
     }
 
-    updateBoardTheme(){
+    updateBoardTheme() {
         this.gameBoard.setPieceType();
         this.gameBoard.setTilesType();
     }
 
     changeBoard() {
-        if(this.gameStarted == false)
+        if (this.gameStarted == false)
             this.gameBoard.setToDefault(this.defBoard);
     }
 
-    changeTheme(value){
+    changeTheme(value) {
         console.log(value);
         this.theme = new MySceneGraph(value, this.scene);
     }
@@ -132,19 +132,19 @@ class MyGameOrchestrator {
 
     OnObjectSelected(obj, id) {
         if (obj instanceof MyPiece) {
-            if(this.state == this.gameStates['Destination Piece Selection']){     
+            if (this.state == this.gameStates['Destination Piece Selection']) {
                 this.selectedPiece = obj;
             }
         } else if (obj instanceof MyTile) {
-            if(this.state == this.gameStates['Destination Tile Selection']){  
+            if (this.state == this.gameStates['Destination Tile Selection']) {
                 this.selectedTile = obj;
-                if(this.selectedPiece.selected == true)
-                this.selectedPiece.selected = false;
+                if (this.selectedPiece.selected == true)
+                    this.selectedPiece.selected = false;
             }
         } else {
             // error ?
 
-            if(!this.manager.parseSelected(id)){
+            if (!this.manager.parseSelected(id)) {
                 console.log("error");
                 this.selectedPiece = null;
                 this.selectedTile = null;
@@ -155,58 +155,61 @@ class MyGameOrchestrator {
         }
     }
 
-    updateNextPlayer(){
-        if(this.currentTurn == 2){
-            this.currentPlayer = (this.currentPlayer)%2 + 1;
+    updateNextPlayer() {
+        if (this.currentTurn == 2) {
+            this.currentPlayer = (this.currentPlayer) % 2 + 1;
             this.currentTurn = 1;
             return true;
-        }else{
+        } else {
             this.currentTurn++;
             return false;
         }
     }
-    updatePreviousPlayer(){
-        if(this.currentTurn == 1){
-            this.currentPlayer = (this.currentPlayer)%2 + 1;
+    updatePreviousPlayer() {
+        if (this.currentTurn == 1) {
+            this.currentPlayer = (this.currentPlayer) % 2 + 1;
             this.currentTurn = 2;
-        }else{  
+            return true;
+        } else {
             this.currentTurn--;
+            return false;
         }
     }
 
-    setSelectable(){
+    setSelectable() {
         //impedir que o jogador escolhaa s peças do adversario
-        if(this.currentPlayer == 1){
-            this.gameBoard.setPlayerSelectable(1,true);
-            this.gameBoard.setPlayerSelectable(2,false);
-        }else if(this.currentPlayer == 2){
-            this.gameBoard.setPlayerSelectable(1,false);
-            this.gameBoard.setPlayerSelectable(2,true);
+        if (this.currentPlayer == 1) {
+            this.gameBoard.setPlayerSelectable(1, true);
+            this.gameBoard.setPlayerSelectable(2, false);
+        } else if (this.currentPlayer == 2) {
+            this.gameBoard.setPlayerSelectable(1, false);
+            this.gameBoard.setPlayerSelectable(2, true);
         }
     }
 
-    resetSelection(){
-        if(this.selectedPiece != null)
+    resetSelection() {
+        if (this.selectedPiece != null)
             this.selectedPiece.selected = false;
         this.selectedPiece = null;
         this.selectedTile = null;
     }
 
-    linearAproximation(origValue , targetValue , delta){
+    linearAproximation(origValue, targetValue, delta) {
         return origValue + (targetValue - origValue) * delta;
     }
-    arrayLinearAproximation(origArray,targetArray,delta){
+    arrayLinearAproximation(origArray, targetArray, delta) {
         let arr = [];
-        for(let i = 0; i < origArray.length;i++){
-            arr.push(this.linearAproximation(origArray[i],targetArray[i],delta));
+        for (let i = 0; i < origArray.length; i++) {
+            arr.push(this.linearAproximation(origArray[i], targetArray[i], delta));
         }
         return arr;
     }
 
-    changeCamera(){
+    changeCamera(target) {
         let time = this.scene.time;
-        let animationTime = 2;
-        if(this.cameraAnimationTime == null){
+        let animationTime = 2.5;
+        if (this.cameraAnimationTime == null) {
+            this.scene.interface.setActiveCamera(null);
             this.startCamera = [];
             this.startCamera[0] = [...this.scene.camera.position];
             this.startCamera[1] = [...this.scene.camera.target];
@@ -214,57 +217,69 @@ class MyGameOrchestrator {
             this.startCamera[3] = [...this.scene.camera._viewMatrix];
             this.startCamera[4] = [...this.scene.camera._projectionMatrix];
             this.startCamera[5] = [...this.scene.camera._up];
+            this.startCamera[6] = this.scene.camera.far;
+            this.startCamera[7] = this.scene.camera.fov;
+            this.startCamera[8] = this.scene.camera.near;
             this.cameraAnimationTime = time;
+
+            this.targetCamera = null;
+
+            if (target != undefined && target != null) {
+                this.targetCamera = target;
+            } else if (this.currentPlayer == 1) {
+                this.targetCamera = new CGFcamera(45, 0.1, 300, vec3.fromValues(5,6, 0), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+            } else if (this.currentPlayer == 2) {
+                this.targetCamera = new CGFcamera(45, 0.1, 300, vec3.fromValues(-5,6, 0), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
+            }
         }
 
-        if(time - this.cameraAnimationTime > animationTime){
+        let currentCamera = this.scene.camera;
+
+        if (time - this.cameraAnimationTime > animationTime) {
+            this.scene.camera = this.targetCamera;
             this.scene.interface.setActiveCamera(this.scene.camera);
             this.cameraAnimationTime = null;
             return false;
         }
-        let currentCamera = this.scene.camera;
-        let targetCamera = null;
-        this.scene.interface.setActiveCamera(null);
-        if(this.currentPlayer == 1){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(23, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }else if(this.currentPlayer == 2){
-            targetCamera = new CGFcamera(0.4, 0.1, 300, vec3.fromValues(-20.5, 20, 10), vec3.fromValues(2.5 + this.boardCoords[0], 0 + this.boardCoords[1], 2.5 + this.boardCoords[2]));
-        }
 
-        let fraction = (time - this.cameraAnimationTime)/animationTime;
 
-        currentCamera.position = this.arrayLinearAproximation(this.startCamera[0],targetCamera.position,fraction);
-        currentCamera.target = this.arrayLinearAproximation(this.startCamera[1],targetCamera.target,fraction);
-        currentCamera.direction = this.arrayLinearAproximation(this.startCamera[2],targetCamera.direction,fraction);
-        currentCamera._viewMatrix = this.arrayLinearAproximation(this.startCamera[3],targetCamera._viewMatrix,fraction);
-        currentCamera._projectionMatrix = this.arrayLinearAproximation(this.startCamera[4],targetCamera._projectionMatrix,fraction);
-        currentCamera._up = this.arrayLinearAproximation(this.startCamera[5],targetCamera._up,fraction);
+        let fraction = (time - this.cameraAnimationTime) / animationTime;
+
+        currentCamera.position = this.arrayLinearAproximation(this.startCamera[0], this.targetCamera.position, fraction);
+        currentCamera.target = this.arrayLinearAproximation(this.startCamera[1], this.targetCamera.target, fraction);
+        currentCamera.direction = this.arrayLinearAproximation(this.startCamera[2], this.targetCamera.direction, fraction);
+        currentCamera._viewMatrix = this.arrayLinearAproximation(this.startCamera[3], this.targetCamera._viewMatrix, fraction);
+        currentCamera._projectionMatrix = this.arrayLinearAproximation(this.startCamera[4], this.targetCamera._projectionMatrix, fraction);
+        currentCamera._up = this.arrayLinearAproximation(this.startCamera[5], this.targetCamera._up, fraction);
+        currentCamera.far = this.linearAproximation(this.startCamera[6],this.targetCamera.far,fraction);
+        currentCamera.fov = this.linearAproximation(this.startCamera[7],this.targetCamera.fov,fraction);
+        currentCamera.near = this.linearAproximation(this.startCamera[8],this.targetCamera.near,fraction);
 
 
         return true;
     }
 
-    getDirection(tile1,tile2){
+    getDirection(tile1, tile2) {
         let dx = tile2.x - tile1.x;
         let dy = tile2.y - tile1.y;
 
-        if(dx != 0 && dy != 0) return '?';
+        if (dx != 0 && dy != 0) return '?';
 
-        if(dx<0) return 'w';
-        if(dx>0) return 's';
-        if(dy<0) return 'a';
-        if(dy>0) return 'd';
+        if (dx < 0) return 'w';
+        if (dx > 0) return 's';
+        if (dy < 0) return 'a';
+        if (dy > 0) return 'd';
     }
 
-    getJSONgameMove(){
+    getJSONgameMove() {
         return {
-            gameBoard : this.gameBoard.board,
-            player : this.currentPlayer,
-            number : this.selectedPiece.getTile().y,
-            letter : this.selectedPiece.getTile().x,
-            direction : this.getDirection(this.selectedPiece.getTile(),this.selectedTile),
-            boardbfrPlay : this.gameSequence.getBfrBoard(),
-            turn : this.currentTurn
+            gameBoard: this.gameBoard.board,
+            player: this.currentPlayer,
+            number: this.selectedPiece.getTile().y,
+            letter: this.selectedPiece.getTile().x,
+            direction: this.getDirection(this.selectedPiece.getTile(), this.selectedTile),
+            boardbfrPlay: this.gameSequence.getBfrBoard(),
+            turn: this.currentTurn
         };
     }
 
@@ -280,8 +295,8 @@ class MyGameOrchestrator {
             return f(this.player2Type)
         }
     }
-    
-    setCurrentMoveStartTime(){
+
+    setCurrentMoveStartTime() {
         this.currentMoveStartTime = this.scene.time;
     }
 
@@ -300,37 +315,40 @@ class MyGameOrchestrator {
         let destTile = this.gameBoard.getTile(x + dx, y + dy);
         let piece = tile.getPiece();
         return piece;
-        return new MyGameMoves(this.gameBoard,[new MyGameMove(piece, tile, destTile)]);
+        return new MyGameMoves(this.gameBoard, [new MyGameMove(piece, tile, destTile)]);
     }
 
     orchestrate() {
         //manage picks
-        this.managePick(false,this.scene.pickResults);
+        this.managePick(false, this.scene.pickResults);
         //clear ids from objs
         this.scene.clearPickRegistration();
 
-        if(this.gameStarted && this.maxMoveTime != 0){
-            if(this.state != this.gameStates['Destination Piece Selected'] && this.state != this.gameStates['Destination Tile Selected'])
-                this.currentMoveTime = this.maxMoveTime - this.scene.time  + this.currentMoveStartTime;
+        if (this.gameStarted && this.maxMoveTime != 0) {
+            if (this.state != this.gameStates['Destination Piece Selected'] && this.state != this.gameStates['Destination Tile Selected'])
+                this.currentMoveTime = this.maxMoveTime - this.scene.time + this.currentMoveStartTime;
             else
-                this.currentMoveStartTime = this.currentMoveStartTime + (this.currentMoveTime - (this.maxMoveTime - this.scene.time  + this.currentMoveStartTime));
-            
-            if(this.currentMoveTime < 0){
+                this.currentMoveStartTime = this.currentMoveStartTime + (this.currentMoveTime - (this.maxMoveTime - this.scene.time + this.currentMoveStartTime));
+
+            if (this.currentMoveTime < 0) {
                 this.state = this.gameStates['Next Turn'];
-                this.gameSequence.addMove(new MyGameMoves(this.gameBoard,[],false));
+                this.gameSequence.addMove(new MyGameMoves(this.gameBoard, [], false));
                 this.gameBoard.buildBoardFromTiles();
             }
         }
 
         switch (this.state) {
             case this.gameStates['Menu']:
-                this.state = (this.prolog.connected) ? 2 : this.state;
+                if (this.prolog.connected && this.gameStarted) {
+                    this.state = this.gameStates['Next Turn'];
+                    this.gameSequence.reset();
+                }
                 break;
             case this.gameStates['Next Turn']:
 
-                if(this.updateNextPlayer())
+                if (this.updateNextPlayer())
                     this.state = this.gameStates['Change Camera Position'];
-                else 
+                else
                     this.state = this.gameStates['Destination Piece Selection'];
                 this.setSelectable();
                 this.resetSelection();
@@ -378,52 +396,52 @@ class MyGameOrchestrator {
                         break;
                     }
                 }
-                
-                if(this.selectedPiece != null){
+
+                if (this.selectedPiece != null) {
                     //deixar de selecionar peças
-                    this.gameBoard.setPlayerSelectable(1,false);
-                    this.gameBoard.setPlayerSelectable(2,false);
+                    this.gameBoard.setPlayerSelectable(1, false);
+                    this.gameBoard.setPlayerSelectable(2, false);
                     //tiles ftw
                     this.gameBoard.setTilesSelectable(true);
                     this.state = this.gameStates['Destination Piece Selected'];
                     let tile = this.selectedPiece.getTile();
-                    this.animator.setMove(new MyGameMoves(this.gameBoard,[new MyGameMove(this.selectedPiece,tile,new MyTile(this,-1,null,tile.x,tile.y,0.5))]),this.scene.time);
+                    this.animator.setMove(new MyGameMoves(this.gameBoard, [new MyGameMove(this.selectedPiece, tile, new MyTile(this, -1, null, tile.x, tile.y, 0.5))]), this.scene.time);
                 }
                 break;
             case this.gameStates['Destination Piece Selected']:
-                    if(this.animator.update(this.scene.time) == false){
-                        this.animating = false;
-                        this.state = this.gameStates['Destination Tile Selection'];
-                        this.selectedPiece.selected = true;
-                    }
+                if (this.animator.update(this.scene.time) == false) {
+                    this.animating = false;
+                    this.state = this.gameStates['Destination Tile Selection'];
+                    this.selectedPiece.selected = true;
+                }
                 break;
             case this.gameStates['Destination Tile Selection']:
-                if(this.selectedTile != null){
+                if (this.selectedTile != null) {
                     this.gameBoard.setTilesSelectable(false);
 
                     //this.animating = true;
                     this.state = this.gameStates['Destination Tile Selected'];
                     this.selectedPiece.selected = false;
                     let tile = this.selectedPiece.getTile();
-                    this.animator.setMove(new MyGameMoves(this.gameBoard,[new MyGameMove(this.selectedPiece,new MyTile(this,-1,null,tile.x,tile.y,0.5),tile)]),this.scene.time);
+                    this.animator.setMove(new MyGameMoves(this.gameBoard, [new MyGameMove(this.selectedPiece, new MyTile(this, -1, null, tile.x, tile.y, 0.5), tile)]), this.scene.time);
                 }
                 break;
             case this.gameStates['Destination Tile Selected']:
-                console.error(this.prolog.checkMove());
-                
-                if(this.animator.update(this.scene.time) == false){
+                //console.error(this.prolog.checkMove());
+
+                if (this.animator.update(this.scene.time) == false) {
                     this.animating = false;
                     this.state = this.gameStates['Movement Animation'];
 
                     //let bool = (this.currentPlayer == 1 && this.player1Type == "Human") || (this.currentPlayer = 2 && this.player2Type == "Human");
-                    
+
                     let validMove = this.prolog.checkMove();
-                    if(validMove == false){
+                    if (validMove == false) {
                         this.animating = false;
                         this.setSelectable();
                         this.resetSelection();
                         this.state = this.gameStates['Destination Piece Selection'];
-                    }else{
+                    } else {
                         this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
                         this.gameSequence.addMove(this.moves);
                     }
@@ -431,8 +449,8 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Movement Animation']:
-                
-                if(this.animator.update(this.scene.time) == false){
+
+                if (this.animator.update(this.scene.time) == false) {
                     this.animating = false;
                     this.state = this.gameStates['Evaluate Game End'];
                     //this.gameBoard.movePiece(this.selectedPiece , this.selectedPiece.getTile() , this.selectedTile );
@@ -442,14 +460,14 @@ class MyGameOrchestrator {
                 break;
             case this.gameStates['Evaluate Game End']:
                 let gameOver = this.prolog.checkGameOver(this.gameBoard.board);
-                console.log(gameOver);
-                if(gameOver.continue == false){
-                    if(gameOver.player1Win){
+                //console.log(gameOver);
+                if (gameOver.continue == false) {
+                    if (gameOver.player1Win) {
                         this.player1Score += 1;
-                        this.player1Score %=10;
-                    }else if(gameOver.player2Win){
+                        this.player1Score %= 10;
+                    } else if (gameOver.player2Win) {
                         this.player2Score += 1;
-                        this.player2Score %=10;
+                        this.player2Score %= 10;
                     }
                     this.gameStarted = false;
                     this.currentPlayer = 1;
@@ -458,35 +476,36 @@ class MyGameOrchestrator {
                 }
                 this.state = this.gameStates['Next Turn'];
                 break;
-            
+
 
 
             case this.gameStates['Undo Animation']:
-                    if(this.animator.update(this.scene.time) == false){
-                        this.animating = false;
-                        this.resetSelection();
+                if (this.animator.update(this.scene.time) == false) {
+                    this.animating = false;
+                    this.resetSelection();
+                    if (this.updatePreviousPlayer())
                         this.state = this.gameStates['Change Camera Position'];
-                        this.updatePreviousPlayer();
-                        this.setSelectable();
-                        //this.gameBoard.buildBoardFromTiles();
-                        //this.currentMoveTime = this.scene.time;
-                    }
-                    break;
+                    else this.state = this.gameStates['Destination Piece Selection'];
+                    this.setSelectable();
+                    //this.gameBoard.buildBoardFromTiles();
+                    //this.currentMoveTime = this.scene.time;
+                }
+                break;
             case this.gameStates['Replay Animation']:
-                    if(this.animator.update(this.scene.time) == false){
-                        this.animating = false;
-                        this.resetSelection();
-                        this.state = this.gameStates['Destination Piece Selection'];
-                    }
-                    break;
-            
-            case this.gameStates['Change Camera Position']:
-                this.currentMoveStartTime = this.scene.time;
-                if(this.changeCamera() == false){
+                if (this.animator.update(this.scene.time) == false) {
+                    this.animating = false;
+                    this.resetSelection();
                     this.state = this.gameStates['Destination Piece Selection'];
                 }
                 break;
-                    
+
+            case this.gameStates['Change Camera Position']:
+                this.currentMoveStartTime = this.scene.time;
+                if (this.changeCamera() == false) {
+                    this.state = this.gameStates['Destination Piece Selection'];
+                }
+                break;
+
             default:
                 break;
         }
@@ -494,11 +513,20 @@ class MyGameOrchestrator {
     }
 
     startGame() {
-        if(this.prolog.connected == false){
+        if (this.prolog.connected == false) {
             this.prolog._handshake();
             this.state = 0;
         }
         this.gameStarted = true;
+    }
+    restartGame() {
+        if (this.gameStarted == true) {
+            this.currentPlayer = 1;
+            this.currentTurn = 0;
+            this.state = this.gameStates['Menu'];
+            this.gameStarted = false;
+            this.changeBoard(this.defBoard);
+        }
     }
 
 
@@ -509,10 +537,10 @@ class MyGameOrchestrator {
     display() {
 
         this.theme.displayScene();
-        if(this.animating == false){
+        if (this.animating == false) {
             this.gameBoard.display();
             //console.log('a');
-        }else
+        } else
             this.animator.display();
         this.manager.display();
 
