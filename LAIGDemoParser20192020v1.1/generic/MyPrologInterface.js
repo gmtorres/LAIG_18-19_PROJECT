@@ -27,7 +27,6 @@ class MyPrologInterface{
       await new Promise(r => setTimeout(r, 3000));
     }
   }
-
   /**
    * Sends a request to the PROLOG server to execute the predicate pred(args)
    * @param {string} pred Predicate to execute
@@ -44,7 +43,7 @@ class MyPrologInterface{
     let url = REQUEST_ADDRESS + pred + argss;
 
     request.open("GET", url, false);
-    //console.warn(url);
+    console.warn(url);
 
     try {
       request.send(); 
@@ -84,14 +83,41 @@ class MyPrologInterface{
     let args = [
       JSON.stringify(json.gameBoard),
       json.player,
-      json.number + 1,
-      json.letter + 1,
+      json.number +1,
+      json.letter +1 ,
       "'" + json.direction + "'",
       JSON.stringify(json.boardbfrPlay),
       json.turn];
     
 
     return this._sendRequest("check_move", args); 
+  }
+
+  getMove(turn,player,mode) {
+    let args = [
+      JSON.stringify(this.orchestrator.gameBoard.board),
+      player,
+      turn,
+      mode
+    ]
+    console.log(args);
+
+    var orchestrator = this.orchestrator;
+    let pred = "get_AIMove";
+    let request = new XMLHttpRequest();
+    // args.forEach(e => e = JSON.stringify(e));
+    let argss = (args.length) ? "(" + args.join(',') + ")" : "";
+    let url = REQUEST_ADDRESS + pred + argss;
+
+    request.open("GET", url, true);
+    request.send();
+
+    request.onreadystatechange = function (evt) {
+      if (this.readyState == 4 && this.status == 200) {
+        orchestrator.moveReceived = true;
+        orchestrator.AIMove = Array.from(this.responseText).filter(ele => ele!="," && ele != '[' && ele != ']');
+      }
+    }
   }
 
 
