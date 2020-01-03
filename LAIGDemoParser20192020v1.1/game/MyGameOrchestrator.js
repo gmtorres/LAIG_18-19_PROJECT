@@ -34,7 +34,7 @@ class MyGameOrchestrator {
         this.state = 0;
 
         this.currentPlayer = 1;
-        this.currentTurn = 0;
+        this.currentTurn = 1;
 
         this.selectedPiece = null;
         this.selectedTile = null;
@@ -285,6 +285,24 @@ class MyGameOrchestrator {
         this.currentMoveStartTime = this.scene.time;
     }
 
+
+    makeGameMoveFromArray(arr) {
+        let direction = arr[2];
+        let dx = 0;
+        let dy = 0;
+        if (direction == 'a') dy = -1;
+        else if (direction == 'd') dy = +1;
+        else if (direction == 's') dx = 1;
+        else if (direction == 'w') dx = -1;
+        let x = Number(arr[0]) - 1;
+        let y = Number(arr[1]);
+        let tile = this.gameBoard.getTile(x, y);
+        let destTile = this.gameBoard.getTile(x + dx, y + dy);
+        let piece = tile.getPiece();
+
+        return new MyGameMoves(this.gameBoard,[new MyGameMove(piece, tile, destTile)]);
+    }
+
     orchestrate() {
         //manage picks
         this.managePick(false,this.scene.pickResults);
@@ -318,14 +336,28 @@ class MyGameOrchestrator {
                 this.resetSelection();
 
                 this.currentMoveStartTime = this.scene.time;
+                this.moveRequest = false;
+                this.moveReceived = false;
+                this.AIMove = null;
 
-                
                 break;
             case this.gameStates['Destination Piece Selection']:
                 if (this.currentPlayer == 1 && this.player1Type != "Human") {
-                    
+                    if (!this.moveRequest) {
+                        this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode());
+                        this.moveRequest = true;
+                        break;
+                    }
+                    if (this.moveReceived) {
+                        this.animator.setMove(this.makeGameMoveFromArray(this.AIMove), this.scene.time);
+                        this.state = this.gameStates['Destination Tile Selected'];
+                        this.AIMove = null;
+                        this.moveReceived = false;
+                        this.moveRequest = false;
+                        break;
+                    }
                 }
-                if (this.currentPlayer == 2 && this.player1Type != "Human") {
+                if (this.currentPlayer == 2 && this.player2Type != "Human") {
 
                 }
                 
@@ -359,11 +391,13 @@ class MyGameOrchestrator {
                 }
                 break;
             case this.gameStates['Destination Tile Selected']:
-                    console.error(this.prolog.checkMove());
+                    // console.error(this.prolog.checkMove());
                 
                 if(this.animator.update(this.scene.time) == false){
                     this.animating = false;
                     this.state = this.gameStates['Movement Animation'];
+
+                    let bool = (this.currentPlayer == 1 && this.player1Type == "Human") || (this.currentPlayer = 2 && this.player2Type == "Human");
                     
                     if(this.prolog.checkMove() == 0){
                         this.animating = false;
@@ -451,9 +485,6 @@ class MyGameOrchestrator {
 
     update(time) {
         this.animator.update(time);
-
-
-
     }
 
     display() {

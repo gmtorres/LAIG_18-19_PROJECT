@@ -27,7 +27,6 @@ class MyPrologInterface{
       await new Promise(r => setTimeout(r, 3000));
     }
   }
-
   /**
    * Sends a request to the PROLOG server to execute the predicate pred(args)
    * @param {string} pred Predicate to execute
@@ -44,7 +43,7 @@ class MyPrologInterface{
     let url = REQUEST_ADDRESS + pred + argss;
 
     request.open("GET", url, false);
-    //console.warn(url);
+    console.warn(url);
 
     try {
       request.send(); 
@@ -101,8 +100,24 @@ class MyPrologInterface{
       turn,
       mode
     ]
+    console.log(args);
 
-    return this._sendRequest("get_AIMove", args);
+    var orchestrator = this.orchestrator;
+    let pred = "get_AIMove";
+    let request = new XMLHttpRequest();
+    // args.forEach(e => e = JSON.stringify(e));
+    let argss = (args.length) ? "(" + args.join(',') + ")" : "";
+    let url = REQUEST_ADDRESS + pred + argss;
+
+    request.open("GET", url, true);
+    request.send();
+
+    request.onreadystatechange = function (evt) {
+      if (this.readyState == 4 && this.status == 200) {
+        orchestrator.moveReceived = true;
+        orchestrator.AIMove = Array.from(this.responseText).filter(ele => ele!="," && ele != '[' && ele != ']');
+      }
+    }
   }
 
 
