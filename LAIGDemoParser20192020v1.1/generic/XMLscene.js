@@ -119,8 +119,11 @@ class XMLscene extends CGFscene {
      * Updates scene camera and set that to the active camera, depending on the camera choosen in the interface
      */
     updateCamera() {
-        this.camera = this.cameras[this.selectView];
-        this.interface.setActiveCamera(this.camera);
+        //this.camera = this.cameras[this.selectView];
+        //this.interface.setActiveCamera(this.camera);
+        this.gameOrchestrator.cameraAnimationTime = null;
+        this.gameOrchestrator.changeCamera(this.cameras[this.selectView]);
+        this.gameOrchestrator.state = this.gameOrchestrator.gameStates['Change Camera Position'];
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -136,10 +139,14 @@ class XMLscene extends CGFscene {
         this.gameOrchestrator.onLoaded();
 
         if(this.interfaceInitiated == true){
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Views']);
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Lights']);
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Select Theme']);
             this.interface.gui.removeFolder(this.interface.gui.__folders['Select Pieces']);
             this.interface.gui.removeFolder(this.interface.gui.__folders['Select Tiles']);
+            this.interface.gui.removeFolder(this.interface.gui.__folders['Game Settings']);
             
-            let piecesFolder = this.interface.gui.addFolder('Select Pieces');
+            /*let piecesFolder = this.interface.gui.addFolder('Select Pieces');
                 piecesFolder.add(this.gameOrchestrator,'player1Piece',this.graph.piecesName1).name('Piece 1').onChange(this.changeThemePiece.bind(this));
                 piecesFolder.add(this.gameOrchestrator,'player2Piece',this.graph.piecesName2).name('Piece 2').onChange(this.changeThemePiece.bind(this));;
             piecesFolder.open();
@@ -147,25 +154,26 @@ class XMLscene extends CGFscene {
             let tilesFolder = this.interface.gui.addFolder('Select Tiles');
                 tilesFolder.add(this.gameOrchestrator,'tile1',this.graph.tilesName1).name('Tiles 1').onChange(this.changeThemeTiles.bind(this));
                 tilesFolder.add(this.gameOrchestrator,'tile2',this.graph.tilesName2).name('Tiles 2').onChange(this.changeThemeTiles.bind(this));;
-            tilesFolder.open();
+            tilesFolder.open();*/
 
-            return;
-        }   
-        this.interfaceInitiated = true;
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
+            //return;
+        }else{
+            this.interfaceInitiated = true;
+            this.axis = new CGFaxis(this, this.graph.referenceLength);
 
 
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+            this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+            this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
-        this.initLights();
+            this.initLights();
 
-        this.sceneInited = true;
+            this.sceneInited = true;
 
+        }
         this.cameras = this.graph.cameras;
 
-
+        this.camerasIds = [];
         for (var key in this.cameras) {
             if (key === 'length' || !this.cameras.hasOwnProperty(key)) continue;
             this.camerasIds.push(key);
@@ -175,8 +183,9 @@ class XMLscene extends CGFscene {
         //this.interface.gui.remove("Select View");
         //this.interface.gui.removeFolder("Lights");
         //this.interface.gui.remove("Select Theme");
-
-        this.interface.gui.add(this, "selectView", this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
+        let viewsFolder = this.interface.gui.addFolder('Views');
+        viewsFolder.add(this, "selectView", this.camerasIds).name("Select View").onChange(this.updateCamera.bind(this));
+        viewsFolder.open();
 
         let lightsFolder = this.interface.gui.addFolder('Lights');
         this.lightsVar = false;
@@ -203,6 +212,7 @@ class XMLscene extends CGFscene {
         tilesFolder.open();
 
         let gameOptions = this.interface.gui.addFolder('Game Settings');
+            gameOptions.add(this.gameOrchestrator, 'cameraTransition').name("Camera_Transitions");
             gameOptions.add(this.gameOrchestrator, 'defBoard', this.gameOrchestrator.defBoards).name("Board").onChange(this.updateBoard.bind(this));
             gameOptions.add(this.gameOrchestrator, 'player1Type', this.gameOrchestrator.ptypes).name('Player 1');
             gameOptions.add(this.gameOrchestrator, 'player2Type', this.gameOrchestrator.ptypes).name('Player 2');

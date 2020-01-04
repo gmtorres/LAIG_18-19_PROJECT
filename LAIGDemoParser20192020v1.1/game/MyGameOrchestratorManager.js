@@ -94,9 +94,9 @@ class MyGameOrchestratorManager{
                 this.orchestrator.maxMoveTime = 0;
             return true;
         }
-
         return false;
-    }   
+    }
+    
 
     displayPickableObject(obj){
         obj.enablePickable();
