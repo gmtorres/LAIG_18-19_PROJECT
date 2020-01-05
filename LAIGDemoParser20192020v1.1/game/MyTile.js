@@ -11,6 +11,8 @@ class MyTile{
         if(z != undefined){
             this.z = z;
         }else this.z = 0;
+
+        this.lastSelected = -1;
     }
     setPosition(x,y){
         this.x = x;
@@ -30,6 +32,10 @@ class MyTile{
 
     getPosition(){
         return [this.x,this.z,this.y];
+    }
+
+    getPiecePosition(){
+        return [this.x - 0.5,this.z,this.y - 0.5];
     }
 
     display() {

@@ -114,6 +114,13 @@
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
+        <material id="orange" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="0.2" b="0.0" a="1.0" />
+            <diffuse r="0.6" g="0.2" b="0.0" a="1.0" />
+            <specular r="0.6" g="0.1" b="0.0" a="1.0" />
+        </material>
+
         <material id="pink" shininess="10">
             <emission r="0" g="0" b="0.0" a="0.0" />
             <ambient r="1" g="0.6" b="0.65" a="1.0" />
@@ -165,6 +172,30 @@
                 <scale x='1' y='1' z='1'/>
             </keyframe>
         </animation>
+
+        <animation id='duckWing' repeat='-1'>
+             <keyframe instant='0.3'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='-10' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='0.6'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='0.75'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='5' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+            <keyframe instant='0.9'>
+                <translate x='0' y='0' z='0'/>
+                <rotate x='0' y='0' z='0'/>
+                <scale x='1' y='1' z='1'/>
+            </keyframe>
+        </animation>
+
    </animations> 
 
     <primitives>
@@ -359,7 +390,7 @@
 
         <component id="torus1">
             <transformation>
-                <translate x="0.5" y="0.15" z="0.5" />
+                <translate x="0" y="0.15" z="0" />
                 <rotate axis='x' angle='-90'/>
                 <scale x="3" y="3" z="3" />
             </transformation>
@@ -372,9 +403,34 @@
             </children>
         </component>
 
+        <component id="dualTriangle">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <componentref id='dualTriangle_1'/>
+                <primitiveref id='triangle'/>
+            </children>
+        </component>
+        <component id="dualTriangle_1">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+                <texture id="inherit"/>
+            <children>
+                <primitiveref id='triangle'/>
+            </children>
+        </component>
+
         <component id="torus2">
             <transformation>
-                <translate x="0.5" y="0.15" z="0.5" />
+                <translate x="0" y="0.15" z="0" />
                 <rotate axis='x' angle='-90'/>
                 <scale x="3" y="3" z="3" />
             </transformation>
@@ -389,11 +445,12 @@
     
         <gameboard id='aa' x='0' y='3.01' z='-2.5' >
             <pieces1>
-                <pieceref id='theme1' componentref='torus1'/>
-                <pieceref id='Player2 Red' componentref='torus2' />
+                <pieceref id='White Duck' componentref='white_duck' />
+                <pieceref id='Blue Torus' componentref='torus1'/>
             </pieces1>
             <pieces2>
-                <pieceref id='theme1' componentref='torus2' />
+                <pieceref id='Yellow Dck' componentref='yellow_duck' />
+                <pieceref id='Red Torus' componentref='torus2'/>
             </pieces2>
             <tiles1>
                 <tileref id='theme1' componentref='board_rectangle1' />
@@ -402,6 +459,202 @@
                 <tileref id='theme1' componentref='board_rectangle2' />
             </tiles2>
         </gameboard>
+        <component id="white_duck">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck'/>
+            </children>
+        </component>
+        <component id="yellow_duck">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="yellow"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck'/>
+            </children>
+        </component>
+
+        <component id="duck">
+            <transformation>
+                <translate x="0.1" y="0.01" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck_body'/>
+            </children>
+        </component>
+
+        <component id="duck_body">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck_body_1'/>
+                <componentref id='duck_head'/>
+                <componentref id='duck_wings'/>
+            </children>
+        </component>
+
+        <component id="duck_wings">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck_wing1'/>
+                <componentref id='duck_wing2'/>
+            </children>
+        </component>
+
+        <component id="duck_wing1">
+            <transformation>
+                <rotate axis='x' angle='10'/>
+                <scale x="0.2" y="1" z="0.45" />
+                <translate x="0" y="0.2" z="0" />
+                <rotate axis='x' angle='90'/>
+            </transformation>
+            <animationref id='duckWing'/>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+
+        <component id="duck_wing2">
+            <transformation>
+                <rotate axis='y' angle='180'/>
+                <rotate axis='x' angle='10'/>
+                <scale x="0.2" y="1" z="0.45" />
+                <translate x="0" y="0.2" z="0" />
+                <rotate axis='x' angle='90'/>
+            </transformation>
+            <animationref id='duckWing'/>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='dualTriangle'/>
+            </children>
+        </component>
+
+        <component id="duck_body_1">
+            <transformation>
+                <translate x="0" y="0.15" z="0" />
+                <scale x="0.3" y="0.2" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+
+        <component id="duck_cabeça">
+            <transformation>
+                <translate x="0" y="0.15" z="0" />
+                <scale x="0.22" y="0.2" z="0.17" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+
+        <component id="duck_head">
+            <transformation>
+                <translate x="-0.18" y="0.18" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck_eyes'/>
+                <componentref id='duck_bico'/>
+                <componentref id='duck_cabeça'/>
+            </children>
+        </component>
+
+        <component id="duck_bico">
+            <transformation>
+                <translate x="-0.35" y="0.14" z="0" />
+                <rotate axis='y' angle='+90'/>
+                <scale x="0.05" y="0.03" z="0.07" />
+            </transformation>
+            <materials>
+                <material id="orange"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='cone'/>
+            </children>
+        </component>
+
+        <component id="duck_eyes">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <componentref id='duck_eye1'/>
+                <componentref id='duck_eye2'/>
+            </children>
+        </component>
+
+        <component id="duck_eye1">
+            <transformation>
+                <translate x="-0.13" y="0.24" z="0.07" />
+                <scale x="0.05" y="0.05" z="0.05" />
+            </transformation>
+            <materials>
+                <material id="black"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+        <component id="duck_eye2">
+            <transformation>
+                <translate x="-0.13" y="0.24" z="-0.07" />
+                <scale x="0.05" y="0.05" z="0.05" />
+            </transformation>
+            <materials>
+                <material id="black"/>
+            </materials>
+            <texture id='none'/>
+            <children>
+                <primitiveref id='sphere'/>
+            </children>
+        </component>
+
 
         <component id="lake">
             <transformation>
@@ -1267,7 +1520,7 @@
                 <scale x="1" y="1" z="1" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id='none'/>
             <children>

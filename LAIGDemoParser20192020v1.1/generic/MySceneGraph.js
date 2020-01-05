@@ -1374,6 +1374,7 @@ class MySceneGraph {
                 var animationId = this.reader.getString(animationChild, 'id');
 
                 component.animation = this.animations[animationId];
+                component.offset = 0;
             }
 
 
@@ -1645,7 +1646,7 @@ class MySceneGraph {
         var tempTex = [];
         tempTex.tex = 'none';
         //this.displayFunction(this.idRoot , mat4.create() , new CGFappearance(this.scene) , tempTex);
-        this.displayFunction(this.nodes[this.idRoot], new CGFappearance(this.scene), tempTex, 1, 1);
+        this.displayFunction(this.nodes[this.idRoot], new CGFappearance(this.scene), tempTex, 1, 1 , 0);
     }
 
     /**
@@ -1656,7 +1657,7 @@ class MySceneGraph {
      * @param {float} s_length length_s of the current texture
      * @param {float} t_length length_t of the current texture
      */
-    displayFunction(node, material, texture, s_length, t_length) {
+    displayFunction(node, material, texture, s_length, t_length , offset) {
         //var currentNode = this.nodes[node];
         var currentNode = node;
 
@@ -1666,7 +1667,8 @@ class MySceneGraph {
         this.scene.pushMatrix();
         this.scene.multMatrix(currentNode.component.transformation);
         if (currentNode.component.animation != null) {
-            currentNode.component.animation.update(this.scene.time);
+            //offset = currentNode.component.offset;
+            currentNode.component.animation.update(this.scene.time + offset);
             currentNode.component.animation.apply();
         }
 
@@ -1713,7 +1715,7 @@ class MySceneGraph {
             this.displayFunction(currentNode.child[a] , matrix , nodeMaterial , nodeTexture);
         }*/
         for (var a = 0; a < currentNode.componentref.length; a++) {
-            this.displayFunction(currentNode.componentref[a], nodeMaterial, nodeTexture, s_length, t_length);
+            this.displayFunction(currentNode.componentref[a], nodeMaterial, nodeTexture, s_length, t_length,offset);
         }
         nodeMaterial.setTexture(null);
         this.scene.popMatrix();

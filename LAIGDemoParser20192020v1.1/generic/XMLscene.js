@@ -213,6 +213,7 @@ class XMLscene extends CGFscene {
 
         let gameOptions = this.interface.gui.addFolder('Game Settings');
             gameOptions.add(this.gameOrchestrator, 'cameraTransition').name("Camera_Transitions");
+            gameOptions.add(this.gameOrchestrator, 'doubleClick').name("Double_Click");
             gameOptions.add(this.gameOrchestrator, 'defBoard', this.gameOrchestrator.defBoards).name("Board").onChange(this.updateBoard.bind(this));
             gameOptions.add(this.gameOrchestrator, 'player1Type', this.gameOrchestrator.ptypes).name('Player 1');
             gameOptions.add(this.gameOrchestrator, 'player2Type', this.gameOrchestrator.ptypes).name('Player 2');

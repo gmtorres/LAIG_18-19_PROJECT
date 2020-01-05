@@ -70,6 +70,10 @@ class MyGameOrchestrator {
 
         this.cameraTransition = true;
 
+        this.doubleClick = false;
+
+        this.nextState = null;
+
     }
 
     onLoaded() {
@@ -134,14 +138,42 @@ class MyGameOrchestrator {
 
     OnObjectSelected(obj, id) {
         if (obj instanceof MyPiece) {
+
+
             if (this.state == this.gameStates['Destination Piece Selection']) {
-                this.selectedPiece = obj;
+                if( this.doubleClick == false|| (this.doubleClick == true && this.scene.time - obj.lastSelected < 0.3)){
+                        this.selectedPiece = obj;
+                }
+                else if(this.doubleClick == true){
+                    obj.lastSelected = this.scene.time;
+                }
+            }
+            if (this.state == this.gameStates['Destination Tile Selection']) {
+                if(obj == this.selectedPiece)
+                    return;
+                if( this.doubleClick == false|| (this.doubleClick == true && this.scene.time - obj.lastSelected < 0.3)){
+                    this.animator.setMove(new MyGameMoves(this.gameBoard, [
+                        new MyGameMove(this.selectedPiece, new MyTile(this, -1, null, this.selectedPiece.getTile().x, this.selectedPiece.getTile().y, 0.5), this.selectedPiece.getTile()),
+                        new MyGameMove(obj, obj.getTile(), new MyTile(this, -1, null, obj.getTile().x, obj.getTile().y, 0.5))
+                    ]), this.scene.time);
+                    this.selectedPiece.selected = false;
+                    this.selectedPiece = obj;
+                    this.state = this.gameStates['Destination Piece Selected']
+                }
+                else if(this.doubleClick == true){
+                    obj.lastSelected = this.scene.time;
+                }
             }
         } else if (obj instanceof MyTile) {
             if (this.state == this.gameStates['Destination Tile Selection']) {
-                this.selectedTile = obj;
-                if (this.selectedPiece.selected == true)
-                    this.selectedPiece.selected = false;
+                if( this.doubleClick == false|| (this.doubleClick == true && this.scene.time - obj.lastSelected < 0.3)){
+                    this.selectedTile = obj;
+                    if (this.selectedPiece.selected == true)
+                        this.selectedPiece.selected = false;
+                }
+                else if(this.doubleClick == true){
+                    obj.lastSelected = this.scene.time;
+                }
             }
         } else {
             // error ?
@@ -209,7 +241,7 @@ class MyGameOrchestrator {
 
     changeCamera(target) {
         let time = this.scene.time;
-        let animationTime = 2.5;
+        let animationTime = 2.0;
         if (this.cameraAnimationTime == null) {
             this.scene.interface.setActiveCamera(null);
             this.startCamera = [];
@@ -332,18 +364,30 @@ class MyGameOrchestrator {
                 this.currentMoveTime = 0;
             }
             else{
-                if (this.state != this.gameStates['Destination Piece Selected'] && this.state != this.gameStates['Destination Tile Selected'])
+                if (this.state != this.gameStates['Movement Animation'] && this.state != this.gameStates['Destination Piece Selected'] && this.state != this.gameStates['Destination Tile Selected'])
                     this.currentMoveTime = this.maxMoveTime - this.scene.time + this.currentMoveStartTime;
                 else
                     this.currentMoveStartTime = this.currentMoveStartTime + (this.currentMoveTime - (this.maxMoveTime - this.scene.time + this.currentMoveStartTime));
 
                 if (this.currentMoveTime < 0) {
-                    this.state = this.gameStates['Next Turn'];
+                    this.currentMoveTime = 0;
+                    this.currentMoveStartTime = this.scene.time;
+                    if(this.selectedPiece != null){
+                        this.state = this.gameStates['Destination Tile Selected'];
+                        this.nextState = this.gameStates['Next Turn'];
+                        this.selectedPiece.selected = false;
+                        this.animator.setMove(new MyGameMoves(this.gameBoard, [
+                            new MyGameMove(this.selectedPiece, new MyTile(this, -1, null, this.selectedPiece.getTile().x, this.selectedPiece.getTile().y, 0.5) , new MyTile(this, -1, null, this.selectedPiece.getTile().x, this.selectedPiece.getTile().y, 0))
+                        ]), this.scene.time);
+                    }
+                    else this.state = this.gameStates['Next Turn'];
                     this.gameSequence.addMove(new MyGameMoves(this.gameBoard, [], false));
                     this.gameBoard.buildBoardFromTiles();
                 }
             }
         }
+
+        //console.log(this.animating , this.state , this.selectedPiece == null ? null : this.selectedPiece.selected);
 
         switch (this.state) {
             case this.gameStates['Menu']:
@@ -368,25 +412,7 @@ class MyGameOrchestrator {
 
                 break;
             case this.gameStates['Destination Piece Selection']:
-                if (this.currentPlayer == 1 && this.player1Type != "Human") {
-                    if (!this.moveRequest) {
-                        this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode());
-                        this.moveRequest = true;
-                        break;
-                    }
-                    if (this.moveReceived) {
-                        let move = this.makeGameMoveFromArray(this.AIMove);
-                        //this.moves = this.gameBoard.getMoves(this.selectedPiece, this.getDirection(this.selectedPiece.getTile(), this.selectedTile));
-                        this.moves = this.gameBoard.getMoves(move, this.AIMove[2]);
-                        this.gameSequence.addMove(this.moves);
-                        this.state = this.gameStates['Movement Animation'];
-                        this.AIMove = null;
-                        this.moveReceived = false;
-                        this.moveRequest = false;
-                        break;
-                    }
-                }
-                if (this.currentPlayer == 2 && this.player2Type != "Human") {
+                if ( (this.currentPlayer == 1 && this.player1Type != "Human") || (this.currentPlayer == 2 && this.player2Type != "Human")) {
                     if (!this.moveRequest) {
                         this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode());
                         this.moveRequest = true;
@@ -406,10 +432,7 @@ class MyGameOrchestrator {
                 }
 
                 if (this.selectedPiece != null) {
-                    //deixar de selecionar peças
-                    this.gameBoard.setPlayerSelectable(1, false);
-                    this.gameBoard.setPlayerSelectable(2, false);
-                    //tiles ftw
+ 
                     this.gameBoard.setTilesSelectable(true);
                     this.state = this.gameStates['Destination Piece Selected'];
                     let tile = this.selectedPiece.getTile();
@@ -419,15 +442,17 @@ class MyGameOrchestrator {
             case this.gameStates['Destination Piece Selected']:
                 if (this.animator.update(this.scene.time) == false) {
                     this.animating = false;
-                    this.state = this.gameStates['Destination Tile Selection'];
                     this.selectedPiece.selected = true;
+                    this.state = this.gameStates['Destination Tile Selection'];
                 }
                 break;
             case this.gameStates['Destination Tile Selection']:
                 if (this.selectedTile != null) {
                     this.gameBoard.setTilesSelectable(false);
 
-                    //this.animating = true;
+                    this.gameBoard.setPlayerSelectable(1, false);
+                    this.gameBoard.setPlayerSelectable(2, false);
+                    
                     this.state = this.gameStates['Destination Tile Selected'];
                     this.selectedPiece.selected = false;
                     let tile = this.selectedPiece.getTile();
@@ -439,10 +464,14 @@ class MyGameOrchestrator {
 
                 if (this.animator.update(this.scene.time) == false) {
                     this.animating = false;
+                    if(this.nextState != null){
+                        this.currentMoveStartTime = this.scene.time;
+                        this.state = this.nextState;
+                        this.nextState = null;
+                        break;
+                    }
                     this.state = this.gameStates['Movement Animation'];
-
-                    //let bool = (this.currentPlayer == 1 && this.player1Type == "Human") || (this.currentPlayer = 2 && this.player2Type == "Human");
-
+                    
                     let validMove = this.prolog.checkMove();
                     if (validMove == false) {
                         this.animating = false;
@@ -527,12 +556,15 @@ class MyGameOrchestrator {
             this.state = 0;
         }
         this.gameStarted = true;
+        this.currentMoveStartTime = this.scene.time;
     }
     restartGame() {
         if (this.gameStarted == true) {
             this.currentPlayer = 1;
             this.currentTurn = 0;
             this.state = this.gameStates['Menu'];
+            if(this.selectedPiece != null)
+                this.selectedPiece.selected = false;
             this.gameStarted = false;
             this.animating = false;
             this.changeBoard(this.defBoard);
@@ -541,7 +573,7 @@ class MyGameOrchestrator {
 
 
     update(time) {
-        this.animator.update(time);
+        //this.animator.update(time);
     }
 
     display() {

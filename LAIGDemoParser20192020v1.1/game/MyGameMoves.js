@@ -3,6 +3,7 @@ class MyGameMoves{
     constructor(gameBoardPrev,myGameMoves,undoMove){
 
         this.gameBoardPrev = new MyGameBoard(gameBoardPrev.orchestrator,gameBoardPrev.board);
+        this.gameBoardPrev.piecesOffset = gameBoardPrev.piecesOffset;
 
         this.gameBoardAfter = null;
 

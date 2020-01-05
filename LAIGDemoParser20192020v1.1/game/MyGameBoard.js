@@ -5,11 +5,10 @@ class MyGameBoard {
         if (board == undefined)
             this.createNewBoard();
         else this.board = board;
-
+        this.piecesOffset = [];
         this.createTiles();
         this.createPieces();
         
-
     }
 
     createNewBoard(i = 0) {
@@ -95,6 +94,7 @@ class MyGameBoard {
         //new MyPlane(this.orchestrator.getScene(), 1, 32, 32)
        
         this.tiles = [];
+        
         let val = 0;
         for (var a = 0; a < 5; a++) {
             for (var b = 0; b < 5; b++) {
@@ -136,8 +136,10 @@ class MyGameBoard {
                 let value = this.board[a][b];
                 if (value == 1) {
                     this.pieces.push(new MyPiece(this.orchestrator, 100 + (player1++), null, this.tiles[a * 5 + b]));
+                    this.piecesOffset.push(Math.random()*10);
                 } else if (value == 2) {
                     this.pieces.push(new MyPiece(this.orchestrator, 150 + (player2++), null, this.tiles[a * 5 + b]));
+                    this.piecesOffset.push(Math.random()*10);
                 }
             }
         }
@@ -293,14 +295,16 @@ class MyGameBoard {
     this.orchestrator.getScene().pushMatrix();
     let delta = this.orchestrator.boardCoords;
     this.orchestrator.getScene().translate(delta[0], delta[1], delta[2]);
+    let a = 0;
     for (let i = 0; i < this.tiles.length; i++) {
-
-        let piece = this.tiles[i].getPiece();
-
         this.tiles[i].display();
+        let piece = this.tiles[i].getPiece();
         
         if (piece != null) {
+            this.orchestrator.getScene().pushMatrix();
+            this.orchestrator.getScene().translate(0.5,0,0.5);
             piece.display();
+            this.orchestrator.getScene().popMatrix();
         }
     }
     this.orchestrator.getScene().popMatrix();

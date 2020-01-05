@@ -8,6 +8,10 @@ class MyPiece{
         this.selected = false;
         this.selectable = true;
         this.animated = false;
+
+        this.lastSelected = -1;
+        //this.offset = Math.random()*10;
+        //console.log("new random");
     }
 
     setType(type){
@@ -40,18 +44,18 @@ class MyPiece{
             }
     }
 
-    displayPiece(){
+    displayPiece(offset){
         let tempTex = [];
         tempTex.tex = 'none';
         let tempApp = new CGFappearance(this.orchestrator.getScene());
 
-        this.orchestrator.getScene().translate(0.5,0,0.5);
+        //this.orchestrator.getScene().translate(0.5,0,0.5);
         if(this.uniqueID >= 150 && this.uniqueID < 200){
             this.orchestrator.getScene().rotate(Math.PI,0,1,0);
         }
-        this.orchestrator.getScene().translate(-0.5,0,-0.5);
+        //this.orchestrator.getScene().translate(-0.5,0,-0.5);
 
-        this.orchestrator.theme.displayFunction(this.type,tempApp,tempTex,1,1);
+        this.orchestrator.theme.displayFunction(this.type,tempApp,tempTex,1,1,0);
     }
 
     display(forceDisplay) {
