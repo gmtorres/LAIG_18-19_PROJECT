@@ -347,7 +347,7 @@ class MyGameOrchestrator {
         let destTile = this.gameBoard.getTile(x + dx, y + dy);
         let piece = tile.getPiece();
         return piece;
-        return new MyGameMoves(this.gameBoard, [new MyGameMove(piece, tile, destTile)]);
+        //return new MyGameMoves(this.gameBoard, [new MyGameMove(piece, tile, destTile)]);
     }
 
     orchestrate() {
@@ -414,7 +414,7 @@ class MyGameOrchestrator {
             case this.gameStates['Destination Piece Selection']:
                 if ( (this.currentPlayer == 1 && this.player1Type != "Human") || (this.currentPlayer == 2 && this.player2Type != "Human")) {
                     if (!this.moveRequest) {
-                        this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode());
+                        this.prolog.getMove(this.currentTurn, this.currentPlayer, this.getPlayerMode(),this.gameSequence.getBfrBoard());
                         this.moveRequest = true;
                         break;
                     }
@@ -533,7 +533,11 @@ class MyGameOrchestrator {
                 if (this.animator.update(this.scene.time) == false) {
                     this.animating = false;
                     this.resetSelection();
-                    this.state = this.gameStates['Destination Piece Selection'];
+                    if(this.gameStarted){
+                        if(this.selectedPiece == null)
+                            this.state = this.gameStates['Destination Piece Selection'];
+                        else this.state = this.gameStates['Destination Tile Selection'];
+                    }else this.state = this.gameStates['Menu'];
                 }
                 break;
 

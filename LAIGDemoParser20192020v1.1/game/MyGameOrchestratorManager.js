@@ -53,6 +53,7 @@ class MyGameOrchestratorManager{
     parseSelected(id){
         if(id == this.replayButton.uniqueID){
             if( this.orchestrator.state == this.orchestrator.gameStates['Destination Piece Selection'] ||
+                this.orchestrator.state == this.orchestrator.gameStates['Menu'] ||
                 this.orchestrator.state == this.orchestrator.gameStates['Destination Tile Selection']){
 
                 this.orchestrator.animator.replay();

@@ -51,6 +51,7 @@ validMove(Board,Player,Number,Letter,Direction,PlayerNudged,OpponentNudged):-
     nextPlayer(Player,Opponent),
     getLinkedNumber(Board,Nt,Lt,Incx,Incy,Opponent,OpponentNudged),
     PlayerNudged>OpponentNudged.
+    % \+ move(Board,Player,Number,Letter,Direction,PlayerNudged,OpponentNudged,BoardBfrPlay).
 
 
 /*

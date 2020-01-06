@@ -127,7 +127,7 @@ check_move(Board,Player,Number,Letter,Direction,BoardbfrPlay,1,Res):-
 check_move(_Board,_Player,_Number,_Letter,_Direction,_BoardbfrPlay,1,0).
 
 check_move(Board,Player,Number,Letter,Direction,BoardbfrPlay,2,Res):-
-	Board \== BoardbfrPlay,
+	%Board \== BoardbfrPlay,
 	validMove(Board,Player,Number,Letter,Direction,_,_),
 	Res is 1.
 

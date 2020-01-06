@@ -93,7 +93,7 @@ class MyPrologInterface{
     return this._sendRequest("check_move", args) == "1"; 
   }
 
-  getMove(turn,player,mode) {
+  getMove(turn,player,mode,boardbfrPlay) {
     let args = [
       JSON.stringify(this.orchestrator.gameBoard.board),
       player,
