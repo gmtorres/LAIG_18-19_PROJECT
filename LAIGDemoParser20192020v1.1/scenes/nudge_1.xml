@@ -421,7 +421,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal"/>
                 <componentref id="sand_floor_hill"/>
@@ -437,7 +437,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal_line1"/>
             </children>
@@ -451,7 +451,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal_line1"/>
                 <componentref id="sand_floor_horizontal_line2"/>
@@ -466,7 +466,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal_line"/>
             </children>
@@ -480,7 +480,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal_line_dune"/>
             </children>
@@ -494,7 +494,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal1"/>
                 <componentref id="sand_floor_horizontal2"/>
@@ -510,7 +510,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <componentref id="sand_floor_horizontal1_dune"/>
                 <componentref id="sand_floor_horizontal2_dune"/>
@@ -526,7 +526,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='plane'/>
             </children>
@@ -540,7 +540,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='plane'/>
             </children>
@@ -554,7 +554,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='plane'/>
             </children>
@@ -567,7 +567,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='dune'/>
             </children>
@@ -580,7 +580,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='dune'/>
             </children>
@@ -593,7 +593,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sand'/>
+            <texture id='sand' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='dune'/>
             </children>
@@ -608,7 +608,7 @@
             <materials>
                 <material id="white" />
             </materials>
-            <texture id='sea'/>
+            <texture id='sea' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='plane'/>
             </children>
@@ -973,7 +973,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='towel1'/>
+            <texture id='towel1' length_s="1" length_t="1"/>
             <children>
                 <componentref id='towel'/>
             </children>
@@ -986,7 +986,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='towel2'/>
+            <texture id='towel2' length_s="1" length_t="1"/>
             <children>
                 <componentref id='towel'/>
             </children>
@@ -999,7 +999,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='towel2'/>
+            <texture id='towel2' length_s="1" length_t="1"/>
             <children>
                 <componentref id='towel'/>
             </children>
@@ -1025,7 +1025,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='sun_umbrella'/>
+            <texture id='none'/>
             <children>
                 <componentref id='sun_umbrella1'/>
                 <componentref id='sun_umbrella2'/>
@@ -1040,7 +1040,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='sun_umbrella'/>
+            <texture id='sun_umbrella' length_s="1" length_t="1"/>
             <children>
                 <componentref id='sun_umbrella'/>
             </children>
@@ -1053,7 +1053,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='sun_umbrella2'/>
+            <texture id='sun_umbrella2' length_s="1" length_t="1"/>
             <children>
                 <componentref id='sun_umbrella'/>
             </children>
@@ -1066,7 +1066,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='sun_umbrella3'/>
+            <texture id='sun_umbrella3' length_s="1" length_t="1"/>
             <children>
                 <componentref id='sun_umbrella'/>
             </children>

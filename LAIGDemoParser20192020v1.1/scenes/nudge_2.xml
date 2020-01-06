@@ -678,7 +678,7 @@
             <materials>
                 <material id="white"/>
             </materials>
-            <texture id='wood'/>
+            <texture id='wood' length_s="1" length_t="1"/>
             <children>
                 <componentref id='boat_side1'/>
                 <componentref id='boat_side2'/>
@@ -1019,7 +1019,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id='grass'/>
+            <texture id='grass' length_s="1" length_t="1"/>
             <children>
                 <componentref id='land1'/>
                 <componentref id='land2'/>
@@ -1398,7 +1398,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id='trunk'/>
+            <texture id='trunk' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='cylinder'/>
             </children>
@@ -1413,7 +1413,7 @@
             <materials>
                 <material id="inherit"/>
             </materials>
-            <texture id='leaves'/>
+            <texture id='leaves' length_s="1" length_t="1"/>
             <children>
                 <primitiveref id='cone'/>
             </children>
@@ -1792,7 +1792,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='leaves' length_s="1" length_t="1"/>
             <children>
                 <componentref id='bush1'/>
                 <componentref id='bush2'/>
@@ -1812,7 +1812,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1826,7 +1826,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1840,7 +1840,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit' length_s="1" length_t="1"/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1854,7 +1854,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit' length_s="1" length_t="1"/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1868,7 +1868,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1882,7 +1882,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1896,7 +1896,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush'/>
             </children>
@@ -1908,7 +1908,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <componentref id='bush_tree'/>
                 <componentref id='bagas'/>
@@ -1923,7 +1923,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id='leaves'/>
+            <texture id='inherit'/>
             <children>
                 <primitiveref id='treeTop'/>
             </children>
