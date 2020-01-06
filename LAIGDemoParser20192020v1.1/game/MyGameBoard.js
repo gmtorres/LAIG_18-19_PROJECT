@@ -8,10 +8,13 @@ class MyGameBoard {
         this.piecesOffset = [];
         this.createTiles();
         this.createPieces();
+
+        this.tempTile = null;
         
     }
 
     createNewBoard(i = 0) {
+        this.tempTile = null;
         if (i == 0) {
             this.board = [
                 [0, 0, 0, 0, 0],
@@ -32,6 +35,7 @@ class MyGameBoard {
     }
 
     setToDefault(i) {
+        this.tempTile = null;
         let board = [];
         board[0] = [
             [0, 0, 0, 0, 0],
@@ -280,7 +284,8 @@ class MyGameBoard {
                 destTile = this.getTile(destX , destY);
                 moves.push(new MyGameMove(pieceT, tile, destTile));
             }else{
-                moves.push(new MyGameMove(pieceT, tile, new MyTile(this.orchestrator,-1,null,destX,destY),true));
+                this.tempTile = new MyTile(this.orchestrator,-1,null,destX,destY)
+                moves.push(new MyGameMove(pieceT, tile, this.tempTile,true));
                 break;
             }
             pieceT = destTile.getPiece();
@@ -299,6 +304,17 @@ class MyGameBoard {
     for (let i = 0; i < this.tiles.length; i++) {
         this.tiles[i].display();
         let piece = this.tiles[i].getPiece();
+        
+        if (piece != null) {
+            this.orchestrator.getScene().pushMatrix();
+            this.orchestrator.getScene().translate(0.5,0,0.5);
+            piece.display();
+            this.orchestrator.getScene().popMatrix();
+        }
+    }
+    if(this.tempTile != null){
+        this.tempTile.display();
+        let piece = this.tempTile.getPiece();
         
         if (piece != null) {
             this.orchestrator.getScene().pushMatrix();

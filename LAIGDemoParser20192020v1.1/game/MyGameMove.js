@@ -30,9 +30,9 @@ class MyGameMove{
 
             let transf2 = {
                 translate : this.diff(this.origTile.getPosition(),this.destTile.getPosition()),
-                scale     : this.removePiece ? [0,0,0] : [1,1,1],
-                rotate    : [0,0,0],
-                instant   : 0.5
+                scale     : this.removePiece ? [1,1,1] : [1,1,1],
+                rotate    : this.removePiece ? [0,Math.PI * 2 , 0] :[0,0,0],
+                instant   : this.removePiece ? 0.5 : 0.5
             };
             this.currentAnimation = new LinearAnimation(this.piece.orchestrator.getScene(),transf1,transf2);
             

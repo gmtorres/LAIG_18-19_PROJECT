@@ -138,7 +138,8 @@ class MyGameOrchestrator {
 
     OnObjectSelected(obj, id) {
         if (obj instanceof MyPiece) {
-
+            if((this.currentPlayer == 1 && this.player1Type != "Human") || (this.currentPlayer == 2 && this.player2Type != "Human"))
+                return;
 
             if (this.state == this.gameStates['Destination Piece Selection']) {
                 if( this.doubleClick == false|| (this.doubleClick == true && this.scene.time - obj.lastSelected < 0.3)){
@@ -434,9 +435,13 @@ class MyGameOrchestrator {
                 if (this.selectedPiece != null) {
  
                     this.gameBoard.setTilesSelectable(true);
-                    this.state = this.gameStates['Destination Piece Selected'];
-                    let tile = this.selectedPiece.getTile();
-                    this.animator.setMove(new MyGameMoves(this.gameBoard, [new MyGameMove(this.selectedPiece, tile, new MyTile(this, -1, null, tile.x, tile.y, 0.5))]), this.scene.time);
+                    if(this.selectedPiece.selected){
+                        this.state = this.gameStates['Destination Tile Selection'];
+                    }else{
+                        this.state = this.gameStates['Destination Piece Selected'];
+                        let tile = this.selectedPiece.getTile();
+                        this.animator.setMove(new MyGameMoves(this.gameBoard, [new MyGameMove(this.selectedPiece, tile, new MyTile(this, -1, null, tile.x, tile.y, 0.5))]), this.scene.time);
+                    }
                 }
                 break;
             case this.gameStates['Destination Piece Selected']:
@@ -509,7 +514,7 @@ class MyGameOrchestrator {
                     this.gameStarted = false;
                     this.currentPlayer = 1;
                     this.currentTurn = 0;
-                    this.changeBoard(this.defBoard);
+                    //this.changeBoard(this.defBoard);
                     this.state = this.gameStates['Menu'];
                 }
                 else this.state = this.gameStates['Next Turn'];
@@ -558,6 +563,9 @@ class MyGameOrchestrator {
         if (this.prolog.connected == false) {
             this.prolog._handshake();
             this.state = 0;
+        }
+        if(this.gameStarted == false){
+            this.changeBoard(this.defBoard);
         }
         this.gameStarted = true;
         this.currentMoveStartTime = this.scene.time;
